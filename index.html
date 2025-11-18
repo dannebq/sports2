@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Schedules - Green Bay Packers</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏈 Sports Schedules</h1>
+            <p class="subtitle">Stay up to date with your favorite teams</p>
+        </header>
+
+        <nav class="team-selector">
+            <button class="team-btn active" data-team="packers">
+                <span class="team-logo">🟢🟡</span>
+                Green Bay Packers
+            </button>
+            <!-- More teams can be added here -->
+        </nav>
+
+        <main>
+            <div id="schedule-container">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading schedule...</p>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>Data updates regularly • NFL Season 2024-2025</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
