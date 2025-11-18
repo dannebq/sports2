@@ -1,148 +1,92 @@
-// Packers 2024-2025 NFL Season Schedule
+// Packers 2025 NFL Season Schedule (Swedish Times)
 const packersSchedule = [
     {
         week: 1,
-        date: "September 6, 2024",
-        time: "8:15 PM ET",
-        opponent: "Philadelphia Eagles",
-        location: "away",
-        stadium: "Lincoln Financial Field"
-    },
-    {
-        week: 2,
-        date: "September 15, 2024",
-        time: "1:00 PM ET",
-        opponent: "Indianapolis Colts",
-        location: "home",
-        stadium: "Lambeau Field"
-    },
-    {
-        week: 3,
-        date: "September 22, 2024",
-        time: "1:00 PM ET",
-        opponent: "Tennessee Titans",
-        location: "home",
-        stadium: "Lambeau Field"
-    },
-    {
-        week: 4,
-        date: "September 29, 2024",
-        time: "1:00 PM ET",
-        opponent: "Minnesota Vikings",
-        location: "home",
-        stadium: "Lambeau Field"
-    },
-    {
-        week: 5,
-        date: "October 6, 2024",
-        time: "4:25 PM ET",
-        opponent: "Los Angeles Rams",
-        location: "away",
-        stadium: "SoFi Stadium"
-    },
-    {
-        week: 6,
-        date: "October 13, 2024",
-        time: "1:00 PM ET",
-        opponent: "Arizona Cardinals",
-        location: "away",
-        stadium: "State Farm Stadium"
-    },
-    {
-        week: 7,
-        date: "October 20, 2024",
-        time: "1:00 PM ET",
-        opponent: "Houston Texans",
-        location: "home",
-        stadium: "Lambeau Field"
-    },
-    {
-        week: 8,
-        date: "October 27, 2024",
-        time: "4:25 PM ET",
-        opponent: "Jacksonville Jaguars",
-        location: "away",
-        stadium: "EverBank Stadium"
-    },
-    {
-        week: 9,
-        date: "November 3, 2024",
-        time: "4:25 PM ET",
+        date: "September 7, 2025",
+        time: "22:25 (Swedish Time)",
         opponent: "Detroit Lions",
         location: "home",
         stadium: "Lambeau Field"
     },
     {
-        week: 10,
-        date: "November 10, 2024",
+        week: 2,
+        date: "September 11, 2025",
+        time: "02:15 (Sept 12, Swedish Time)",
+        opponent: "Washington Commanders",
+        location: "home",
+        stadium: "Lambeau Field"
+    },
+    {
+        week: 3,
+        date: "September 21, 2025",
+        time: "19:00 (Swedish Time)",
+        opponent: "Cleveland Browns",
+        location: "away",
+        stadium: "Cleveland Browns Stadium"
+    },
+    {
+        week: 4,
+        date: "September 28, 2025",
+        time: "00:20 (Sept 29, Swedish Time)",
+        opponent: "Dallas Cowboys",
+        location: "away",
+        stadium: "AT&T Stadium"
+    },
+    {
+        week: 5,
+        date: "October 5, 2025",
         time: "BYE WEEK",
         opponent: null,
         location: null,
         stadium: null
     },
     {
+        week: 6,
+        date: "October 12, 2025",
+        time: "20:25 (Swedish Time)",
+        opponent: "Cincinnati Bengals",
+        location: "home",
+        stadium: "Lambeau Field"
+    },
+    {
+        week: 7,
+        date: "October 19, 2025",
+        time: "20:25 (Swedish Time)",
+        opponent: "Arizona Cardinals",
+        location: "away",
+        stadium: "State Farm Stadium"
+    },
+    {
+        week: 8,
+        date: "October 26, 2025",
+        time: "02:20 (Oct 27, Swedish Time)",
+        opponent: "Pittsburgh Steelers",
+        location: "away",
+        stadium: "Acrisure Stadium"
+    },
+    {
+        week: 9,
+        date: "November 2, 2025",
+        time: "19:00 (Swedish Time)",
+        opponent: "Carolina Panthers",
+        location: "home",
+        stadium: "Lambeau Field"
+    },
+    {
+        week: 10,
+        date: "November 10, 2025",
+        time: "01:15 (Nov 11, Swedish Time)",
+        opponent: "Philadelphia Eagles",
+        location: "home",
+        stadium: "Lambeau Field"
+    },
+    {
         week: 11,
-        date: "November 17, 2024",
-        time: "1:00 PM ET",
-        opponent: "Chicago Bears",
+        date: "November 16, 2025",
+        time: "19:00 (Swedish Time)",
+        opponent: "New York Giants",
         location: "away",
-        stadium: "Soldier Field"
-    },
-    {
-        week: 12,
-        date: "November 24, 2024",
-        time: "4:25 PM ET",
-        opponent: "San Francisco 49ers",
-        location: "home",
-        stadium: "Lambeau Field"
-    },
-    {
-        week: 13,
-        date: "November 28, 2024",
-        time: "8:20 PM ET",
-        opponent: "Miami Dolphins",
-        location: "away",
-        stadium: "Hard Rock Stadium"
-    },
-    {
-        week: 14,
-        date: "December 5, 2024",
-        time: "8:15 PM ET",
-        opponent: "Detroit Lions",
-        location: "away",
-        stadium: "Ford Field"
-    },
-    {
-        week: 15,
-        date: "December 15, 2024",
-        time: "8:20 PM ET",
-        opponent: "Seattle Seahawks",
-        location: "home",
-        stadium: "Lambeau Field"
-    },
-    {
-        week: 16,
-        date: "December 23, 2024",
-        time: "8:15 PM ET",
-        opponent: "New Orleans Saints",
-        location: "away",
-        stadium: "Caesars Superdome"
-    },
-    {
-        week: 17,
-        date: "December 29, 2024",
-        time: "1:00 PM ET",
-        opponent: "Minnesota Vikings",
-        location: "away",
-        stadium: "U.S. Bank Stadium"
-    },
-    {
-        week: 18,
-        date: "January 5, 2025",
-        time: "TBD",
-        opponent: "Chicago Bears",
-        location: "home",
-        stadium: "Lambeau Field"
+        stadium: "MetLife Stadium"
     }
 ];
 
