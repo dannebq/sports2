@@ -3,42 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sports Schedules - NFL & Skidskytte</title>
+    <title>Sports Schedules</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>⚡ Sports Schedules</h1>
-            <p class="subtitle">Håll koll på dina favoriter - NFL & Skidskytte</p>
-        </header>
-
         <nav class="team-selector">
-            <button class="team-btn active" data-team="packers">
-                <span class="team-logo">🟢🟡</span>
-                Green Bay Packers
-            </button>
-            <button class="team-btn" data-team="biathlon">
-                <span class="team-logo">⛷️🎯</span>
-                Skidskytte (World Cup)
-            </button>
+            <button class="team-btn active" data-team="packers">Green Bay Packers</button>
+            <button class="team-btn" data-team="biathlon">Skidskytte</button>
         </nav>
 
         <main>
             <div id="schedule-container">
-                <div class="loading">
-                    <div class="spinner"></div>
-                    <p>Loading schedule...</p>
-                </div>
+                <div class="loading">Loading...</div>
             </div>
         </main>
-
-        <footer>
-            <p>Data updates regularly • NFL Season 2025 • Skidskytte VM 2025/2026 • SVT-tider inkluderade</p>
-        </footer>
     </div>
 
     <script src="app.js"></script>
 </body>
 </html>
-

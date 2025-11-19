@@ -404,109 +404,120 @@ const packersSchedule = [
 // DOM Elements
 const scheduleContainer = document.getElementById('schedule-container');
 
-// Function to create a game card (for NFL)
-function createGameCard(game) {
-    const card = document.createElement('div');
-    card.className = 'game-card';
+// Function to create NFL table
+function createNFLTable(schedule) {
+    const table = document.createElement('table');
+    table.className = 'schedule-table';
     
-    // Handle BYE week
-    if (game.opponent === null) {
-        card.innerHTML = `
-            <div class="week-badge">Week ${game.week}</div>
-            <div class="game-date">${game.date}</div>
-            <div class="matchup">
-                <div class="team" style="width: 100%; text-align: center;">
-                    <div class="team-name" style="font-size: 1.5rem;">BYE WEEK</div>
-                    <div style="color: var(--text-secondary); margin-top: 8px;">Time to rest and recover 🏖️</div>
-                </div>
-            </div>
-        `;
-        return card;
-    }
-    
-    const isHome = game.location === 'home';
-    const locationClass = isHome ? 'home' : 'away';
-    
-    card.innerHTML = `
-        <div class="week-badge">Week ${game.week}</div>
-        <div class="game-date">${game.date}</div>
-        <div class="matchup">
-            <div class="team ${isHome ? 'home' : ''}">
-                <div class="team-name">${isHome ? 'Packers' : game.opponent}</div>
-            </div>
-            <div class="vs">VS</div>
-            <div class="team ${!isHome ? 'home' : ''}">
-                <div class="team-name">${!isHome ? 'Packers' : game.opponent}</div>
-            </div>
-        </div>
-        <div class="game-info">
-            <div class="location ${locationClass}">${game.stadium}</div>
-            <div class="time">${game.time}</div>
-        </div>
+    let html = `
+        <caption>Green Bay Packers - 2025 Schedule</caption>
+        <thead>
+            <tr>
+                <th>Week</th>
+                <th>Date</th>
+                <th>Opponent</th>
+                <th>Location</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
     `;
     
-    return card;
-}
-
-// Function to create a biathlon event card
-function createBiathlonCard(competition) {
-    const card = document.createElement('div');
-    card.className = 'game-card biathlon-card';
-    
-    let eventsHTML = '';
-    competition.events.forEach(event => {
-        const racesHTML = event.races.map(race => 
-            `<li class="race-item">
-                <div class="race-info">
-                    <span class="race-name">${race.name}</span>
-                    <span class="tv-time">📺 ${race.tv}</span>
-                </div>
-            </li>`
-        ).join('');
-        
-        eventsHTML += `
-            <div class="biathlon-day">
-                <div class="day-header">${event.date}</div>
-                <ul class="race-list">
-                    ${racesHTML}
-                </ul>
-            </div>
-        `;
+    schedule.forEach(game => {
+        if (game.opponent === null) {
+            html += `
+                <tr>
+                    <td>${game.week}</td>
+                    <td>${game.date}</td>
+                    <td colspan="3">BYE WEEK</td>
+                </tr>
+            `;
+        } else {
+            const opponent = game.location === 'home' ? `vs ${game.opponent}` : `@ ${game.opponent}`;
+            
+            html += `
+                <tr>
+                    <td>${game.week}</td>
+                    <td>${game.date}</td>
+                    <td>${opponent}</td>
+                    <td>${game.stadium}</td>
+                    <td>${game.time}</td>
+                </tr>
+            `;
+        }
     });
     
-    card.innerHTML = `
-        <div class="week-badge" style="background: linear-gradient(135deg, #4fc3f7, #2196f3);">📍 ${competition.location}</div>
-        <div class="game-date">${competition.dates}</div>
-        <div class="biathlon-events">
-            ${eventsHTML}
-        </div>
-    `;
+    html += `</tbody>`;
+    table.innerHTML = html;
+    return table;
+}
+
+// Function to create biathlon tables
+function createBiathlonTables(schedule) {
+    const container = document.createElement('div');
     
-    return card;
+    schedule.forEach(competition => {
+        const section = document.createElement('div');
+        section.className = 'competition-section';
+        
+        const title = document.createElement('div');
+        title.className = 'competition-title';
+        title.textContent = competition.location;
+        
+        const dates = document.createElement('div');
+        dates.className = 'competition-dates';
+        dates.textContent = competition.dates;
+        
+        const table = document.createElement('table');
+        table.className = 'schedule-table';
+        
+        let html = `
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Event</th>
+                    <th>SVT Broadcast</th>
+                </tr>
+            </thead>
+            <tbody>
+        `;
+        
+        competition.events.forEach(event => {
+            event.races.forEach((race, index) => {
+                html += `
+                    <tr>
+                        <td>${index === 0 ? event.date : ''}</td>
+                        <td>${race.name}</td>
+                        <td>${race.tv}</td>
+                    </tr>
+                `;
+            });
+        });
+        
+        html += `</tbody>`;
+        table.innerHTML = html;
+        
+        section.appendChild(title);
+        section.appendChild(dates);
+        section.appendChild(table);
+        container.appendChild(section);
+    });
+    
+    return container;
 }
 
 // Function to display NFL schedule
 function displaySchedule(schedule) {
-    // Clear loading state
     scheduleContainer.innerHTML = '';
-    
-    // Create and append game cards
-    schedule.forEach(game => {
-        const card = createGameCard(game);
-        scheduleContainer.appendChild(card);
-    });
+    const table = createNFLTable(schedule);
+    scheduleContainer.appendChild(table);
 }
 
 // Function to display biathlon schedule
 function displayBiathlonSchedule(schedule) {
-    // Clear loading state
     scheduleContainer.innerHTML = '';
-    
-    // Create and append biathlon cards
-    schedule.forEach(competition => {
-        const card = createBiathlonCard(competition);
-        scheduleContainer.appendChild(card);
-    });
+    const tables = createBiathlonTables(schedule);
+    scheduleContainer.appendChild(tables);
 }
 
 // Initialize the page
