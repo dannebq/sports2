@@ -1,3 +1,100 @@
+// Biathlon World Cup Schedule 2025/2026
+const biathlonSchedule = [
+    {
+        dates: "29 november–7 december 2025",
+        location: "Östersund, Sverige",
+        events: [
+            { date: "29 november", races: ["Stafett 4x6 km, damer", "Stafett 4x7,5 km, herrar"] },
+            { date: "30 november", races: ["Singelmixedstafett", "Mixedstafett"] },
+            { date: "2 december", races: ["Distans 15 km, damer"] },
+            { date: "3 december", races: ["Distans 20 km, herrar"] },
+            { date: "5 december", races: ["Sprint 7,5 km, damer"] },
+            { date: "6 december", races: ["Sprint 10 km, herrar"] },
+            { date: "7 december", races: ["Jaktstart 10 km, damer", "Jaktstart 12,5 km, herrar"] }
+        ]
+    },
+    {
+        dates: "12–14 december 2025",
+        location: "Hochfilzen, Österrike",
+        events: [
+            { date: "12 december", races: ["Sprint 10 km, herrar", "Sprint 7,5 km, damer"] },
+            { date: "13 december", races: ["Jaktstart 12,5 km, herrar", "Stafett 4x6 km, damer"] },
+            { date: "14 december", races: ["Stafett 4x7,5 km, herrar", "Jaktstart 10 km, damer"] }
+        ]
+    },
+    {
+        dates: "18–21 december 2025",
+        location: "Annecy-Le Grand Bornand, Frankrike",
+        events: [
+            { date: "18 december", races: ["Sprint 7,5 km, damer"] },
+            { date: "19 december", races: ["Sprint 10 km, herrar"] },
+            { date: "20 december", races: ["Jaktstart 10 km, damer", "Jaktstart 12,5 km, herrar"] },
+            { date: "21 december", races: ["Masstart 12,5 km, damer", "Masstart 15 km, herrar"] }
+        ]
+    },
+    {
+        dates: "8–11 januari 2026",
+        location: "Oberhof, Tyskland",
+        events: [
+            { date: "8 januari", races: ["Sprint 10 km, herrar"] },
+            { date: "9 januari", races: ["Sprint 7,5 km, damer"] },
+            { date: "10 januari", races: ["Jaktstart 12,5 km, herrar", "Stafett 4x6 km, damer"] },
+            { date: "11 januari", races: ["Stafett 4x7,5 km, herrar", "Jaktstart 10 km, damer"] }
+        ]
+    },
+    {
+        dates: "14–18 januari 2026",
+        location: "Ruhpolding, Tyskland",
+        events: [
+            { date: "14 januari", races: ["Stafett 4x6 km, damer"] },
+            { date: "15 januari", races: ["Stafett 4x7,5 km, herrar"] },
+            { date: "16 januari", races: ["Sprint 7,5 km, damer"] },
+            { date: "17 januari", races: ["Sprint 10 km, herrar"] },
+            { date: "18 januari", races: ["Jaktstart 10 km, damer", "Jaktstart 12,5 km, herrar"] }
+        ]
+    },
+    {
+        dates: "22–25 januari 2026",
+        location: "Nove Mesto na Morave, Tjeckien",
+        events: [
+            { date: "22 januari", races: ["Kortdistans 15 km, herrar"] },
+            { date: "23 januari", races: ["Kortdistans 12,5 km, damer"] },
+            { date: "24 januari", races: ["Singelmixedstafett", "Mixedstafett"] },
+            { date: "25 januari", races: ["Masstart 15 km, herrar", "Masstart 12,5 km, damer"] }
+        ]
+    },
+    {
+        dates: "5–8 mars 2026",
+        location: "Kontiolahti, Finland",
+        events: [
+            { date: "5 mars", races: ["Distans 15 km, damer"] },
+            { date: "6 mars", races: ["Distans 20 km, herrar"] },
+            { date: "7 mars", races: ["Masstart 12,5 km, damer", "Stafett 4x7,5 km, herrar"] },
+            { date: "8 mars", races: ["Stafett 4x6 km, damer", "Masstart 15 km, herrar"] }
+        ]
+    },
+    {
+        dates: "12–15 mars 2026",
+        location: "Otepää, Estland",
+        events: [
+            { date: "12 mars", races: ["Sprint 10 km, herrar"] },
+            { date: "13 mars", races: ["Sprint 7,5 km, damer"] },
+            { date: "14 mars", races: ["Jaktstart 12,5 km, herrar", "Jaktstart 10 km, damer"] },
+            { date: "15 mars", races: ["Singelmixedstafett", "Mixedstafett"] }
+        ]
+    },
+    {
+        dates: "19–22 mars 2026",
+        location: "Oslo, Norge",
+        events: [
+            { date: "19 mars", races: ["Sprint 7,5 km, damer"] },
+            { date: "20 mars", races: ["Sprint 10 km, herrar"] },
+            { date: "21 mars", races: ["Jaktstart 10 km, damer", "Jaktstart 12,5 km, herrar"] },
+            { date: "22 mars", races: ["Masstart 12,5 km, damer", "Masstart 15 km, herrar"] }
+        ]
+    }
+];
+
 // Packers 2025 NFL Season Schedule (Swedish Times)
 const packersSchedule = [
     {
@@ -93,7 +190,7 @@ const packersSchedule = [
 // DOM Elements
 const scheduleContainer = document.getElementById('schedule-container');
 
-// Function to create a game card
+// Function to create a game card (for NFL)
 function createGameCard(game) {
     const card = document.createElement('div');
     card.className = 'game-card';
@@ -137,7 +234,39 @@ function createGameCard(game) {
     return card;
 }
 
-// Function to display schedule
+// Function to create a biathlon event card
+function createBiathlonCard(competition) {
+    const card = document.createElement('div');
+    card.className = 'game-card biathlon-card';
+    
+    let eventsHTML = '';
+    competition.events.forEach(event => {
+        const racesHTML = event.races.map(race => 
+            `<li class="race-item">${race}</li>`
+        ).join('');
+        
+        eventsHTML += `
+            <div class="biathlon-day">
+                <div class="day-header">${event.date}</div>
+                <ul class="race-list">
+                    ${racesHTML}
+                </ul>
+            </div>
+        `;
+    });
+    
+    card.innerHTML = `
+        <div class="week-badge" style="background: linear-gradient(135deg, #4fc3f7, #2196f3);">📍 ${competition.location}</div>
+        <div class="game-date">${competition.dates}</div>
+        <div class="biathlon-events">
+            ${eventsHTML}
+        </div>
+    `;
+    
+    return card;
+}
+
+// Function to display NFL schedule
 function displaySchedule(schedule) {
     // Clear loading state
     scheduleContainer.innerHTML = '';
@@ -145,6 +274,18 @@ function displaySchedule(schedule) {
     // Create and append game cards
     schedule.forEach(game => {
         const card = createGameCard(game);
+        scheduleContainer.appendChild(card);
+    });
+}
+
+// Function to display biathlon schedule
+function displayBiathlonSchedule(schedule) {
+    // Clear loading state
+    scheduleContainer.innerHTML = '';
+    
+    // Create and append biathlon cards
+    schedule.forEach(competition => {
+        const card = createBiathlonCard(competition);
         scheduleContainer.appendChild(card);
     });
 }
@@ -175,16 +316,20 @@ document.querySelectorAll('.team-btn').forEach(btn => {
         // Add active class to clicked button
         this.classList.add('active');
         
-        // Get selected team
-        const team = this.dataset.team;
+        // Get selected sport
+        const sport = this.dataset.team;
         
-        // For now, we only have Packers data
-        if (team === 'packers') {
-            scheduleContainer.innerHTML = '<div class="loading"><div class="spinner"></div><p>Loading schedule...</p></div>';
-            setTimeout(() => {
+        // Show loading
+        scheduleContainer.innerHTML = '<div class="loading"><div class="spinner"></div><p>Laddar schema...</p></div>';
+        
+        // Display appropriate schedule
+        setTimeout(() => {
+            if (sport === 'packers') {
                 displaySchedule(packersSchedule);
-            }, 500);
-        }
+            } else if (sport === 'biathlon') {
+                displayBiathlonSchedule(biathlonSchedule);
+            }
+        }, 500);
     });
 });
 
