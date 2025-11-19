@@ -4,93 +4,307 @@ const biathlonSchedule = [
         dates: "29 november–7 december 2025",
         location: "Östersund, Sverige",
         events: [
-            { date: "29 november", races: ["Stafett 4x6 km, damer", "Stafett 4x7,5 km, herrar"] },
-            { date: "30 november", races: ["Singelmixedstafett", "Mixedstafett"] },
-            { date: "2 december", races: ["Distans 15 km, damer"] },
-            { date: "3 december", races: ["Distans 20 km, herrar"] },
-            { date: "5 december", races: ["Sprint 7,5 km, damer"] },
-            { date: "6 december", races: ["Sprint 10 km, herrar"] },
-            { date: "7 december", races: ["Jaktstart 10 km, damer", "Jaktstart 12,5 km, herrar"] }
+            { 
+                date: "29 november", 
+                races: [
+                    { name: "Stafett 4x6 km, damer", tv: "13:15-14:35, SVT1/SVT Play" },
+                    { name: "Stafett 4x7,5 km, herrar", tv: "16:55-18:15, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "30 november", 
+                races: [
+                    { name: "Singelmixedstafett", tv: "14:00-14:45, SVT1/SVT Play" },
+                    { name: "Mixedstafett", tv: "16:40-17:50, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "2 december", 
+                races: [
+                    { name: "Distans 15 km, damer", tv: "15:20-17:20, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "3 december", 
+                races: [
+                    { name: "Distans 20 km, herrar", tv: "15:20-17:20, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "5 december", 
+                races: [
+                    { name: "Sprint 7,5 km, damer", tv: "15:50-17:25, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "6 december", 
+                races: [
+                    { name: "Sprint 10 km, herrar", tv: "16:30-17:50, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "7 december", 
+                races: [
+                    { name: "Jaktstart 10 km, damer", tv: "13:15-14:00, SVT1/SVT Play" },
+                    { name: "Jaktstart 12,5 km, herrar", tv: "15:15-16:00, SVT1/SVT Play" }
+                ]
+            }
         ]
     },
     {
         dates: "12–14 december 2025",
         location: "Hochfilzen, Österrike",
         events: [
-            { date: "12 december", races: ["Sprint 10 km, herrar", "Sprint 7,5 km, damer"] },
-            { date: "13 december", races: ["Jaktstart 12,5 km, herrar", "Stafett 4x6 km, damer"] },
-            { date: "14 december", races: ["Stafett 4x7,5 km, herrar", "Jaktstart 10 km, damer"] }
+            { 
+                date: "12 december", 
+                races: [
+                    { name: "Sprint 10 km, herrar", tv: "11:15-12:55, SVT1/SVT Play" },
+                    { name: "Sprint 7,5 km, damer", tv: "14:05-15:45, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "13 december", 
+                races: [
+                    { name: "Jaktstart 12,5 km, herrar", tv: "12:00-12:45, SVT1/SVT Play" },
+                    { name: "Stafett 4x6 km, damer", tv: "14:15-15:35, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "14 december", 
+                races: [
+                    { name: "Stafett 4x7,5 km, herrar", tv: "12:00-13:20, SVT1/SVT Play" },
+                    { name: "Jaktstart 10 km, damer", tv: "14:45-15:30, SVT1/SVT Play" }
+                ]
+            }
         ]
     },
     {
         dates: "18–21 december 2025",
         location: "Annecy-Le Grand Bornand, Frankrike",
         events: [
-            { date: "18 december", races: ["Sprint 7,5 km, damer"] },
-            { date: "19 december", races: ["Sprint 10 km, herrar"] },
-            { date: "20 december", races: ["Jaktstart 10 km, damer", "Jaktstart 12,5 km, herrar"] },
-            { date: "21 december", races: ["Masstart 12,5 km, damer", "Masstart 15 km, herrar"] }
+            { 
+                date: "18 december", 
+                races: [
+                    { name: "Sprint 7,5 km, damer", tv: "14:05-15:45, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "19 december", 
+                races: [
+                    { name: "Sprint 10 km, herrar", tv: "14:05-15:40, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "20 december", 
+                races: [
+                    { name: "Jaktstart 10 km, damer", tv: "12:15-13:00, SVT1/SVT Play" },
+                    { name: "Jaktstart 12,5 km, herrar", tv: "14:45-15:30, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "21 december", 
+                races: [
+                    { name: "Masstart 12,5 km, damer", tv: "12:15-13:00, SVT1/SVT Play" },
+                    { name: "Masstart 15 km, herrar", tv: "14:45-15:30, SVT1/SVT Play" }
+                ]
+            }
         ]
     },
     {
         dates: "8–11 januari 2026",
         location: "Oberhof, Tyskland",
         events: [
-            { date: "8 januari", races: ["Sprint 10 km, herrar"] },
-            { date: "9 januari", races: ["Sprint 7,5 km, damer"] },
-            { date: "10 januari", races: ["Jaktstart 12,5 km, herrar", "Stafett 4x6 km, damer"] },
-            { date: "11 januari", races: ["Stafett 4x7,5 km, herrar", "Jaktstart 10 km, damer"] }
+            { 
+                date: "8 januari", 
+                races: [
+                    { name: "Sprint 10 km, herrar", tv: "14:00-15:40, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "9 januari", 
+                races: [
+                    { name: "Sprint 7,5 km, damer", tv: "14:15-15:50, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "10 januari", 
+                races: [
+                    { name: "Jaktstart 12,5 km, herrar", tv: "12:00-12:45, SVT1/SVT Play" },
+                    { name: "Stafett 4x6 km, damer", tv: "14:25-15:40, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "11 januari", 
+                races: [
+                    { name: "Stafett 4x7,5 km, herrar", tv: "11:00-12:20, SVT1/SVT Play" },
+                    { name: "Jaktstart 10 km, damer", tv: "14:15-15:00, SVT1/SVT Play" }
+                ]
+            }
         ]
     },
     {
         dates: "14–18 januari 2026",
         location: "Ruhpolding, Tyskland",
         events: [
-            { date: "14 januari", races: ["Stafett 4x6 km, damer"] },
-            { date: "15 januari", races: ["Stafett 4x7,5 km, herrar"] },
-            { date: "16 januari", races: ["Sprint 7,5 km, damer"] },
-            { date: "17 januari", races: ["Sprint 10 km, herrar"] },
-            { date: "18 januari", races: ["Jaktstart 10 km, damer", "Jaktstart 12,5 km, herrar"] }
+            { 
+                date: "14 januari", 
+                races: [
+                    { name: "Stafett 4x6 km, damer", tv: "14:20-15:55, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "15 januari", 
+                races: [
+                    { name: "Stafett 4x7,5 km, herrar", tv: "14:20-15:55, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "16 januari", 
+                races: [
+                    { name: "Sprint 7,5 km, damer", tv: "14:20-15:55, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "17 januari", 
+                races: [
+                    { name: "Sprint 10 km, herrar", tv: "14:30-15:50, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "18 januari", 
+                races: [
+                    { name: "Jaktstart 10 km, damer", tv: "12:30-13:15, SVT1/SVT Play" },
+                    { name: "Jaktstart 12,5 km, herrar", tv: "15:00-15:45, SVT1/SVT Play" }
+                ]
+            }
         ]
     },
     {
         dates: "22–25 januari 2026",
         location: "Nove Mesto na Morave, Tjeckien",
         events: [
-            { date: "22 januari", races: ["Kortdistans 15 km, herrar"] },
-            { date: "23 januari", races: ["Kortdistans 12,5 km, damer"] },
-            { date: "24 januari", races: ["Singelmixedstafett", "Mixedstafett"] },
-            { date: "25 januari", races: ["Masstart 15 km, herrar", "Masstart 12,5 km, damer"] }
+            { 
+                date: "22 januari", 
+                races: [
+                    { name: "Kortdistans 15 km, herrar", tv: "18:05-20:00, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "23 januari", 
+                races: [
+                    { name: "Kortdistans 12,5 km, damer", tv: "18:05-20:00, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "24 januari", 
+                races: [
+                    { name: "Singelmixedstafett", tv: "13:15-14:00, SVT1/SVT Play" },
+                    { name: "Mixedstafett", tv: "15:15-16:25, SVT1/SVT Play" }
+                ]
+            },
+            { 
+                date: "25 januari", 
+                races: [
+                    { name: "Masstart 15 km, herrar", tv: "15:15-16:00, SVT1/SVT Play" },
+                    { name: "Masstart 12,5 km, damer", tv: "18:15-19:00, SVT1/SVT Play" }
+                ]
+            }
         ]
     },
     {
         dates: "5–8 mars 2026",
         location: "Kontiolahti, Finland",
         events: [
-            { date: "5 mars", races: ["Distans 15 km, damer"] },
-            { date: "6 mars", races: ["Distans 20 km, herrar"] },
-            { date: "7 mars", races: ["Masstart 12,5 km, damer", "Stafett 4x7,5 km, herrar"] },
-            { date: "8 mars", races: ["Stafett 4x6 km, damer", "Masstart 15 km, herrar"] }
+            { 
+                date: "5 mars", 
+                races: [
+                    { name: "Distans 15 km, damer", tv: "SVT (tider uppdateras)" }
+                ]
+            },
+            { 
+                date: "6 mars", 
+                races: [
+                    { name: "Distans 20 km, herrar", tv: "SVT (tider uppdateras)" }
+                ]
+            },
+            { 
+                date: "7 mars", 
+                races: [
+                    { name: "Masstart 12,5 km, damer", tv: "SVT (tider uppdateras)" },
+                    { name: "Stafett 4x7,5 km, herrar", tv: "SVT (tider uppdateras)" }
+                ]
+            },
+            { 
+                date: "8 mars", 
+                races: [
+                    { name: "Stafett 4x6 km, damer", tv: "SVT (tider uppdateras)" },
+                    { name: "Masstart 15 km, herrar", tv: "SVT (tider uppdateras)" }
+                ]
+            }
         ]
     },
     {
         dates: "12–15 mars 2026",
         location: "Otepää, Estland",
         events: [
-            { date: "12 mars", races: ["Sprint 10 km, herrar"] },
-            { date: "13 mars", races: ["Sprint 7,5 km, damer"] },
-            { date: "14 mars", races: ["Jaktstart 12,5 km, herrar", "Jaktstart 10 km, damer"] },
-            { date: "15 mars", races: ["Singelmixedstafett", "Mixedstafett"] }
+            { 
+                date: "12 mars", 
+                races: [
+                    { name: "Sprint 10 km, herrar", tv: "SVT (tider uppdateras)" }
+                ]
+            },
+            { 
+                date: "13 mars", 
+                races: [
+                    { name: "Sprint 7,5 km, damer", tv: "SVT (tider uppdateras)" }
+                ]
+            },
+            { 
+                date: "14 mars", 
+                races: [
+                    { name: "Jaktstart 12,5 km, herrar", tv: "SVT (tider uppdateras)" },
+                    { name: "Jaktstart 10 km, damer", tv: "SVT (tider uppdateras)" }
+                ]
+            },
+            { 
+                date: "15 mars", 
+                races: [
+                    { name: "Singelmixedstafett", tv: "SVT (tider uppdateras)" },
+                    { name: "Mixedstafett", tv: "SVT (tider uppdateras)" }
+                ]
+            }
         ]
     },
     {
         dates: "19–22 mars 2026",
         location: "Oslo, Norge",
         events: [
-            { date: "19 mars", races: ["Sprint 7,5 km, damer"] },
-            { date: "20 mars", races: ["Sprint 10 km, herrar"] },
-            { date: "21 mars", races: ["Jaktstart 10 km, damer", "Jaktstart 12,5 km, herrar"] },
-            { date: "22 mars", races: ["Masstart 12,5 km, damer", "Masstart 15 km, herrar"] }
+            { 
+                date: "19 mars", 
+                races: [
+                    { name: "Sprint 7,5 km, damer", tv: "SVT (tider uppdateras)" }
+                ]
+            },
+            { 
+                date: "20 mars", 
+                races: [
+                    { name: "Sprint 10 km, herrar", tv: "SVT (tider uppdateras)" }
+                ]
+            },
+            { 
+                date: "21 mars", 
+                races: [
+                    { name: "Jaktstart 10 km, damer", tv: "SVT (tider uppdateras)" },
+                    { name: "Jaktstart 12,5 km, herrar", tv: "SVT (tider uppdateras)" }
+                ]
+            },
+            { 
+                date: "22 mars", 
+                races: [
+                    { name: "Masstart 12,5 km, damer", tv: "SVT (tider uppdateras)" },
+                    { name: "Masstart 15 km, herrar", tv: "SVT (tider uppdateras)" }
+                ]
+            }
         ]
     }
 ];
@@ -242,7 +456,12 @@ function createBiathlonCard(competition) {
     let eventsHTML = '';
     competition.events.forEach(event => {
         const racesHTML = event.races.map(race => 
-            `<li class="race-item">${race}</li>`
+            `<li class="race-item">
+                <div class="race-info">
+                    <span class="race-name">${race.name}</span>
+                    <span class="tv-time">📺 ${race.tv}</span>
+                </div>
+            </li>`
         ).join('');
         
         eventsHTML += `
