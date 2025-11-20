@@ -426,6 +426,135 @@ const packersSchedule = [
 // DOM Elements
 const scheduleContainer = document.getElementById('schedule-container');
 
+// Helper function to parse dates from different formats
+function parseDate(dateString) {
+    // Remove day names in parentheses like (Tors), (Lör), (Mån)
+    let cleanDate = dateString.replace(/\s*\([^)]*\)/g, '');
+    
+    // Swedish month names to numbers
+    const monthMap = {
+        'januari': 0, 'februari': 1, 'mars': 2, 'april': 3,
+        'maj': 4, 'juni': 5, 'juli': 6, 'augusti': 7,
+        'september': 8, 'oktober': 9, 'november': 10, 'december': 11,
+        'jan': 0, 'feb': 1, 'mar': 2, 'apr': 3,
+        'maj': 4, 'jun': 5, 'jul': 6, 'aug': 7,
+        'sep': 8, 'okt': 9, 'nov': 10, 'dec': 11
+    };
+    
+    // Try Swedish format: "29 november" or "7 december 2025"
+    const swedishMatch = cleanDate.match(/(\d{1,2})\s+(januari|februari|mars|april|maj|juni|juli|augusti|september|oktober|november|december|jan|feb|mar|apr|maj|jun|jul|aug|sep|okt|nov|dec)(?:\s+(\d{4}))?/i);
+    if (swedishMatch) {
+        const day = parseInt(swedishMatch[1]);
+        const month = monthMap[swedishMatch[2].toLowerCase()];
+        const year = swedishMatch[3] ? parseInt(swedishMatch[3]) : 2025;
+        return new Date(year, month, day);
+    }
+    
+    // Try American format: "September 7, 2025" or "November 16, 2025"
+    const americanMatch = cleanDate.match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(\d{4})/i);
+    if (americanMatch) {
+        const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        const month = monthNames.findIndex(m => m.toLowerCase() === americanMatch[1].toLowerCase());
+        const day = parseInt(americanMatch[2]);
+        const year = parseInt(americanMatch[3]);
+        return new Date(year, month, day);
+    }
+    
+    return null;
+}
+
+// Function to get all events from all sports
+function getAllEvents() {
+    const events = [];
+    
+    // Add Packers games
+    packersSchedule.forEach(game => {
+        if (game.opponent !== null) {
+            const date = parseDate(game.date);
+            if (date) {
+                events.push({
+                    date: date,
+                    dateString: game.date,
+                    sport: 'NFL',
+                    team: 'Green Bay Packers',
+                    description: game.location === 'home' ? `vs ${game.opponent}` : `@ ${game.opponent}`,
+                    location: game.stadium,
+                    time: game.time
+                });
+            }
+        }
+    });
+    
+    // Add Biathlon events
+    biathlonSchedule.forEach(competition => {
+        competition.events.forEach(event => {
+            const date = parseDate(event.date);
+            if (date) {
+                event.races.forEach(race => {
+                    events.push({
+                        date: date,
+                        dateString: event.date,
+                        sport: 'Skidskytte',
+                        team: competition.location,
+                        description: race.name,
+                        location: competition.location,
+                        time: race.tv
+                    });
+                });
+            }
+        });
+    });
+    
+    // Add Handball matches
+    handballSchedule.forEach(game => {
+        const date = parseDate(game.date);
+        if (date) {
+            events.push({
+                date: date,
+                dateString: game.date,
+                sport: 'Handboll VM',
+                team: 'Sverige',
+                description: game.match,
+                location: game.arena,
+                time: game.time
+            });
+        }
+    });
+    
+    return events;
+}
+
+// Function to filter events for today
+function getTodaysEvents() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    const allEvents = getAllEvents();
+    return allEvents.filter(event => {
+        return event.date >= today && event.date < tomorrow;
+    }).sort((a, b) => a.date - b.date);
+}
+
+// Function to filter events for next 7 days (excluding today)
+function getUpcomingEvents() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
+    
+    const nextWeek = new Date(today);
+    nextWeek.setDate(nextWeek.getDate() + 8);
+    
+    const allEvents = getAllEvents();
+    return allEvents.filter(event => {
+        return event.date >= tomorrow && event.date < nextWeek;
+    }).sort((a, b) => a.date - b.date);
+}
+
 // Function to create NFL table
 function createNFLTable(schedule) {
     const table = document.createElement('table');
@@ -583,12 +712,82 @@ function displayHandballSchedule(schedule) {
     scheduleContainer.appendChild(table);
 }
 
+// Function to create overview table
+function createOverviewTable(events, title) {
+    if (events.length === 0) {
+        const noEvents = document.createElement('p');
+        noEvents.style.padding = '20px';
+        noEvents.style.color = '#666';
+        noEvents.textContent = 'Inga händelser';
+        return noEvents;
+    }
+    
+    const table = document.createElement('table');
+    table.className = 'schedule-table';
+    
+    let html = `
+        <caption>${title}</caption>
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Sport</th>
+                <th>Händelse</th>
+                <th>Plats</th>
+                <th>Tid/TV</th>
+            </tr>
+        </thead>
+        <tbody>
+    `;
+    
+    events.forEach(event => {
+        html += `
+            <tr>
+                <td>${event.dateString}</td>
+                <td>${event.sport}</td>
+                <td>${event.description}</td>
+                <td>${event.location}</td>
+                <td>${event.time}</td>
+            </tr>
+        `;
+    });
+    
+    html += `</tbody>`;
+    table.innerHTML = html;
+    return table;
+}
+
+// Function to display overview page
+function displayOverview() {
+    scheduleContainer.innerHTML = '';
+    
+    const todaysEvents = getTodaysEvents();
+    const upcomingEvents = getUpcomingEvents();
+    
+    // Create container for both sections
+    const container = document.createElement('div');
+    
+    // Today's events section
+    const todaySection = document.createElement('div');
+    todaySection.style.marginBottom = '50px';
+    const todayTable = createOverviewTable(todaysEvents, 'Dagens händelser');
+    todaySection.appendChild(todayTable);
+    container.appendChild(todaySection);
+    
+    // Upcoming events section
+    const upcomingSection = document.createElement('div');
+    const upcomingTable = createOverviewTable(upcomingEvents, 'Kommande händelser (7 dagar)');
+    upcomingSection.appendChild(upcomingTable);
+    container.appendChild(upcomingSection);
+    
+    scheduleContainer.appendChild(container);
+}
+
 // Initialize the page
 function init() {
     try {
-        // Simulate loading delay for better UX
+        // Show overview by default
         setTimeout(() => {
-            displaySchedule(packersSchedule);
+            displayOverview();
         }, 500);
     } catch (error) {
         console.error('Error loading schedule:', error);
@@ -617,7 +816,9 @@ document.querySelectorAll('.team-btn').forEach(btn => {
         
         // Display appropriate schedule
         setTimeout(() => {
-            if (sport === 'packers') {
+            if (sport === 'overview') {
+                displayOverview();
+            } else if (sport === 'packers') {
                 displaySchedule(packersSchedule);
             } else if (sport === 'biathlon') {
                 displayBiathlonSchedule(biathlonSchedule);
