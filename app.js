@@ -309,6 +309,28 @@ const biathlonSchedule = [
     }
 ];
 
+// Handball World Championship 2025 - Sweden Matches
+const handballSchedule = [
+    {
+        date: "27 nov (Tors)",
+        time: "20:30",
+        match: "Sverige – Tjeckien",
+        arena: "Porsche-Arena, Stuttgart"
+    },
+    {
+        date: "29 nov (Lör)",
+        time: "20:30",
+        match: "Kuba – Sverige",
+        arena: "Porsche-Arena, Stuttgart"
+    },
+    {
+        date: "1 dec (Mån)",
+        time: "20:30",
+        match: "Sverige – Brasilien",
+        arena: "Porsche-Arena, Stuttgart"
+    }
+];
+
 // Packers 2025 NFL Season Schedule (Swedish Times)
 const packersSchedule = [
     {
@@ -520,6 +542,47 @@ function displayBiathlonSchedule(schedule) {
     scheduleContainer.appendChild(tables);
 }
 
+// Function to create handball table
+function createHandballTable(schedule) {
+    const table = document.createElement('table');
+    table.className = 'schedule-table';
+    
+    let html = `
+        <caption>Handboll VM 2025 - Sveriges Matcher</caption>
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Tid</th>
+                <th>Match</th>
+                <th>Arena</th>
+            </tr>
+        </thead>
+        <tbody>
+    `;
+    
+    schedule.forEach(game => {
+        html += `
+            <tr>
+                <td>${game.date}</td>
+                <td>${game.time}</td>
+                <td>${game.match}</td>
+                <td>${game.arena}</td>
+            </tr>
+        `;
+    });
+    
+    html += `</tbody>`;
+    table.innerHTML = html;
+    return table;
+}
+
+// Function to display handball schedule
+function displayHandballSchedule(schedule) {
+    scheduleContainer.innerHTML = '';
+    const table = createHandballTable(schedule);
+    scheduleContainer.appendChild(table);
+}
+
 // Initialize the page
 function init() {
     try {
@@ -558,6 +621,8 @@ document.querySelectorAll('.team-btn').forEach(btn => {
                 displaySchedule(packersSchedule);
             } else if (sport === 'biathlon') {
                 displayBiathlonSchedule(biathlonSchedule);
+            } else if (sport === 'handball') {
+                displayHandballSchedule(handballSchedule);
             }
         }, 500);
     });
