@@ -331,6 +331,82 @@ const handballSchedule = [
     }
 ];
 
+// Vinterstudion Schedule 2025/2026
+const vinterstudionSchedule = [
+    { date: "2025-11-15", time: "09:30–13:45", sport: "Vinterstudion", event: "–" },
+    { date: "2025-11-15", time: "10:00–11:30", sport: "Skidskytte, Idre", event: "Sprint (d)" },
+    { date: "2025-11-15", time: "12:30–14:15", sport: "Skidskytte, Idre", event: "Sprint (h)" },
+    { date: "2025-11-16", time: "09:15–13:45", sport: "Vinterstudion", event: "–" },
+    { date: "2025-11-16", time: "10:00–11:30", sport: "Skidskytte, Idre", event: "Sprint (d)" },
+    { date: "2025-11-16", time: "12:30–14:15", sport: "Skidskytte, Idre", event: "Sprint (h)" },
+    { date: "2025-11-21", time: "09:40–11:20", sport: "Längdskidor, Gällivare", event: "Prolog sprint" },
+    { date: "2025-11-21", time: "12:00–14:15", sport: "Längdskidor, Gällivare", event: "Final sprint" },
+    { date: "2025-11-22", time: "10:00–13:30", sport: "Vinterstudion", event: "–" },
+    { date: "2025-11-22", time: "10:25–11:15", sport: "Längdskidor, Gällivare", event: "10 km klassiskt (h)" },
+    { date: "2025-11-22", time: "12:15–13:05", sport: "Längdskidor, Gällivare", event: "10 km klassiskt (d)" },
+    { date: "2025-11-23", time: "10:00–13:30", sport: "Vinterstudion", event: "–" },
+    { date: "2025-11-23", time: "10:25–11:15", sport: "Längdskidor, Gällivare", event: "10 km fristil (h)" },
+    { date: "2025-11-23", time: "12:15–13:05", sport: "Längdskidor, Gällivare", event: "10 km fristil (d)" },
+    { date: "2025-11-29", time: "12:45–18:30", sport: "Vinterstudion", event: "–" },
+    { date: "2025-11-29", time: "13:15–14:35", sport: "Skidskytte, Östersund", event: "Stafett (d)" },
+    { date: "2025-11-29", time: "16:55–18:15", sport: "Skidskytte, Östersund", event: "Stafett (h)" },
+    { date: "2025-11-30", time: "13:45–18:00", sport: "Vinterstudion", event: "–" },
+    { date: "2025-11-30", time: "14:00–14:45", sport: "Skidskytte, Östersund", event: "Singlemixed stafett" },
+    { date: "2025-11-30", time: "16:40–17:50", sport: "Skidskytte, Östersund", event: "Mixed stafett" },
+    { date: "2025-12-02", time: "15:20–17:20", sport: "Skidskytte, Östersund", event: "Individuell start 15 km (d)" },
+    { date: "2025-12-03", time: "15:20–17:20", sport: "Skidskytte, Östersund", event: "Individuell start 20 km (h)" },
+    { date: "2025-12-05", time: "15:50–17:25", sport: "Skidskytte, Östersund", event: "Sprint (d)" },
+    { date: "2025-12-06", time: "16:00–18:00", sport: "Vinterstudion", event: "–" },
+    { date: "2025-12-06", time: "16:30–17:50", sport: "Skidskytte, Östersund", event: "Sprint (h)" },
+    { date: "2025-12-07", time: "13:00–16:30", sport: "Vinterstudion", event: "–" },
+    { date: "2025-12-07", time: "13:15–14:00", sport: "Skidskytte, Östersund", event: "Jaktstart (d)" },
+    { date: "2025-12-07", time: "15:15–16:00", sport: "Skidskytte, Östersund", event: "Jaktstart (h)" },
+    { date: "2025-12-12", time: "11:15–12:55", sport: "Skidskytte, Hochfilzen", event: "Sprint (h)" },
+    { date: "2025-12-12", time: "14:05–15:45", sport: "Skidskytte, Hochfilzen", event: "Sprint (d)" },
+    { date: "2025-12-13", time: "11:30–15:50", sport: "Vinterstudion", event: "–" },
+    { date: "2025-12-13", time: "08:15–11:30", sport: "Ski Classics, Bad Gastein", event: "Individuell 7 km" },
+    { date: "2025-12-13", time: "12:00–12:45", sport: "Skidskytte, Hochfilzen", event: "Jaktstart (h)" },
+    { date: "2025-12-13", time: "14:15–15:35", sport: "Skidskytte, Hochfilzen", event: "Stafett (d)" },
+    { date: "2025-12-14", time: "11:30–15:50", sport: "Vinterstudion", event: "–" },
+    { date: "2025-12-14", time: "08:20–11:30", sport: "Ski Classics, Bad Gastein", event: "Criterium 36 km" },
+    { date: "2025-12-14", time: "12:00–13:20", sport: "Skidskytte, Hochfilzen", event: "Stafett (h)" },
+    { date: "2025-12-14", time: "14:45–15:30", sport: "Skidskytte, Hochfilzen", event: "Jaktstart (d)" },
+    { date: "2025-12-18", time: "14:05–15:45", sport: "Skidskytte, Annecy", event: "Sprint (d)" },
+    { date: "2025-12-19", time: "14:05–15:40", sport: "Skidskytte, Annecy", event: "Sprint (h)" },
+    { date: "2025-12-20", time: "12:00–16:00", sport: "Vinterstudion", event: "–" },
+    { date: "2025-12-20", time: "12:15–13:00", sport: "Skidskytte, Annecy", event: "Jaktstart (d)" },
+    { date: "2025-12-20", time: "14:45–15:30", sport: "Skidskytte, Annecy", event: "Jaktstart (h)" },
+    { date: "2025-12-21", time: "12:00–16:00", sport: "Vinterstudion", event: "–" },
+    { date: "2025-12-21", time: "12:15–13:00", sport: "Skidskytte, Annecy", event: "Masstart (d)" },
+    { date: "2025-12-21", time: "14:45–15:30", sport: "Skidskytte, Annecy", event: "Masstart (h)" },
+    { date: "2026-01-08", time: "14:00–15:40", sport: "Skidskytte, Oberhof", event: "Sprint (h)" },
+    { date: "2026-01-09", time: "14:15–15:50", sport: "Skidskytte, Oberhof", event: "Sprint (d)" },
+    { date: "2026-01-10", time: "11:30–16:00", sport: "Vinterstudion", event: "–" },
+    { date: "2026-01-10", time: "12:00–12:45", sport: "Skidskytte, Oberhof", event: "Jaktstart (h)" },
+    { date: "2026-01-10", time: "14:25–15:40", sport: "Skidskytte, Oberhof", event: "Stafett (d)" },
+    { date: "2026-01-11", time: "10:45–15:30", sport: "Vinterstudion", event: "–" },
+    { date: "2026-01-11", time: "11:00–12:20", sport: "Skidskytte, Oberhof", event: "Stafett (h)" },
+    { date: "2026-01-11", time: "14:15–15:00", sport: "Skidskytte, Oberhof", event: "Jaktstart (h)" },
+    { date: "2026-01-14", time: "14:20–15:55", sport: "Skidskytte, Ruhpolding", event: "Stafett (d)" },
+    { date: "2026-01-15", time: "14:20–15:55", sport: "Skidskytte, Ruhpolding", event: "Stafett (h)" },
+    { date: "2026-01-16", time: "14:20–15:55", sport: "Skidskytte, Ruhpolding", event: "Sprint (d)" },
+    { date: "2026-01-17", time: "14:00–16:15", sport: "Vinterstudion", event: "–" },
+    { date: "2026-01-17", time: "09:45–12:50", sport: "Längdskidor, Engadin La Diagonela", event: "55 km" },
+    { date: "2026-01-17", time: "14:30–15:50", sport: "Skidskytte, Ruhpolding", event: "Sprint (h)" },
+    { date: "2026-01-18", time: "12:15–16:00", sport: "Vinterstudion", event: "–" },
+    { date: "2026-01-18", time: "12:30–13:15", sport: "Skidskytte, Ruhpolding", event: "Jaktstart (d)" },
+    { date: "2026-01-18", time: "15:00–15:45", sport: "Skidskytte, Ruhpolding", event: "Jaktstart (h)" },
+    { date: "2026-01-22", time: "18:05–20:00", sport: "Skidskytte, Nove Mesto", event: "Individuell start 15 km (h)" },
+    { date: "2026-01-23", time: "18:05–20:00", sport: "Skidskytte, Nove Mesto", event: "Individuell start 12.5 km (d)" },
+    { date: "2026-01-24", time: "12:45–16:45", sport: "Vinterstudion", event: "–" },
+    { date: "2026-01-24", time: "13:15–14:00", sport: "Skidskytte, Nove Mesto", event: "Singlemixed stafett" },
+    { date: "2026-01-24", time: "15:15–16:25", sport: "Skidskytte, Nove Mesto", event: "Mixed stafett" },
+    { date: "2026-01-25", time: "15:00–19:15", sport: "Vinterstudion", event: "–" },
+    { date: "2026-01-25", time: "07:50–11:30", sport: "Längdskidor, Marcialonga", event: "70 km" },
+    { date: "2026-01-25", time: "15:15–16:00", sport: "Skidskytte, Nove Mesto", event: "Masstart (h)" },
+    { date: "2026-01-25", time: "18:15–19:00", sport: "Skidskytte, Nove Mesto", event: "Masstart (d)" }
+];
+
 // Packers 2025 NFL Season Schedule (Swedish Times)
 const packersSchedule = [
     {
@@ -574,6 +650,25 @@ function getAllEvents() {
                 location: game.arena,
                 time: game.time
             });
+        }
+    });
+    
+    // Add Vinterstudion events
+    vinterstudionSchedule.forEach(item => {
+        const date = parseDate(item.date);
+        if (date) {
+            // Only add non-Vinterstudion events (actual sports events)
+            if (item.sport !== 'Vinterstudion') {
+                events.push({
+                    date: date,
+                    dateString: item.date,
+                    sport: 'Vinterstudion',
+                    team: item.sport,
+                    description: item.event,
+                    location: item.sport,
+                    time: item.time
+                });
+            }
         }
     });
     
@@ -823,6 +918,65 @@ function displayHandballSchedule(schedule) {
     scheduleContainer.appendChild(table);
 }
 
+// Function to create Vinterstudion table
+function createVinterstudionTable(schedule) {
+    const table = document.createElement('table');
+    table.className = 'schedule-table';
+    
+    // Find next event
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    let nextEventDate = null;
+    for (let i = 0; i < schedule.length; i++) {
+        const eventDate = parseDate(schedule[i].date);
+        if (eventDate && eventDate >= today) {
+            nextEventDate = eventDate;
+            break;
+        }
+    }
+    
+    let html = `
+        <caption>Vinterstudion 2025/2026 - SVT</caption>
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Tid</th>
+                <th>Sport / Plats</th>
+                <th>Gren</th>
+            </tr>
+        </thead>
+        <tbody>
+    `;
+    
+    schedule.forEach(item => {
+        const itemDate = parseDate(item.date);
+        const isNextEvent = nextEventDate && itemDate && 
+                           itemDate.getTime() === nextEventDate.getTime();
+        const rowClass = isNextEvent ? ' class="next-event"' : '';
+        
+        html += `
+            <tr${rowClass}>
+                <td>${item.date}</td>
+                <td>${item.time}</td>
+                <td>${item.sport}</td>
+                <td>${item.event}</td>
+            </tr>
+        `;
+    });
+    
+    html += `</tbody>`;
+    table.innerHTML = html;
+    return table;
+}
+
+// Function to display Vinterstudion schedule
+function displayVinterstudionSchedule(schedule) {
+    scheduleContainer.innerHTML = '';
+    const table = createVinterstudionTable(schedule);
+    scheduleContainer.appendChild(table);
+}
+
 // Function to create overview table
 function createOverviewTable(events, title) {
     if (events.length === 0) {
@@ -929,6 +1083,8 @@ document.querySelectorAll('.team-btn').forEach(btn => {
         setTimeout(() => {
             if (sport === 'overview') {
                 displayOverview();
+            } else if (sport === 'vinterstudion') {
+                displayVinterstudionSchedule(vinterstudionSchedule);
             } else if (sport === 'packers') {
                 displaySchedule(packersSchedule);
             } else if (sport === 'biathlon') {
