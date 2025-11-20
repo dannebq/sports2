@@ -92,6 +92,11 @@ body {
     background: #fafafa;
 }
 
+.schedule-table tr.next-event td {
+    background: #fffbea;
+    font-weight: 500;
+}
+
 /* Biathlon specific */
 .competition-section {
     margin-bottom: 50px;

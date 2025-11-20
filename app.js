@@ -616,6 +616,21 @@ function createNFLTable(schedule) {
     const table = document.createElement('table');
     table.className = 'schedule-table';
     
+    // Find next game
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    let nextGameIndex = -1;
+    for (let i = 0; i < schedule.length; i++) {
+        if (schedule[i].opponent !== null) {
+            const gameDate = parseDate(schedule[i].date);
+            if (gameDate && gameDate >= today) {
+                nextGameIndex = i;
+                break;
+            }
+        }
+    }
+    
     let html = `
         <caption>Green Bay Packers - 2025 Schedule</caption>
         <thead>
@@ -630,10 +645,13 @@ function createNFLTable(schedule) {
         <tbody>
     `;
     
-    schedule.forEach(game => {
+    schedule.forEach((game, index) => {
+        const isNextGame = index === nextGameIndex;
+        const rowClass = isNextGame ? ' class="next-event"' : '';
+        
         if (game.opponent === null) {
             html += `
-                <tr>
+                <tr${rowClass}>
                     <td>${game.week}</td>
                     <td>${game.date}</td>
                     <td colspan="3">BYE WEEK</td>
@@ -643,7 +661,7 @@ function createNFLTable(schedule) {
             const opponent = game.location === 'home' ? `vs ${game.opponent}` : `@ ${game.opponent}`;
             
             html += `
-                <tr>
+                <tr${rowClass}>
                     <td>${game.week}</td>
                     <td>${game.date}</td>
                     <td>${opponent}</td>
@@ -662,6 +680,22 @@ function createNFLTable(schedule) {
 // Function to create biathlon tables
 function createBiathlonTables(schedule) {
     const container = document.createElement('div');
+    
+    // Find next event date across all competitions
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    let nextEventDate = null;
+    for (const competition of schedule) {
+        for (const event of competition.events) {
+            const eventDate = parseDate(event.date);
+            if (eventDate && eventDate >= today) {
+                if (!nextEventDate || eventDate < nextEventDate) {
+                    nextEventDate = eventDate;
+                }
+            }
+        }
+    }
     
     schedule.forEach(competition => {
         const section = document.createElement('div');
@@ -690,9 +724,14 @@ function createBiathlonTables(schedule) {
         `;
         
         competition.events.forEach(event => {
+            const eventDate = parseDate(event.date);
+            const isNextEvent = nextEventDate && eventDate && 
+                               eventDate.getTime() === nextEventDate.getTime();
+            const rowClass = isNextEvent ? ' class="next-event"' : '';
+            
             event.races.forEach((race, index) => {
                 html += `
-                    <tr>
+                    <tr${rowClass}>
                         <td>${index === 0 ? event.date : ''}</td>
                         <td>${race.name}</td>
                         <td>${race.tv}</td>
@@ -732,6 +771,19 @@ function createHandballTable(schedule) {
     const table = document.createElement('table');
     table.className = 'schedule-table';
     
+    // Find next match
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    let nextMatchIndex = -1;
+    for (let i = 0; i < schedule.length; i++) {
+        const matchDate = parseDate(schedule[i].date);
+        if (matchDate && matchDate >= today) {
+            nextMatchIndex = i;
+            break;
+        }
+    }
+    
     let html = `
         <caption>Handboll VM 2025 - Sveriges Matcher</caption>
         <thead>
@@ -745,9 +797,12 @@ function createHandballTable(schedule) {
         <tbody>
     `;
     
-    schedule.forEach(game => {
+    schedule.forEach((game, index) => {
+        const isNextMatch = index === nextMatchIndex;
+        const rowClass = isNextMatch ? ' class="next-event"' : '';
+        
         html += `
-            <tr>
+            <tr${rowClass}>
                 <td>${game.date}</td>
                 <td>${game.time}</td>
                 <td>${game.match}</td>
