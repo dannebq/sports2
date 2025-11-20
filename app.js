@@ -420,6 +420,62 @@ const packersSchedule = [
         opponent: "New York Giants",
         location: "away",
         stadium: "MetLife Stadium"
+    },
+    {
+        week: 12,
+        date: "November 23, 2025",
+        time: "19:00 (Swedish Time)",
+        opponent: "San Francisco 49ers",
+        location: "away",
+        stadium: "Levi's Stadium"
+    },
+    {
+        week: 13,
+        date: "November 27, 2025",
+        time: "18:30 (Thanksgiving, Swedish Time)",
+        opponent: "Miami Dolphins",
+        location: "home",
+        stadium: "Lambeau Field"
+    },
+    {
+        week: 14,
+        date: "December 7, 2025",
+        time: "19:00 (Swedish Time)",
+        opponent: "Detroit Lions",
+        location: "away",
+        stadium: "Ford Field"
+    },
+    {
+        week: 15,
+        date: "December 14, 2025",
+        time: "19:00 (Swedish Time)",
+        opponent: "Seattle Seahawks",
+        location: "home",
+        stadium: "Lambeau Field"
+    },
+    {
+        week: 16,
+        date: "December 21, 2025",
+        time: "19:00 (Swedish Time)",
+        opponent: "New Orleans Saints",
+        location: "away",
+        stadium: "Caesars Superdome"
+    },
+    {
+        week: 17,
+        date: "December 28, 2025",
+        time: "19:00 (Swedish Time)",
+        opponent: "Minnesota Vikings",
+        location: "away",
+        stadium: "U.S. Bank Stadium"
+    },
+    {
+        week: 18,
+        date: "January 4, 2026",
+        time: "TBD",
+        opponent: "Chicago Bears",
+        location: "home",
+        stadium: "Lambeau Field"
     }
 ];
 
