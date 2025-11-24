@@ -331,6 +331,42 @@ const handballSchedule = [
     }
 ];
 
+// Cross Country Skiing World Cup 2025/2026
+const crossCountrySchedule = [
+    { date: "2025-11-28", location: "Ruka", time: "10.30", event: "10 km, klassisk stil, intervallstart, damer" },
+    { date: "2025-11-28", location: "Ruka", time: "13.15", event: "10 km, klassisk stil, intervallstart, herrar" },
+    { date: "2025-11-29", location: "Ruka", time: "08.55", event: "Sprint, klassisk stil, kval, herrar och damer" },
+    { date: "2025-11-29", location: "Ruka", time: "11.25", event: "Sprint, klassisk stil, finalpass, herrar och damer" },
+    { date: "2025-11-30", location: "Ruka", time: "10.00", event: "20 km, fristil, masstart, herrar" },
+    { date: "2025-11-30", location: "Ruka", time: "11.45", event: "20 km, fristil, masstart, damer" },
+    { date: "2025-12-05", location: "Trondheim", time: "–", event: "10 km fristil, individuell start" },
+    { date: "2025-12-06", location: "Trondheim", time: "–", event: "Sprint klassiskt" },
+    { date: "2025-12-07", location: "Trondheim", time: "–", event: "20 km skiathlon" },
+    { date: "2025-12-12", location: "Davos", time: "–", event: "Lagsprint fristil" },
+    { date: "2025-12-13", location: "Davos", time: "–", event: "Sprint fristil" },
+    { date: "2025-12-14", location: "Davos", time: "–", event: "10 km fristil, individuell start" },
+    { date: "2025-12-28", location: "Toblach/Val di Fiemme", time: "–", event: "Sprint fristil" },
+    { date: "2025-12-29", location: "Toblach/Val di Fiemme", time: "–", event: "10 km fristil, individuell start" },
+    { date: "2025-12-31", location: "Toblach/Val di Fiemme", time: "–", event: "5 km fristil heat, masstart" },
+    { date: "2026-01-01", location: "Toblach/Val di Fiemme", time: "–", event: "15 km klassiskt, jaktstart" },
+    { date: "2026-01-03", location: "Toblach/Val di Fiemme", time: "–", event: "Sprint klassiskt" },
+    { date: "2026-01-04", location: "Toblach/Val di Fiemme", time: "–", event: "15 km fristil, masstart" },
+    { date: "2026-01-17", location: "Oberhof", time: "–", event: "Sprint fristil" },
+    { date: "2026-01-18", location: "Oberhof", time: "–", event: "10 km klassiskt, individuell start" },
+    { date: "2026-01-23", location: "Goms", time: "–", event: "Lagsprint fristil" },
+    { date: "2026-01-24", location: "Goms", time: "–", event: "Sprint fristil" },
+    { date: "2026-01-25", location: "Goms", time: "–", event: "20 km klassiskt, masstart" },
+    { date: "2026-02-28", location: "Falun", time: "–", event: "Sprint fristil" },
+    { date: "2026-03-01", location: "Falun", time: "–", event: "20 km skiathlon" },
+    { date: "2026-03-07", location: "Lahtis", time: "–", event: "Sprint fristil" },
+    { date: "2026-03-08", location: "Lahtis", time: "–", event: "10 km fristil, individuell start" },
+    { date: "2026-03-12", location: "Drammen", time: "–", event: "Sprint klassiskt" },
+    { date: "2026-03-14", location: "Oslo", time: "–", event: "50 km fristil, masstart" },
+    { date: "2026-03-20", location: "Lake Placid", time: "–", event: "10 km klassiskt, individuell start" },
+    { date: "2026-03-21", location: "Lake Placid", time: "–", event: "Sprint fristil" },
+    { date: "2026-03-22", location: "Lake Placid", time: "–", event: "20 km fristil, masstart" }
+];
+
 // Vinterstudion Schedule 2025/2026
 const vinterstudionSchedule = [
     { date: "2025-11-15", time: "09:30–13:45", sport: "Vinterstudion", event: "–" },
@@ -676,6 +712,22 @@ function getAllEvents() {
         }
     });
     
+    // Add Cross Country Skiing events
+    crossCountrySchedule.forEach(race => {
+        const date = parseDate(race.date);
+        if (date) {
+            events.push({
+                date: date,
+                dateString: formatDateSwedish(date),
+                sport: 'Längdskidor',
+                team: race.location,
+                description: race.event,
+                location: race.location,
+                time: race.time
+            });
+        }
+    });
+    
     // Add Vinterstudion events
     vinterstudionSchedule.forEach(item => {
         const date = parseDate(item.date);
@@ -979,6 +1031,72 @@ function displayHandballSchedule(schedule) {
     scheduleContainer.appendChild(table);
 }
 
+// Function to create cross country skiing table
+function createCrossCountryTable(schedule) {
+    const table = document.createElement('table');
+    table.className = 'schedule-table';
+    
+    // Find next race
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    let nextRaceIndex = -1;
+    for (let i = 0; i < schedule.length; i++) {
+        const raceDate = parseDate(schedule[i].date);
+        if (raceDate && raceDate >= today) {
+            nextRaceIndex = i;
+            break;
+        }
+    }
+    
+    let html = `
+        <caption>Längdskidor - Världscupen 2025/2026</caption>
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Ort</th>
+                <th>Tid</th>
+                <th>Gren</th>
+            </tr>
+        </thead>
+        <tbody>
+    `;
+    
+    schedule.forEach((race, index) => {
+        // Skip races that have already occurred
+        const raceDate = parseDate(race.date);
+        if (!raceDate || raceDate < today) {
+            return;
+        }
+        
+        const isNextRace = index === nextRaceIndex;
+        const rowClass = isNextRace ? ' class="next-event"' : '';
+        
+        // Format date to Swedish format
+        const formattedDate = formatDateSwedish(raceDate);
+        
+        html += `
+            <tr${rowClass}>
+                <td>${formattedDate}</td>
+                <td>${race.location}</td>
+                <td>${race.time}</td>
+                <td>${race.event}</td>
+            </tr>
+        `;
+    });
+    
+    html += `</tbody>`;
+    table.innerHTML = html;
+    return table;
+}
+
+// Function to display cross country skiing schedule
+function displayCrossCountrySchedule(schedule) {
+    scheduleContainer.innerHTML = '';
+    const table = createCrossCountryTable(schedule);
+    scheduleContainer.appendChild(table);
+}
+
 // Function to create Vinterstudion table
 function createVinterstudionTable(schedule) {
     const table = document.createElement('table');
@@ -1159,6 +1277,8 @@ document.querySelectorAll('.team-btn').forEach(btn => {
                 displaySchedule(packersSchedule);
             } else if (sport === 'biathlon') {
                 displayBiathlonSchedule(biathlonSchedule);
+            } else if (sport === 'crosscountry') {
+                displayCrossCountrySchedule(crossCountrySchedule);
             } else if (sport === 'handball') {
                 displayHandballSchedule(handballSchedule);
             }
