@@ -741,6 +741,12 @@ function createNFLTable(schedule) {
     `;
     
     schedule.forEach((game, index) => {
+        // Skip games that have already occurred
+        const gameDate = parseDate(game.date);
+        if (gameDate && gameDate < today && game.opponent !== null) {
+            return; // Skip past games
+        }
+        
         const isNextGame = index === nextGameIndex;
         const rowClass = isNextGame ? ' class="next-event"' : '';
         
@@ -793,6 +799,17 @@ function createBiathlonTables(schedule) {
     }
     
     schedule.forEach(competition => {
+        // Check if competition has any future events
+        const hasFutureEvents = competition.events.some(event => {
+            const eventDate = parseDate(event.date);
+            return eventDate && eventDate >= today;
+        });
+        
+        // Skip competition if all events have passed
+        if (!hasFutureEvents) {
+            return;
+        }
+        
         const section = document.createElement('div');
         section.className = 'competition-section';
         
@@ -820,6 +837,12 @@ function createBiathlonTables(schedule) {
         
         competition.events.forEach(event => {
             const eventDate = parseDate(event.date);
+            
+            // Skip events that have already occurred
+            if (eventDate && eventDate < today) {
+                return;
+            }
+            
             const isNextEvent = nextEventDate && eventDate && 
                                eventDate.getTime() === nextEventDate.getTime();
             const rowClass = isNextEvent ? ' class="next-event"' : '';
@@ -893,6 +916,12 @@ function createHandballTable(schedule) {
     `;
     
     schedule.forEach((game, index) => {
+        // Skip matches that have already occurred
+        const matchDate = parseDate(game.date);
+        if (matchDate && matchDate < today) {
+            return;
+        }
+        
         const isNextMatch = index === nextMatchIndex;
         const rowClass = isNextMatch ? ' class="next-event"' : '';
         
@@ -951,6 +980,12 @@ function createVinterstudionTable(schedule) {
     
     schedule.forEach(item => {
         const itemDate = parseDate(item.date);
+        
+        // Skip events that have already occurred
+        if (itemDate && itemDate < today) {
+            return;
+        }
+        
         const isNextEvent = nextEventDate && itemDate && 
                            itemDate.getTime() === nextEventDate.getTime();
         const rowClass = isNextEvent ? ' class="next-event"' : '';
