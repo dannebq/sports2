@@ -1193,10 +1193,9 @@ function createOverviewTable(events, title) {
         <thead>
             <tr>
                 <th>Datum</th>
+                <th>Tid/TV</th>
                 <th>Sport</th>
                 <th>Händelse</th>
-                <th>Plats</th>
-                <th>Tid/TV</th>
             </tr>
         </thead>
         <tbody>
@@ -1206,10 +1205,9 @@ function createOverviewTable(events, title) {
         html += `
             <tr>
                 <td>${event.dateString}</td>
+                <td>${event.time}</td>
                 <td>${event.sport}</td>
                 <td>${event.description}</td>
-                <td>${event.location}</td>
-                <td>${event.time}</td>
             </tr>
         `;
     });
