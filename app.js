@@ -789,6 +789,14 @@ function getAllEvents() {
             const date = parseDate(event.date);
             if (date) {
                 event.races.forEach(race => {
+                    // Format time: take only start time, remove channel info
+                    // Example: "13:15-14:35, SVT1/SVT Play" -> "13:15"
+                    let time = race.tv;
+                    // Remove channel info
+                    time = time.split(',')[0].trim();
+                    // Take only start time if range
+                    time = time.split('–')[0].split('-')[0].trim();
+                    
                     events.push({
                         date: date,
                         dateString: formatDateSwedish(date),
@@ -796,7 +804,7 @@ function getAllEvents() {
                         team: competition.location,
                         description: race.name,
                         location: competition.location,
-                        time: race.tv
+                        time: time
                     });
                 });
             }
@@ -848,25 +856,6 @@ function getAllEvents() {
                 location: '-',
                 time: game.time
             });
-        }
-    });
-    
-    // Add Vinterstudion events
-    vinterstudionSchedule.forEach(item => {
-        const date = parseDate(item.date);
-        if (date) {
-            // Only add non-Vinterstudion events (actual sports events)
-            if (item.sport !== 'Vinterstudion') {
-                events.push({
-                    date: date,
-                    dateString: formatDateSwedish(date),
-                    sport: 'Vinterstudion',
-                    team: item.sport,
-                    description: item.event,
-                    location: item.sport,
-                    time: item.time
-                });
-            }
         }
     });
     
