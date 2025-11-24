@@ -846,7 +846,8 @@ function getAllEvents() {
     // Add Handball League matches
     handballLeagueSchedule.forEach(game => {
         const date = parseDate(game.date);
-        if (date) {
+        // Only show IFK Kristianstad matches in overview
+        if (date && (game.home === 'IFK Kristianstad' || game.away === 'IFK Kristianstad')) {
             events.push({
                 date: date,
                 dateString: formatDateSwedish(date),
