@@ -555,7 +555,7 @@ const packersSchedule = [
     {
         week: 1,
         date: "September 7, 2025",
-        time: "22:25 (Swedish Time)",
+        time: "22:25",
         opponent: "Detroit Lions",
         location: "home",
         stadium: "Lambeau Field"
@@ -563,7 +563,7 @@ const packersSchedule = [
     {
         week: 2,
         date: "September 11, 2025",
-        time: "02:15 (Sept 12, Swedish Time)",
+        time: "02:15",
         opponent: "Washington Commanders",
         location: "home",
         stadium: "Lambeau Field"
@@ -571,7 +571,7 @@ const packersSchedule = [
     {
         week: 3,
         date: "September 21, 2025",
-        time: "19:00 (Swedish Time)",
+        time: "19:00",
         opponent: "Cleveland Browns",
         location: "away",
         stadium: "Cleveland Browns Stadium"
@@ -579,7 +579,7 @@ const packersSchedule = [
     {
         week: 4,
         date: "September 28, 2025",
-        time: "00:20 (Sept 29, Swedish Time)",
+        time: "00:20",
         opponent: "Dallas Cowboys",
         location: "away",
         stadium: "AT&T Stadium"
@@ -595,7 +595,7 @@ const packersSchedule = [
     {
         week: 6,
         date: "October 12, 2025",
-        time: "20:25 (Swedish Time)",
+        time: "22:25",
         opponent: "Cincinnati Bengals",
         location: "home",
         stadium: "Lambeau Field"
@@ -603,7 +603,7 @@ const packersSchedule = [
     {
         week: 7,
         date: "October 19, 2025",
-        time: "20:25 (Swedish Time)",
+        time: "22:25",
         opponent: "Arizona Cardinals",
         location: "away",
         stadium: "State Farm Stadium"
@@ -611,7 +611,7 @@ const packersSchedule = [
     {
         week: 8,
         date: "October 26, 2025",
-        time: "02:20 (Oct 27, Swedish Time)",
+        time: "02:20",
         opponent: "Pittsburgh Steelers",
         location: "away",
         stadium: "Acrisure Stadium"
@@ -619,7 +619,7 @@ const packersSchedule = [
     {
         week: 9,
         date: "November 2, 2025",
-        time: "19:00 (Swedish Time)",
+        time: "19:00",
         opponent: "Carolina Panthers",
         location: "home",
         stadium: "Lambeau Field"
@@ -627,7 +627,7 @@ const packersSchedule = [
     {
         week: 10,
         date: "November 10, 2025",
-        time: "01:15 (Nov 11, Swedish Time)",
+        time: "01:15",
         opponent: "Philadelphia Eagles",
         location: "home",
         stadium: "Lambeau Field"
@@ -635,7 +635,7 @@ const packersSchedule = [
     {
         week: 11,
         date: "November 16, 2025",
-        time: "19:00 (Swedish Time)",
+        time: "19:00",
         opponent: "New York Giants",
         location: "away",
         stadium: "MetLife Stadium"
@@ -643,7 +643,7 @@ const packersSchedule = [
     {
         week: 12,
         date: "November 23, 2025",
-        time: "18:00 (Swedish Time)",
+        time: "19:00",
         opponent: "Minnesota Vikings",
         location: "home",
         stadium: "Lambeau Field"
@@ -651,7 +651,7 @@ const packersSchedule = [
     {
         week: 13,
         date: "November 27, 2025",
-        time: "18:00 (Swedish Time)",
+        time: "19:00",
         opponent: "Detroit Lions",
         location: "away",
         stadium: "Ford Field"
@@ -659,7 +659,7 @@ const packersSchedule = [
     {
         week: 14,
         date: "December 7, 2025",
-        time: "21:25 (Swedish Time)",
+        time: "22:25",
         opponent: "Chicago Bears",
         location: "home",
         stadium: "Lambeau Field"
@@ -667,7 +667,7 @@ const packersSchedule = [
     {
         week: 15,
         date: "December 14, 2025",
-        time: "21:25 (Swedish Time)",
+        time: "22:25",
         opponent: "Denver Broncos",
         location: "away",
         stadium: "Empower Field at Mile High"
@@ -770,12 +770,16 @@ function getAllEvents() {
         if (game.opponent !== null) {
             const date = parseDate(game.date);
             if (date) {
+                const description = game.location === 'home' 
+                    ? `Packers – ${game.opponent}` 
+                    : `${game.opponent} – Packers`;
+                    
                 events.push({
                     date: date,
                     dateString: formatDateSwedish(date),
                     sport: 'NFL',
                     team: 'Green Bay Packers',
-                    description: game.location === 'home' ? `vs ${game.opponent}` : `@ ${game.opponent}`,
+                    description: description,
                     location: game.stadium,
                     time: game.time
                 });
@@ -915,12 +919,12 @@ function createNFLTable(schedule) {
     }
     
     let html = `
-        <caption>Green Bay Packers - 2025 Schedule</caption>
+        <caption>Packers - 2025 Schedule</caption>
         <thead>
             <tr>
                 <th>Week</th>
                 <th>Date</th>
-                <th>Opponent</th>
+                <th>Match</th>
                 <th>Location</th>
                 <th>Time</th>
             </tr>
@@ -935,33 +939,30 @@ function createNFLTable(schedule) {
             return; // Skip past games
         }
         
+        // Skip BYE WEEK (opponent is null)
+        if (game.opponent === null) {
+            return;
+        }
+        
         const isNextGame = index === nextGameIndex;
         const rowClass = isNextGame ? ' class="next-event"' : '';
         
         // Format date to Swedish format
         const formattedDate = gameDate ? formatDateSwedish(gameDate) : game.date;
         
-        if (game.opponent === null) {
-            html += `
-                <tr${rowClass}>
-                    <td>${game.week}</td>
-                    <td>${formattedDate}</td>
-                    <td colspan="3">BYE WEEK</td>
-                </tr>
-            `;
-        } else {
-            const opponent = game.location === 'home' ? `vs ${game.opponent}` : `@ ${game.opponent}`;
+        const match = game.location === 'home' 
+            ? `Packers – ${game.opponent}` 
+            : `${game.opponent} – Packers`;
             
-            html += `
-                <tr${rowClass}>
-                    <td>${game.week}</td>
-                    <td>${formattedDate}</td>
-                    <td>${opponent}</td>
-                    <td>${game.stadium}</td>
-                    <td>${game.time}</td>
-                </tr>
-            `;
-        }
+        html += `
+            <tr${rowClass}>
+                <td>${game.week}</td>
+                <td>${formattedDate}</td>
+                <td>${match}</td>
+                <td>${game.stadium}</td>
+                <td>${game.time}</td>
+            </tr>
+        `;
     });
     
     html += `</tbody>`;
