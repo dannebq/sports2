@@ -1167,19 +1167,29 @@ function displayVinterstudionSchedule(schedule) {
 
 // Function to create overview table
 function createOverviewTable(events, title) {
+    const container = document.createElement('div');
+    
+    // Always create and add the title
+    const titleElement = document.createElement('h2');
+    titleElement.style.marginBottom = '20px';
+    titleElement.style.fontSize = '24px';
+    titleElement.style.fontWeight = 'bold';
+    titleElement.textContent = title;
+    container.appendChild(titleElement);
+    
     if (events.length === 0) {
         const noEvents = document.createElement('p');
         noEvents.style.padding = '20px';
         noEvents.style.color = '#666';
         noEvents.textContent = 'Inga händelser';
-        return noEvents;
+        container.appendChild(noEvents);
+        return container;
     }
     
     const table = document.createElement('table');
     table.className = 'schedule-table';
     
     let html = `
-        <caption>${title}</caption>
         <thead>
             <tr>
                 <th>Datum</th>
@@ -1206,7 +1216,8 @@ function createOverviewTable(events, title) {
     
     html += `</tbody>`;
     table.innerHTML = html;
-    return table;
+    container.appendChild(table);
+    return container;
 }
 
 // Function to display overview page
