@@ -563,6 +563,15 @@ function parseDate(dateString) {
     // Remove day names in parentheses like (Tors), (Lör), (Mån)
     let cleanDate = dateString.replace(/\s*\([^)]*\)/g, '');
     
+    // Try ISO format first: "2025-11-15"
+    const isoMatch = cleanDate.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+    if (isoMatch) {
+        const year = parseInt(isoMatch[1]);
+        const month = parseInt(isoMatch[2]) - 1; // Month is 0-indexed
+        const day = parseInt(isoMatch[3]);
+        return new Date(year, month, day);
+    }
+    
     // Swedish month names to numbers
     const monthMap = {
         'januari': 0, 'februari': 1, 'mars': 2, 'april': 3,
@@ -595,6 +604,20 @@ function parseDate(dateString) {
     return null;
 }
 
+// Helper function to format date to "27 nov (Tors)" format
+function formatDateSwedish(date) {
+    if (!date || !(date instanceof Date)) return '';
+    
+    const dayNames = ['Sön', 'Mån', 'Tis', 'Ons', 'Tors', 'Fre', 'Lör'];
+    const monthNames = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+    
+    const day = date.getDate();
+    const month = monthNames[date.getMonth()];
+    const dayName = dayNames[date.getDay()];
+    
+    return `${day} ${month} (${dayName})`;
+}
+
 // Function to get all events from all sports
 function getAllEvents() {
     const events = [];
@@ -606,7 +629,7 @@ function getAllEvents() {
             if (date) {
                 events.push({
                     date: date,
-                    dateString: game.date,
+                    dateString: formatDateSwedish(date),
                     sport: 'NFL',
                     team: 'Green Bay Packers',
                     description: game.location === 'home' ? `vs ${game.opponent}` : `@ ${game.opponent}`,
@@ -625,7 +648,7 @@ function getAllEvents() {
                 event.races.forEach(race => {
                     events.push({
                         date: date,
-                        dateString: event.date,
+                        dateString: formatDateSwedish(date),
                         sport: 'Skidskytte',
                         team: competition.location,
                         description: race.name,
@@ -643,7 +666,7 @@ function getAllEvents() {
         if (date) {
             events.push({
                 date: date,
-                dateString: game.date,
+                dateString: formatDateSwedish(date),
                 sport: 'Handboll VM',
                 team: 'Sverige',
                 description: game.match,
@@ -661,7 +684,7 @@ function getAllEvents() {
             if (item.sport !== 'Vinterstudion') {
                 events.push({
                     date: date,
-                    dateString: item.date,
+                    dateString: formatDateSwedish(date),
                     sport: 'Vinterstudion',
                     team: item.sport,
                     description: item.event,
@@ -750,11 +773,14 @@ function createNFLTable(schedule) {
         const isNextGame = index === nextGameIndex;
         const rowClass = isNextGame ? ' class="next-event"' : '';
         
+        // Format date to Swedish format
+        const formattedDate = gameDate ? formatDateSwedish(gameDate) : game.date;
+        
         if (game.opponent === null) {
             html += `
                 <tr${rowClass}>
                     <td>${game.week}</td>
-                    <td>${game.date}</td>
+                    <td>${formattedDate}</td>
                     <td colspan="3">BYE WEEK</td>
                 </tr>
             `;
@@ -764,7 +790,7 @@ function createNFLTable(schedule) {
             html += `
                 <tr${rowClass}>
                     <td>${game.week}</td>
-                    <td>${game.date}</td>
+                    <td>${formattedDate}</td>
                     <td>${opponent}</td>
                     <td>${game.stadium}</td>
                     <td>${game.time}</td>
@@ -839,7 +865,7 @@ function createBiathlonTables(schedule) {
             const eventDate = parseDate(event.date);
             
             // Skip events that have already occurred
-            if (eventDate && eventDate < today) {
+            if (!eventDate || eventDate < today) {
                 return;
             }
             
@@ -847,10 +873,13 @@ function createBiathlonTables(schedule) {
                                eventDate.getTime() === nextEventDate.getTime();
             const rowClass = isNextEvent ? ' class="next-event"' : '';
             
+            // Format date to Swedish format
+            const formattedDate = formatDateSwedish(eventDate);
+            
             event.races.forEach((race, index) => {
                 html += `
                     <tr${rowClass}>
-                        <td>${index === 0 ? event.date : ''}</td>
+                        <td>${index === 0 ? formattedDate : ''}</td>
                         <td>${race.name}</td>
                         <td>${race.tv}</td>
                     </tr>
@@ -918,16 +947,19 @@ function createHandballTable(schedule) {
     schedule.forEach((game, index) => {
         // Skip matches that have already occurred
         const matchDate = parseDate(game.date);
-        if (matchDate && matchDate < today) {
+        if (!matchDate || matchDate < today) {
             return;
         }
         
         const isNextMatch = index === nextMatchIndex;
         const rowClass = isNextMatch ? ' class="next-event"' : '';
         
+        // Format date to Swedish format
+        const formattedDate = formatDateSwedish(matchDate);
+        
         html += `
             <tr${rowClass}>
-                <td>${game.date}</td>
+                <td>${formattedDate}</td>
                 <td>${game.time}</td>
                 <td>${game.match}</td>
                 <td>${game.arena}</td>
@@ -982,7 +1014,7 @@ function createVinterstudionTable(schedule) {
         const itemDate = parseDate(item.date);
         
         // Skip events that have already occurred
-        if (itemDate && itemDate < today) {
+        if (!itemDate || itemDate < today) {
             return;
         }
         
@@ -990,9 +1022,12 @@ function createVinterstudionTable(schedule) {
                            itemDate.getTime() === nextEventDate.getTime();
         const rowClass = isNextEvent ? ' class="next-event"' : '';
         
+        // Format date to Swedish format
+        const formattedDate = formatDateSwedish(itemDate);
+        
         html += `
             <tr${rowClass}>
-                <td>${item.date}</td>
+                <td>${formattedDate}</td>
                 <td>${item.time}</td>
                 <td>${item.sport}</td>
                 <td>${item.event}</td>
