@@ -1479,7 +1479,14 @@ function createOverviewTable(events, title) {
     titleElement.style.marginBottom = '20px';
     titleElement.style.fontSize = '24px';
     titleElement.style.fontWeight = 'bold';
-    titleElement.textContent = title;
+    
+    // If it's today's events and there are events, add the date to the title
+    if (title === 'Dagens händelser' && events.length > 0) {
+        titleElement.textContent = `${title} (${events[0].dateString})`;
+    } else {
+        titleElement.textContent = title;
+    }
+    
     container.appendChild(titleElement);
     
     if (events.length === 0) {
@@ -1497,7 +1504,6 @@ function createOverviewTable(events, title) {
     let html = `
         <thead>
             <tr>
-                <th>Datum</th>
                 <th>Tid/TV</th>
                 <th>Sport</th>
                 <th>Händelse</th>
@@ -1507,11 +1513,15 @@ function createOverviewTable(events, title) {
     `;
     
     events.forEach(event => {
+        // Combine sport and location for better context
+        const sportWithLocation = event.location && event.location !== '-' 
+            ? `${event.sport}, ${event.location}` 
+            : event.sport;
+            
         html += `
             <tr>
-                <td>${event.dateString}</td>
                 <td>${event.time}</td>
-                <td>${event.sport}</td>
+                <td>${sportWithLocation}</td>
                 <td>${event.description}</td>
             </tr>
         `;
