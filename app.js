@@ -1644,6 +1644,17 @@ function init() {
     }
 }
 
+// Mobile menu toggle functionality
+const menuToggle = document.getElementById('menuToggle');
+const teamSelector = document.getElementById('teamSelector');
+
+if (menuToggle) {
+    menuToggle.addEventListener('click', function() {
+        this.classList.toggle('open');
+        teamSelector.classList.toggle('open');
+    });
+}
+
 // Team selector functionality
 document.querySelectorAll('.team-btn').forEach(btn => {
     btn.addEventListener('click', function() {
@@ -1651,6 +1662,12 @@ document.querySelectorAll('.team-btn').forEach(btn => {
         document.querySelectorAll('.team-btn').forEach(b => b.classList.remove('active'));
         // Add active class to clicked button
         this.classList.add('active');
+        
+        // Close mobile menu after selection
+        if (menuToggle && window.innerWidth <= 768) {
+            menuToggle.classList.remove('open');
+            teamSelector.classList.remove('open');
+        }
         
         // Get selected sport
         const sport = this.dataset.team;
