@@ -373,6 +373,23 @@ const crossCountrySchedule = [
     { date: "2026-03-22", location: "Lake Placid", time: "–", event: "20 km fristil, masstart" }
 ];
 
+// Ski Classics 2025/2026
+const skiClassicsSchedule = [
+    { date: "2025-12-13", location: "Sportgastein, Österrike", time: "–", event: "Bad Gastein Pro Team Tempo, 7 km" },
+    { date: "2025-12-14", location: "Sportgastein, Österrike", time: "–", event: "Bad Gastein Criterium, 36 km" },
+    { date: "2026-01-17", location: "Pontresina–Zuoz, Schweiz", time: "–", event: "Engadin La Diagonela, 55 km" },
+    { date: "2026-01-25", location: "Moena–Cavalese, Italien", time: "–", event: "Marcialonga, 70 km *" },
+    { date: "2026-01-30", location: "Bedřichov, Tjeckien", time: "–", event: "Bedřichov Sprint, 1,5 km" },
+    { date: "2026-02-01", location: "Bedřichov, Tjeckien", time: "–", event: "Jizerská50, 50 km *" },
+    { date: "2026-03-01", location: "Sälen–Mora, Sverige", time: "–", event: "Vasaloppet, 90 km *" },
+    { date: "2026-03-07", location: "Grönklitt, Sverige", time: "–", event: "Orsa Grönklitt 50k ITT damer, 50 km" },
+    { date: "2026-03-08", location: "Grönklitt, Sverige", time: "–", event: "Orsa Grönklitt 50k ITT herrar, 50 km" },
+    { date: "2026-03-14", location: "Rena–Lillehammer, Norge", time: "–", event: "Birkebeinerrennet, 54 km *" },
+    { date: "2026-03-21", location: "Bodø, Norge", time: "–", event: "Marcialonga Bodø, 50 km" },
+    { date: "2026-03-28", location: "Setermoen–Bardufoss, Norge", time: "–", event: "Reistadløpet, 46 km" },
+    { date: "2026-03-29", location: "Bardufoss–Finnsnes, Norge", time: "–", event: "Grand Finale Summit 2 Senja, 60 km" }
+];
+
 // Handball League Schedule 2025/2026
 const handballLeagueSchedule = [
     { date: "2025-11-26", time: "19:00", home: "Eskilstuna Guif IF", away: "OV Helsingborg HK" },
@@ -853,6 +870,22 @@ function getAllEvents() {
         }
     });
     
+    // Add Ski Classics events
+    skiClassicsSchedule.forEach(race => {
+        const date = parseDate(race.date);
+        if (date) {
+            events.push({
+                date: date,
+                dateString: formatDateSwedish(date),
+                sport: 'Ski Classics',
+                team: race.location,
+                description: race.event,
+                location: race.location,
+                time: race.time
+            });
+        }
+    });
+    
     // Add Handball League matches
     handballLeagueSchedule.forEach(game => {
         const date = parseDate(game.date);
@@ -1305,6 +1338,70 @@ function displayCrossCountrySchedule(schedule) {
     scheduleContainer.appendChild(table);
 }
 
+// Function to create Ski Classics table
+function createSkiClassicsTable(schedule) {
+    const table = document.createElement('table');
+    table.className = 'schedule-table';
+    
+    // Find next race
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    let nextRaceIndex = -1;
+    for (let i = 0; i < schedule.length; i++) {
+        const raceDate = parseDate(schedule[i].date);
+        if (raceDate && raceDate >= today) {
+            nextRaceIndex = i;
+            break;
+        }
+    }
+    
+    let html = `
+        <caption>Ski Classics 2025/2026</caption>
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Lopp</th>
+                <th>Plats</th>
+            </tr>
+        </thead>
+        <tbody>
+    `;
+    
+    schedule.forEach((race, index) => {
+        // Skip races that have already occurred
+        const raceDate = parseDate(race.date);
+        if (!raceDate || raceDate < today) {
+            return;
+        }
+        
+        const isNextRace = index === nextRaceIndex;
+        const rowClass = isNextRace ? ' class="next-event"' : '';
+        
+        // Format date to Swedish format
+        const formattedDate = formatDateSwedish(raceDate);
+        
+        html += `
+            <tr${rowClass}>
+                <td>${formattedDate}</td>
+                <td>${race.event}</td>
+                <td>${race.location}</td>
+            </tr>
+        `;
+    });
+    
+    html += `</tbody>`;
+    table.innerHTML = html;
+    return table;
+}
+
+// Function to display Ski Classics schedule
+function displaySkiClassicsSchedule(schedule) {
+    scheduleContainer.innerHTML = '';
+    const table = createSkiClassicsTable(schedule);
+    scheduleContainer.appendChild(table);
+}
+
 // Function to create Vinterstudion table
 function createVinterstudionTable(schedule) {
     const table = document.createElement('table');
@@ -1573,6 +1670,8 @@ document.querySelectorAll('.team-btn').forEach(btn => {
                 displayBiathlonSchedule(biathlonSchedule);
             } else if (sport === 'crosscountry') {
                 displayCrossCountrySchedule(crossCountrySchedule);
+            } else if (sport === 'skiclassics') {
+                displaySkiClassicsSchedule(skiClassicsSchedule);
             } else if (sport === 'handball') {
                 displayHandballSchedule(handballSchedule);
             } else if (sport === 'handball-league') {
