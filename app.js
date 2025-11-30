@@ -867,6 +867,28 @@ function getAllEvents() {
     return events;
 }
 
+// Helper function to compare events by date and time
+function compareEvents(a, b) {
+    // First compare dates
+    const dateDiff = a.date - b.date;
+    if (dateDiff !== 0) return dateDiff;
+    
+    // If dates are same, compare times
+    const getTimeValue = (timeStr) => {
+        if (!timeStr || timeStr === 'TBD' || timeStr === '–') return 9999; // Put unknown times last
+        
+        // Extract hours and minutes
+        // Matches HH:MM or HH.MM
+        const match = timeStr.match(/(\d{1,2})[:.](\d{2})/);
+        if (match) {
+            return parseInt(match[1]) * 60 + parseInt(match[2]);
+        }
+        return 9999;
+    };
+    
+    return getTimeValue(a.time) - getTimeValue(b.time);
+}
+
 // Function to filter events for today
 function getTodaysEvents() {
     const today = new Date();
@@ -878,7 +900,7 @@ function getTodaysEvents() {
     const allEvents = getAllEvents();
     return allEvents.filter(event => {
         return event.date >= today && event.date < tomorrow;
-    }).sort((a, b) => a.date - b.date);
+    }).sort(compareEvents);
 }
 
 // Function to filter events for next 7 days (excluding today)
@@ -895,7 +917,7 @@ function getUpcomingEvents() {
     const allEvents = getAllEvents();
     return allEvents.filter(event => {
         return event.date >= tomorrow && event.date < nextWeek;
-    }).sort((a, b) => a.date - b.date);
+    }).sort(compareEvents);
 }
 
 // Function to create NFL table
