@@ -1420,6 +1420,83 @@ function createOverviewTable(events, title) {
     return container;
 }
 
+// Function to create upcoming events grouped by day
+function createUpcomingEventsGroupedByDay(events, title) {
+    const container = document.createElement('div');
+    
+    // Always create and add the main title
+    const titleElement = document.createElement('h2');
+    titleElement.style.marginBottom = '20px';
+    titleElement.style.fontSize = '24px';
+    titleElement.style.fontWeight = 'bold';
+    titleElement.textContent = title;
+    container.appendChild(titleElement);
+    
+    if (events.length === 0) {
+        const noEvents = document.createElement('p');
+        noEvents.style.padding = '20px';
+        noEvents.style.color = '#666';
+        noEvents.textContent = 'Inga händelser';
+        container.appendChild(noEvents);
+        return container;
+    }
+    
+    // Group events by date
+    const eventsByDate = {};
+    events.forEach(event => {
+        const dateKey = event.date.toDateString();
+        if (!eventsByDate[dateKey]) {
+            eventsByDate[dateKey] = [];
+        }
+        eventsByDate[dateKey].push(event);
+    });
+    
+    // Create a section for each date
+    Object.keys(eventsByDate).forEach((dateKey, index) => {
+        const dayEvents = eventsByDate[dateKey];
+        
+        // Create date header
+        const dateHeader = document.createElement('h3');
+        dateHeader.style.marginTop = index > 0 ? '30px' : '10px';
+        dateHeader.style.marginBottom = '10px';
+        dateHeader.style.fontSize = '18px';
+        dateHeader.style.fontWeight = 'bold';
+        dateHeader.textContent = dayEvents[0].dateString;
+        container.appendChild(dateHeader);
+        
+        // Create table for this day's events
+        const table = document.createElement('table');
+        table.className = 'schedule-table';
+        
+        let html = `
+            <thead>
+                <tr>
+                    <th>Tid/TV</th>
+                    <th>Sport</th>
+                    <th>Händelse</th>
+                </tr>
+            </thead>
+            <tbody>
+        `;
+        
+        dayEvents.forEach(event => {
+            html += `
+                <tr>
+                    <td>${event.time}</td>
+                    <td>${event.sport}</td>
+                    <td>${event.description}</td>
+                </tr>
+            `;
+        });
+        
+        html += `</tbody>`;
+        table.innerHTML = html;
+        container.appendChild(table);
+    });
+    
+    return container;
+}
+
 // Function to display overview page
 function displayOverview() {
     scheduleContainer.innerHTML = '';
@@ -1437,10 +1514,10 @@ function displayOverview() {
     todaySection.appendChild(todayTable);
     container.appendChild(todaySection);
     
-    // Upcoming events section
+    // Upcoming events section (grouped by day)
     const upcomingSection = document.createElement('div');
-    const upcomingTable = createOverviewTable(upcomingEvents, 'Kommande händelser (7 dagar)');
-    upcomingSection.appendChild(upcomingTable);
+    const upcomingView = createUpcomingEventsGroupedByDay(upcomingEvents, 'Kommande händelser (7 dagar)');
+    upcomingSection.appendChild(upcomingView);
     container.appendChild(upcomingSection);
     
     scheduleContainer.appendChild(container);
