@@ -375,10 +375,10 @@ const crossCountrySchedule = [
 
 // Ski Classics 2025/2026
 const skiClassicsSchedule = [
-    { date: "2025-12-13", location: "Sportgastein, Österrike", time: "–", event: "Bad Gastein Pro Team Tempo, 7 km" },
-    { date: "2025-12-14", location: "Sportgastein, Österrike", time: "–", event: "Bad Gastein Criterium, 36 km" },
-    { date: "2026-01-17", location: "Pontresina–Zuoz, Schweiz", time: "–", event: "Engadin La Diagonela, 55 km" },
-    { date: "2026-01-25", location: "Moena–Cavalese, Italien", time: "–", event: "Marcialonga, 70 km *" },
+    { date: "2025-12-13", location: "Sportgastein, Österrike", time: "08:15–11:30", event: "Bad Gastein – individuell 7 km" },
+    { date: "2025-12-14", location: "Sportgastein, Österrike", time: "08:20–11:30", event: "Bad Gastein – Criterium 36 km" },
+    { date: "2026-01-17", location: "Pontresina–Zuoz, Schweiz", time: "09:45–12:50", event: "Engadin La Diagonela, 55 km" },
+    { date: "2026-01-25", location: "Moena–Cavalese, Italien", time: "07:50–11:30", event: "Marcialonga, 70 km *" },
     { date: "2026-01-30", location: "Bedřichov, Tjeckien", time: "–", event: "Bedřichov Sprint, 1,5 km" },
     { date: "2026-02-01", location: "Bedřichov, Tjeckien", time: "–", event: "Jizerská50, 50 km *" },
     { date: "2026-03-01", location: "Sälen–Mora, Sverige", time: "–", event: "Vasaloppet, 90 km *" },
