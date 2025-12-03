@@ -1361,6 +1361,7 @@ function createSkiClassicsTable(schedule) {
         <thead>
             <tr>
                 <th>Datum</th>
+                <th>Tid</th>
                 <th>Lopp</th>
                 <th>Plats</th>
             </tr>
@@ -1384,6 +1385,7 @@ function createSkiClassicsTable(schedule) {
         html += `
             <tr${rowClass}>
                 <td>${formattedDate}</td>
+                <td>${race.time}</td>
                 <td>${race.event}</td>
                 <td>${race.location}</td>
             </tr>
