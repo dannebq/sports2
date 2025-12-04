@@ -328,6 +328,18 @@ const handballSchedule = [
         time: "20:30",
         match: "Sverige – Brasilien",
         arena: "Porsche-Arena, Stuttgart"
+    },
+    {
+        date: "5 dec (Fre)",
+        time: "18:00",
+        match: "Sverige – Sydkorea",
+        arena: "–"
+    },
+    {
+        date: "7 dec (Sön)",
+        time: "18:00",
+        match: "Angola – Sverige",
+        arena: "–"
     }
 ];
 
