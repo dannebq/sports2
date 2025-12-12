@@ -309,44 +309,44 @@ const biathlonSchedule = [
     }
 ];
 
-// Handball European Championship 2025 - Group Stage
+// Handball European Championship 2026 - Group Stage
 const handballEMSchedule = [
-    { date: "2025-01-15", time: "18:00", match: "Frankrike – Tjeckien" },
-    { date: "2025-01-15", time: "18:00", match: "Spanien – Serbien" },
-    { date: "2025-01-15", time: "20:30", match: "Tyskland – Österrike" },
-    { date: "2025-01-15", time: "20:30", match: "Norge – Ukraina" },
-    { date: "2025-01-16", time: "18:00", match: "Island – Italien" },
-    { date: "2025-01-16", time: "18:00", match: "Portugal – Rumänien" },
-    { date: "2025-01-16", time: "18:00", match: "Slovenien – Montenegro" },
-    { date: "2025-01-16", time: "20:30", match: "Danmark – Nordmakedonien" },
-    { date: "2025-01-16", time: "20:30", match: "Färöarna – Schweiz" },
-    { date: "2025-01-16", time: "20:30", match: "Ungern – Polen" },
-    { date: "2025-01-17", time: "18:00", match: "Österrike – Spanien" },
-    { date: "2025-01-17", time: "18:00", match: "Kroatien – Georgien" },
-    { date: "2025-01-17", time: "18:00", match: "Ukraina – Frankrike" },
-    { date: "2025-01-17", time: "20:30", match: "Tjeckien – Norge" },
-    { date: "2025-01-17", time: "20:30", match: "Serbien – Tyskland" },
-    { date: "2025-01-17", time: "20:30", match: "Sverige – Nederländerna", sweden: true },
-    { date: "2025-01-18", time: "18:00", match: "Montenegro – Färöarna" },
-    { date: "2025-01-18", time: "18:00", match: "Nordmakedonien – Portugal" },
-    { date: "2025-01-18", time: "18:00", match: "Polen – Island" },
-    { date: "2025-01-18", time: "20:30", match: "Italien – Ungern" },
-    { date: "2025-01-18", time: "20:30", match: "Rumänien – Danmark" },
-    { date: "2025-01-18", time: "20:30", match: "Schweiz – Slovenien" },
-    { date: "2025-01-19", time: "18:00", match: "Österrike – Serbien" },
-    { date: "2025-01-19", time: "18:00", match: "Tjeckien – Ukraina" },
-    { date: "2025-01-19", time: "18:00", match: "Nederländerna – Kroatien" },
-    { date: "2025-01-19", time: "20:30", match: "Frankrike – Norge" },
-    { date: "2025-01-19", time: "20:30", match: "Georgien – Sverige", sweden: true },
-    { date: "2025-01-19", time: "20:30", match: "Tyskland – Spanien" },
-    { date: "2025-01-20", time: "18:00", match: "Montenegro – Schweiz" },
-    { date: "2025-01-20", time: "18:00", match: "Nordmakedonien – Rumänien" },
-    { date: "2025-01-20", time: "18:00", match: "Polen – Italien" },
-    { date: "2025-01-20", time: "20:30", match: "Danmark – Portugal" },
-    { date: "2025-01-20", time: "20:30", match: "Ungern – Island" },
-    { date: "2025-01-20", time: "20:30", match: "Slovenien – Färöarna" },
-    { date: "2025-01-21", time: "18:00", match: "Nederländerna – Georgien" },
-    { date: "2025-01-21", time: "20:30", match: "Sverige – Kroatien", sweden: true }
+    { date: "2026-01-15", time: "18:00", match: "Frankrike – Tjeckien" },
+    { date: "2026-01-15", time: "18:00", match: "Spanien – Serbien" },
+    { date: "2026-01-15", time: "20:30", match: "Tyskland – Österrike" },
+    { date: "2026-01-15", time: "20:30", match: "Norge – Ukraina" },
+    { date: "2026-01-16", time: "18:00", match: "Island – Italien" },
+    { date: "2026-01-16", time: "18:00", match: "Portugal – Rumänien" },
+    { date: "2026-01-16", time: "18:00", match: "Slovenien – Montenegro" },
+    { date: "2026-01-16", time: "20:30", match: "Danmark – Nordmakedonien" },
+    { date: "2026-01-16", time: "20:30", match: "Färöarna – Schweiz" },
+    { date: "2026-01-16", time: "20:30", match: "Ungern – Polen" },
+    { date: "2026-01-17", time: "18:00", match: "Österrike – Spanien" },
+    { date: "2026-01-17", time: "18:00", match: "Kroatien – Georgien" },
+    { date: "2026-01-17", time: "18:00", match: "Ukraina – Frankrike" },
+    { date: "2026-01-17", time: "20:30", match: "Tjeckien – Norge" },
+    { date: "2026-01-17", time: "20:30", match: "Serbien – Tyskland" },
+    { date: "2026-01-17", time: "20:30", match: "Sverige – Nederländerna", sweden: true },
+    { date: "2026-01-18", time: "18:00", match: "Montenegro – Färöarna" },
+    { date: "2026-01-18", time: "18:00", match: "Nordmakedonien – Portugal" },
+    { date: "2026-01-18", time: "18:00", match: "Polen – Island" },
+    { date: "2026-01-18", time: "20:30", match: "Italien – Ungern" },
+    { date: "2026-01-18", time: "20:30", match: "Rumänien – Danmark" },
+    { date: "2026-01-18", time: "20:30", match: "Schweiz – Slovenien" },
+    { date: "2026-01-19", time: "18:00", match: "Österrike – Serbien" },
+    { date: "2026-01-19", time: "18:00", match: "Tjeckien – Ukraina" },
+    { date: "2026-01-19", time: "18:00", match: "Nederländerna – Kroatien" },
+    { date: "2026-01-19", time: "20:30", match: "Frankrike – Norge" },
+    { date: "2026-01-19", time: "20:30", match: "Georgien – Sverige", sweden: true },
+    { date: "2026-01-19", time: "20:30", match: "Tyskland – Spanien" },
+    { date: "2026-01-20", time: "18:00", match: "Montenegro – Schweiz" },
+    { date: "2026-01-20", time: "18:00", match: "Nordmakedonien – Rumänien" },
+    { date: "2026-01-20", time: "18:00", match: "Polen – Italien" },
+    { date: "2026-01-20", time: "20:30", match: "Danmark – Portugal" },
+    { date: "2026-01-20", time: "20:30", match: "Ungern – Island" },
+    { date: "2026-01-20", time: "20:30", match: "Slovenien – Färöarna" },
+    { date: "2026-01-21", time: "18:00", match: "Nederländerna – Georgien" },
+    { date: "2026-01-21", time: "20:30", match: "Sverige – Kroatien", sweden: true }
 ];
 
 // Cross Country Skiing World Cup 2025/2026
@@ -1179,7 +1179,7 @@ function createHandballEMTable(schedule) {
     }
     
     let html = `
-        <caption>Handboll EM 2025 - Gruppspel</caption>
+        <caption>Handboll EM 2026 - Gruppspel</caption>
         <thead>
             <tr>
                 <th>Datum</th>
