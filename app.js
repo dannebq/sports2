@@ -309,40 +309,6 @@ const biathlonSchedule = [
     }
 ];
 
-// Handball World Championship 2025 - Sweden Matches
-const handballSchedule = [
-    {
-        date: "27 nov (Tors)",
-        time: "20:30",
-        match: "Sverige – Tjeckien",
-        arena: "Porsche-Arena, Stuttgart"
-    },
-    {
-        date: "29 nov (Lör)",
-        time: "20:30",
-        match: "Kuba – Sverige",
-        arena: "Porsche-Arena, Stuttgart"
-    },
-    {
-        date: "1 dec (Mån)",
-        time: "20:30",
-        match: "Sverige – Brasilien",
-        arena: "Porsche-Arena, Stuttgart"
-    },
-    {
-        date: "5 dec (Fre)",
-        time: "18:00",
-        match: "Sverige – Sydkorea",
-        arena: "–"
-    },
-    {
-        date: "7 dec (Sön)",
-        time: "18:00",
-        match: "Angola – Sverige",
-        arena: "–"
-    }
-];
-
 // Cross Country Skiing World Cup 2025/2026
 const crossCountrySchedule = [
     { date: "2025-11-28", location: "Ruka", time: "10.30", event: "10 km, klassisk stil, intervallstart, damer" },
@@ -850,22 +816,6 @@ function getAllEvents() {
         });
     });
     
-    // Add Handball matches
-    handballSchedule.forEach(game => {
-        const date = parseDate(game.date);
-        if (date) {
-            events.push({
-                date: date,
-                dateString: formatDateSwedish(date),
-                sport: 'Handboll VM',
-                team: 'Sverige',
-                description: game.match,
-                location: game.arena,
-                time: game.time
-            });
-        }
-    });
-    
     // Add Cross Country Skiing events
     crossCountrySchedule.forEach(race => {
         const date = parseDate(race.date);
@@ -1150,72 +1100,6 @@ function displayBiathlonSchedule(schedule) {
     scheduleContainer.innerHTML = '';
     const tables = createBiathlonTables(schedule);
     scheduleContainer.appendChild(tables);
-}
-
-// Function to create handball table
-function createHandballTable(schedule) {
-    const table = document.createElement('table');
-    table.className = 'schedule-table';
-    
-    // Find next match
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    let nextMatchIndex = -1;
-    for (let i = 0; i < schedule.length; i++) {
-        const matchDate = parseDate(schedule[i].date);
-        if (matchDate && matchDate >= today) {
-            nextMatchIndex = i;
-            break;
-        }
-    }
-    
-    let html = `
-        <caption>Handboll VM 2025 - Sveriges Matcher</caption>
-        <thead>
-            <tr>
-                <th>Datum</th>
-                <th>Tid</th>
-                <th>Match</th>
-                <th>Arena</th>
-            </tr>
-        </thead>
-        <tbody>
-    `;
-    
-    schedule.forEach((game, index) => {
-        // Skip matches that have already occurred
-        const matchDate = parseDate(game.date);
-        if (!matchDate || matchDate < today) {
-            return;
-        }
-        
-        const isNextMatch = index === nextMatchIndex;
-        const rowClass = isNextMatch ? ' class="next-event"' : '';
-        
-        // Format date to Swedish format
-        const formattedDate = formatDateSwedish(matchDate);
-        
-        html += `
-            <tr${rowClass}>
-                <td>${formattedDate}</td>
-                <td>${game.time}</td>
-                <td>${game.match}</td>
-                <td>${game.arena}</td>
-            </tr>
-        `;
-    });
-    
-    html += `</tbody>`;
-    table.innerHTML = html;
-    return table;
-}
-
-// Function to display handball schedule
-function displayHandballSchedule(schedule) {
-    scheduleContainer.innerHTML = '';
-    const table = createHandballTable(schedule);
-    scheduleContainer.appendChild(table);
 }
 
 // Function to create Handball League table
@@ -1713,8 +1597,6 @@ document.querySelectorAll('.team-btn').forEach(btn => {
                 displayCrossCountrySchedule(crossCountrySchedule);
             } else if (sport === 'skiclassics') {
                 displaySkiClassicsSchedule(skiClassicsSchedule);
-            } else if (sport === 'handball') {
-                displayHandballSchedule(handballSchedule);
             } else if (sport === 'handball-league') {
                 displayHandballLeagueSchedule(handballLeagueSchedule);
             }
