@@ -309,6 +309,46 @@ const biathlonSchedule = [
     }
 ];
 
+// Handball European Championship 2025 - Group Stage
+const handballEMSchedule = [
+    { date: "2025-01-15", time: "18:00", match: "Frankrike – Tjeckien" },
+    { date: "2025-01-15", time: "18:00", match: "Spanien – Serbien" },
+    { date: "2025-01-15", time: "20:30", match: "Tyskland – Österrike" },
+    { date: "2025-01-15", time: "20:30", match: "Norge – Ukraina" },
+    { date: "2025-01-16", time: "18:00", match: "Island – Italien" },
+    { date: "2025-01-16", time: "18:00", match: "Portugal – Rumänien" },
+    { date: "2025-01-16", time: "18:00", match: "Slovenien – Montenegro" },
+    { date: "2025-01-16", time: "20:30", match: "Danmark – Nordmakedonien" },
+    { date: "2025-01-16", time: "20:30", match: "Färöarna – Schweiz" },
+    { date: "2025-01-16", time: "20:30", match: "Ungern – Polen" },
+    { date: "2025-01-17", time: "18:00", match: "Österrike – Spanien" },
+    { date: "2025-01-17", time: "18:00", match: "Kroatien – Georgien" },
+    { date: "2025-01-17", time: "18:00", match: "Ukraina – Frankrike" },
+    { date: "2025-01-17", time: "20:30", match: "Tjeckien – Norge" },
+    { date: "2025-01-17", time: "20:30", match: "Serbien – Tyskland" },
+    { date: "2025-01-17", time: "20:30", match: "Sverige – Nederländerna", sweden: true },
+    { date: "2025-01-18", time: "18:00", match: "Montenegro – Färöarna" },
+    { date: "2025-01-18", time: "18:00", match: "Nordmakedonien – Portugal" },
+    { date: "2025-01-18", time: "18:00", match: "Polen – Island" },
+    { date: "2025-01-18", time: "20:30", match: "Italien – Ungern" },
+    { date: "2025-01-18", time: "20:30", match: "Rumänien – Danmark" },
+    { date: "2025-01-18", time: "20:30", match: "Schweiz – Slovenien" },
+    { date: "2025-01-19", time: "18:00", match: "Österrike – Serbien" },
+    { date: "2025-01-19", time: "18:00", match: "Tjeckien – Ukraina" },
+    { date: "2025-01-19", time: "18:00", match: "Nederländerna – Kroatien" },
+    { date: "2025-01-19", time: "20:30", match: "Frankrike – Norge" },
+    { date: "2025-01-19", time: "20:30", match: "Georgien – Sverige", sweden: true },
+    { date: "2025-01-19", time: "20:30", match: "Tyskland – Spanien" },
+    { date: "2025-01-20", time: "18:00", match: "Montenegro – Schweiz" },
+    { date: "2025-01-20", time: "18:00", match: "Nordmakedonien – Rumänien" },
+    { date: "2025-01-20", time: "18:00", match: "Polen – Italien" },
+    { date: "2025-01-20", time: "20:30", match: "Danmark – Portugal" },
+    { date: "2025-01-20", time: "20:30", match: "Ungern – Island" },
+    { date: "2025-01-20", time: "20:30", match: "Slovenien – Färöarna" },
+    { date: "2025-01-21", time: "18:00", match: "Nederländerna – Georgien" },
+    { date: "2025-01-21", time: "20:30", match: "Sverige – Kroatien", sweden: true }
+];
+
 // Cross Country Skiing World Cup 2025/2026
 const crossCountrySchedule = [
     { date: "2025-11-28", location: "Ruka", time: "10.30", event: "10 km, klassisk stil, intervallstart, damer" },
@@ -816,6 +856,24 @@ function getAllEvents() {
         });
     });
     
+    // Add Handball EM matches (only Sweden's matches for overview)
+    handballEMSchedule.forEach(game => {
+        if (game.sweden) {
+            const date = parseDate(game.date);
+            if (date) {
+                events.push({
+                    date: date,
+                    dateString: formatDateSwedish(date),
+                    sport: 'Handboll EM',
+                    team: 'Sverige',
+                    description: game.match,
+                    location: '-',
+                    time: game.time
+                });
+            }
+        }
+    });
+    
     // Add Cross Country Skiing events
     crossCountrySchedule.forEach(race => {
         const date = parseDate(race.date);
@@ -1100,6 +1158,75 @@ function displayBiathlonSchedule(schedule) {
     scheduleContainer.innerHTML = '';
     const tables = createBiathlonTables(schedule);
     scheduleContainer.appendChild(tables);
+}
+
+// Function to create Handball EM table
+function createHandballEMTable(schedule) {
+    const table = document.createElement('table');
+    table.className = 'schedule-table';
+    
+    // Find next match
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    let nextMatchDate = null;
+    for (let i = 0; i < schedule.length; i++) {
+        const matchDate = parseDate(schedule[i].date);
+        if (matchDate && matchDate >= today) {
+            nextMatchDate = matchDate;
+            break;
+        }
+    }
+    
+    let html = `
+        <caption>Handboll EM 2025 - Gruppspel</caption>
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Tid</th>
+                <th>Match</th>
+            </tr>
+        </thead>
+        <tbody>
+    `;
+    
+    schedule.forEach((game) => {
+        // Skip matches that have already occurred
+        const matchDate = parseDate(game.date);
+        if (!matchDate || matchDate < today) {
+            return;
+        }
+        
+        const isNextMatch = nextMatchDate && matchDate && 
+                           matchDate.getTime() === nextMatchDate.getTime();
+        const isSwedenMatch = game.sweden;
+        let rowClass = '';
+        if (isNextMatch) rowClass = 'next-event';
+        if (isSwedenMatch) rowClass = 'sweden-match';
+        if (isNextMatch && isSwedenMatch) rowClass = 'next-event sweden-match';
+        
+        // Format date to Swedish format
+        const formattedDate = formatDateSwedish(matchDate);
+        
+        html += `
+            <tr${rowClass ? ` class="${rowClass}"` : ''}>
+                <td>${formattedDate}</td>
+                <td>${game.time}</td>
+                <td>${game.match}</td>
+            </tr>
+        `;
+    });
+    
+    html += `</tbody>`;
+    table.innerHTML = html;
+    return table;
+}
+
+// Function to display Handball EM schedule
+function displayHandballEMSchedule(schedule) {
+    scheduleContainer.innerHTML = '';
+    const table = createHandballEMTable(schedule);
+    scheduleContainer.appendChild(table);
 }
 
 // Function to create Handball League table
@@ -1597,6 +1724,8 @@ document.querySelectorAll('.team-btn').forEach(btn => {
                 displayCrossCountrySchedule(crossCountrySchedule);
             } else if (sport === 'skiclassics') {
                 displaySkiClassicsSchedule(skiClassicsSchedule);
+            } else if (sport === 'handball-em') {
+                displayHandballEMSchedule(handballEMSchedule);
             } else if (sport === 'handball-league') {
                 displayHandballLeagueSchedule(handballLeagueSchedule);
             }

@@ -127,6 +127,16 @@ body {
     font-weight: 500;
 }
 
+.schedule-table tr.sweden-match td {
+    background: #e6f0ff;
+    font-weight: 600;
+}
+
+.schedule-table tr.sweden-match.next-event td {
+    background: linear-gradient(135deg, #fffbea 0%, #e6f0ff 100%);
+    font-weight: 600;
+}
+
 /* Biathlon specific */
 .competition-section {
     margin-bottom: 50px;
