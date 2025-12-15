@@ -1635,6 +1635,65 @@ function createUpcomingEventsGroupedByDay(events, title) {
     return container;
 }
 
+// Julgransflygning schedule
+const julgransflygningSchedule = [
+    { ort: "Simrishamn", tid: "13.43" },
+    { ort: "Ystad", tid: "–" },
+    { ort: "Köpenhamn", tid: "14.08" },
+    { ort: "Helsingör", tid: "14.13" },
+    { ort: "Höganäs", tid: "–" },
+    { ort: "Helsingborg", tid: "14.22" },
+    { ort: "Lund", tid: "–" },
+    { ort: "Malmö", tid: "14.31" },
+    { ort: "Trelleborg", tid: "14.38" },
+    { ort: "Kristianstad", tid: "14.50" },
+    { ort: "Karlshamn", tid: "–" },
+    { ort: "Nättraby", tid: "15.00" },
+    { ort: "Karlskrona (Trossö)", tid: "15.10" },
+    { ort: "F 17 / Ronneby", tid: "15.15" }
+];
+
+// Function to create Julgransflygning table
+function createJulgransflygningSection() {
+    const container = document.createElement('div');
+    container.style.marginBottom = '50px';
+    
+    const titleElement = document.createElement('h2');
+    titleElement.style.marginBottom = '20px';
+    titleElement.style.fontSize = '24px';
+    titleElement.style.fontWeight = 'bold';
+    titleElement.textContent = '🎄 Julgransflygning';
+    container.appendChild(titleElement);
+    
+    const table = document.createElement('table');
+    table.className = 'schedule-table';
+    
+    let html = `
+        <thead>
+            <tr>
+                <th>Ort</th>
+                <th>Tid</th>
+            </tr>
+        </thead>
+        <tbody>
+    `;
+    
+    julgransflygningSchedule.forEach(item => {
+        html += `
+            <tr>
+                <td>${item.ort}</td>
+                <td>${item.tid}</td>
+            </tr>
+        `;
+    });
+    
+    html += `</tbody>`;
+    table.innerHTML = html;
+    container.appendChild(table);
+    
+    return container;
+}
+
 // Function to display overview page
 function displayOverview() {
     scheduleContainer.innerHTML = '';
@@ -1644,6 +1703,10 @@ function displayOverview() {
     
     // Create container for both sections
     const container = document.createElement('div');
+    
+    // Julgransflygning section (temporary)
+    const julgransSection = createJulgransflygningSection();
+    container.appendChild(julgransSection);
     
     // Today's events section
     const todaySection = document.createElement('div');
