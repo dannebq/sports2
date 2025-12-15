@@ -1662,7 +1662,7 @@ function createJulgransflygningSection() {
     titleElement.style.marginBottom = '20px';
     titleElement.style.fontSize = '24px';
     titleElement.style.fontWeight = 'bold';
-    titleElement.textContent = '🎄 Julgransflygning';
+    titleElement.textContent = '🎄 Julgransflygning tis 16 dec';
     container.appendChild(titleElement);
     
     const table = document.createElement('table');
