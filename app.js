@@ -1643,68 +1643,6 @@ function createUpcomingEventsGroupedByDay(events, title) {
     return container;
 }
 
-// Julgransflygning schedule
-const julgransflygningSchedule = [
-    { ort: "Simrishamn", tid: "13.08" },
-    { ort: "Ystad", tid: "13.12" },
-    { ort: "Køge", tid: "13.29" },
-    { ort: "Köpenhamn (facklor)", tid: "13.33" },
-    { ort: "Helsingör", tid: "13.38" },
-    { ort: "Höganäs", tid: "13.44" },
-    { ort: "Helsingborg", tid: "13.47" },
-    { ort: "Eslöv", tid: "13.51" },
-    { ort: "Lund", tid: "13.53" },
-    { ort: "Malmö", tid: "13.56" },
-    { ort: "Trelleborg", tid: "14.03" },
-    { ort: "Kristianstad", tid: "14.15" },
-    { ort: "Karlshamn", tid: "14.20" },
-    { ort: "Nättraby", tid: "14.25" },
-    { ort: "Karlskrona (Trossö, facklor)", tid: "14.35" },
-    { ort: "Rödeby", tid: "14.36" },
-    { ort: "F 17 / Ronneby", tid: "14.42" }
-];
-
-// Function to create Julgransflygning table
-function createJulgransflygningSection() {
-    const container = document.createElement('div');
-    container.style.marginBottom = '50px';
-    
-    const titleElement = document.createElement('h2');
-    titleElement.style.marginBottom = '20px';
-    titleElement.style.fontSize = '24px';
-    titleElement.style.fontWeight = 'bold';
-    titleElement.textContent = '🎄 Julgransflygning tis 16 dec';
-    container.appendChild(titleElement);
-    
-    const table = document.createElement('table');
-    table.className = 'schedule-table';
-    
-    let html = `
-        <thead>
-            <tr>
-                <th>Ort</th>
-                <th>Tid</th>
-            </tr>
-        </thead>
-        <tbody>
-    `;
-    
-    julgransflygningSchedule.forEach(item => {
-        html += `
-            <tr>
-                <td>${item.ort}</td>
-                <td>${item.tid}</td>
-            </tr>
-        `;
-    });
-    
-    html += `</tbody>`;
-    table.innerHTML = html;
-    container.appendChild(table);
-    
-    return container;
-}
-
 // Function to display overview page
 function displayOverview() {
     scheduleContainer.innerHTML = '';
@@ -1714,10 +1652,6 @@ function displayOverview() {
     
     // Create container for both sections
     const container = document.createElement('div');
-    
-    // Julgransflygning section (temporary)
-    const julgransSection = createJulgransflygningSection();
-    container.appendChild(julgransSection);
     
     // Today's events section
     const todaySection = document.createElement('div');
