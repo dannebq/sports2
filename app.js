@@ -117,27 +117,27 @@ const biathlonSchedule = [
             { 
                 date: "8 januari", 
                 races: [
-                    { name: "Sprint 10 km, herrar", tv: "14:00-15:40, SVT1/SVT Play" }
+                    { name: "Sprint 10 km, herrar", tv: "14:10, SVT/SVT Play" }
                 ]
             },
             { 
                 date: "9 januari", 
                 races: [
-                    { name: "Sprint 7,5 km, damer", tv: "14:15-15:50, SVT1/SVT Play" }
+                    { name: "Sprint 7,5 km, damer", tv: "14:25, SVT/SVT Play" }
                 ]
             },
             { 
                 date: "10 januari", 
                 races: [
-                    { name: "Jaktstart 12,5 km, herrar", tv: "12:00-12:45, SVT1/SVT Play" },
-                    { name: "Stafett 4x6 km, damer", tv: "14:25-15:40, SVT1/SVT Play" }
+                    { name: "Jaktstart 12,5 km, herrar", tv: "12:00, SVT/SVT Play" },
+                    { name: "Stafett 4×6 km, damer", tv: "14:25, SVT/SVT Play" }
                 ]
             },
             { 
                 date: "11 januari", 
                 races: [
-                    { name: "Stafett 4x7,5 km, herrar", tv: "11:00-12:20, SVT1/SVT Play" },
-                    { name: "Jaktstart 10 km, damer", tv: "14:15-15:00, SVT1/SVT Play" }
+                    { name: "Stafett 4×7,5 km, herrar", tv: "11:00, SVT/SVT Play" },
+                    { name: "Jaktstart 10 km, damer", tv: "14:30, SVT/SVT Play" }
                 ]
             }
         ]
@@ -149,64 +149,131 @@ const biathlonSchedule = [
             { 
                 date: "14 januari", 
                 races: [
-                    { name: "Stafett 4x6 km, damer", tv: "14:20-15:55, SVT1/SVT Play" }
+                    { name: "Stafett 4×6 km, damer", tv: "14:30, SVT/SVT Play" }
                 ]
             },
             { 
                 date: "15 januari", 
                 races: [
-                    { name: "Stafett 4x7,5 km, herrar", tv: "14:20-15:55, SVT1/SVT Play" }
+                    { name: "Stafett 4×7,5 km, herrar", tv: "14:30, SVT/SVT Play" }
                 ]
             },
             { 
                 date: "16 januari", 
                 races: [
-                    { name: "Sprint 7,5 km, damer", tv: "14:20-15:55, SVT1/SVT Play" }
+                    { name: "Sprint 7,5 km, damer", tv: "14:30, SVT/SVT Play" }
                 ]
             },
             { 
                 date: "17 januari", 
                 races: [
-                    { name: "Sprint 10 km, herrar", tv: "14:30-15:50, SVT1/SVT Play" }
+                    { name: "Sprint 10 km, herrar", tv: "14:30, SVT/SVT Play" }
                 ]
             },
             { 
                 date: "18 januari", 
                 races: [
-                    { name: "Jaktstart 10 km, damer", tv: "12:30-13:15, SVT1/SVT Play" },
-                    { name: "Jaktstart 12,5 km, herrar", tv: "15:00-15:45, SVT1/SVT Play" }
+                    { name: "Jaktstart 10 km, damer", tv: "12:30, SVT/SVT Play" },
+                    { name: "Jaktstart 12,5 km, herrar", tv: "15:00, SVT/SVT Play" }
                 ]
             }
         ]
     },
     {
         dates: "22–25 januari 2026",
-        location: "Nove Mesto na Morave, Tjeckien",
+        location: "Nove Mesto, Tjeckien",
         events: [
             { 
                 date: "22 januari", 
                 races: [
-                    { name: "Kortdistans 15 km, herrar", tv: "18:05-20:00, SVT1/SVT Play" }
+                    { name: "Distans 15 km, herrar", tv: "18:15, SVT/SVT Play" }
                 ]
             },
             { 
                 date: "23 januari", 
                 races: [
-                    { name: "Kortdistans 12,5 km, damer", tv: "18:05-20:00, SVT1/SVT Play" }
+                    { name: "Distans 12,5 km, damer", tv: "18:15, SVT/SVT Play" }
                 ]
             },
             { 
                 date: "24 januari", 
                 races: [
-                    { name: "Singelmixedstafett", tv: "13:15-14:00, SVT1/SVT Play" },
-                    { name: "Mixedstafett", tv: "15:15-16:25, SVT1/SVT Play" }
+                    { name: "Singelmixedstafett", tv: "13:15, SVT/SVT Play" },
+                    { name: "Mixedstafett", tv: "15:15, SVT/SVT Play" }
                 ]
             },
             { 
                 date: "25 januari", 
                 races: [
-                    { name: "Masstart 15 km, herrar", tv: "15:15-16:00, SVT1/SVT Play" },
-                    { name: "Masstart 12,5 km, damer", tv: "18:15-19:00, SVT1/SVT Play" }
+                    { name: "Masstart 15 km, herrar", tv: "15:15, SVT/SVT Play" },
+                    { name: "Masstart 12,5 km, damer", tv: "18:15, SVT/SVT Play" }
+                ]
+            }
+        ]
+    },
+    {
+        dates: "8–21 februari 2026",
+        location: "Antholz, Italien",
+        events: [
+            { 
+                date: "8 februari", 
+                races: [
+                    { name: "Mixedstafett", tv: "14:05, TV4/TV4 Play" }
+                ]
+            },
+            { 
+                date: "10 februari", 
+                races: [
+                    { name: "Distans 20 km, herrar", tv: "13:30, TV4/TV4 Play" }
+                ]
+            },
+            { 
+                date: "11 februari", 
+                races: [
+                    { name: "Distans 15 km, damer", tv: "14:15, TV4/TV4 Play" }
+                ]
+            },
+            { 
+                date: "13 februari", 
+                races: [
+                    { name: "Sprint 10 km, herrar", tv: "14:00, TV4/TV4 Play" }
+                ]
+            },
+            { 
+                date: "14 februari", 
+                races: [
+                    { name: "Sprint 7,5 km, damer", tv: "14:00, TV4/TV4 Play" }
+                ]
+            },
+            { 
+                date: "15 februari", 
+                races: [
+                    { name: "Jaktstart 12,5 km, herrar", tv: "11:15, TV4/TV4 Play" },
+                    { name: "Jaktstart 10 km, damer", tv: "14:45, TV4/TV4 Play" }
+                ]
+            },
+            { 
+                date: "17 februari", 
+                races: [
+                    { name: "Stafett 4×7,5 km, herrar", tv: "14:30, TV4/TV4 Play" }
+                ]
+            },
+            { 
+                date: "18 februari", 
+                races: [
+                    { name: "Stafett 4×6 km, damer", tv: "14:45, TV4/TV4 Play" }
+                ]
+            },
+            { 
+                date: "20 februari", 
+                races: [
+                    { name: "Masstart 15 km, damer", tv: "14:15, TV4/TV4 Play" }
+                ]
+            },
+            { 
+                date: "21 februari", 
+                races: [
+                    { name: "Masstart 12,5 km, herrar", tv: "14:15, TV4/TV4 Play" }
                 ]
             }
         ]
@@ -218,27 +285,27 @@ const biathlonSchedule = [
             { 
                 date: "5 mars", 
                 races: [
-                    { name: "Distans 15 km, damer", tv: "SVT (tider uppdateras)" }
+                    { name: "Distans 15 km, damer", tv: "17:05, SVT/SVT Play" }
                 ]
             },
             { 
                 date: "6 mars", 
                 races: [
-                    { name: "Distans 20 km, herrar", tv: "SVT (tider uppdateras)" }
+                    { name: "Distans 20 km, herrar", tv: "17:10, SVT/SVT Play" }
                 ]
             },
             { 
                 date: "7 mars", 
                 races: [
-                    { name: "Masstart 12,5 km, damer", tv: "SVT (tider uppdateras)" },
-                    { name: "Stafett 4x7,5 km, herrar", tv: "SVT (tider uppdateras)" }
+                    { name: "Masstart 12,5 km, damer", tv: "13:40, SVT/SVT Play" },
+                    { name: "Stafett 4×7,5 km, herrar", tv: "15:40, SVT/SVT Play" }
                 ]
             },
             { 
                 date: "8 mars", 
                 races: [
-                    { name: "Stafett 4x6 km, damer", tv: "SVT (tider uppdateras)" },
-                    { name: "Masstart 15 km, herrar", tv: "SVT (tider uppdateras)" }
+                    { name: "Stafett 4×6 km, damer", tv: "13:30, SVT/SVT Play" },
+                    { name: "Masstart 15 km, herrar", tv: "16:55, SVT/SVT Play" }
                 ]
             }
         ]
@@ -250,27 +317,27 @@ const biathlonSchedule = [
             { 
                 date: "12 mars", 
                 races: [
-                    { name: "Sprint 10 km, herrar", tv: "SVT (tider uppdateras)" }
+                    { name: "Sprint 10 km, herrar", tv: "15:15, SVT/SVT Play" }
                 ]
             },
             { 
                 date: "13 mars", 
                 races: [
-                    { name: "Sprint 7,5 km, damer", tv: "SVT (tider uppdateras)" }
+                    { name: "Sprint 7,5 km, damer", tv: "15:15, SVT/SVT Play" }
                 ]
             },
             { 
                 date: "14 mars", 
                 races: [
-                    { name: "Jaktstart 12,5 km, herrar", tv: "SVT (tider uppdateras)" },
-                    { name: "Jaktstart 10 km, damer", tv: "SVT (tider uppdateras)" }
+                    { name: "Jaktstart 12,5 km, herrar", tv: "13:30, SVT/SVT Play" },
+                    { name: "Jaktstart 10 km, damer", tv: "16:00, SVT/SVT Play" }
                 ]
             },
             { 
                 date: "15 mars", 
                 races: [
-                    { name: "Singelmixedstafett", tv: "SVT (tider uppdateras)" },
-                    { name: "Mixedstafett", tv: "SVT (tider uppdateras)" }
+                    { name: "Singelmixedstafett", tv: "12:35, SVT/SVT Play" },
+                    { name: "Mixedstafett", tv: "14:40, SVT/SVT Play" }
                 ]
             }
         ]
@@ -282,27 +349,27 @@ const biathlonSchedule = [
             { 
                 date: "19 mars", 
                 races: [
-                    { name: "Sprint 7,5 km, damer", tv: "SVT (tider uppdateras)" }
+                    { name: "Sprint 7,5 km, damer", tv: "16:15" }
                 ]
             },
             { 
                 date: "20 mars", 
                 races: [
-                    { name: "Sprint 10 km, herrar", tv: "SVT (tider uppdateras)" }
+                    { name: "Sprint 10 km, herrar", tv: "16:15" }
                 ]
             },
             { 
                 date: "21 mars", 
                 races: [
-                    { name: "Jaktstart 10 km, damer", tv: "SVT (tider uppdateras)" },
-                    { name: "Jaktstart 12,5 km, herrar", tv: "SVT (tider uppdateras)" }
+                    { name: "Jaktstart 10 km, damer", tv: "13:45" },
+                    { name: "Jaktstart 12,5 km, herrar", tv: "16:15" }
                 ]
             },
             { 
                 date: "22 mars", 
                 races: [
-                    { name: "Masstart 12,5 km, damer", tv: "SVT (tider uppdateras)" },
-                    { name: "Masstart 15 km, herrar", tv: "SVT (tider uppdateras)" }
+                    { name: "Masstart 12,5 km, damer", tv: "13:45" },
+                    { name: "Masstart 15 km, herrar", tv: "16:45" }
                 ]
             }
         ]
