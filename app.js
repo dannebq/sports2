@@ -797,22 +797,22 @@ const packersSchedule = [
     {
         week: 16,
         date: "December 20, 2025",
-        time: "TBD",
+        time: "02:20",
         opponent: "Chicago Bears",
         location: "away",
         stadium: "Soldier Field"
     },
     {
         week: 17,
-        date: "TBD",
-        time: "TBD",
+        date: "December 28, 2025",
+        time: "02:00",
         opponent: "Baltimore Ravens",
         location: "home",
         stadium: "Lambeau Field"
     },
     {
         week: 18,
-        date: "January 3/4, 2026",
+        date: "January 4, 2026",
         time: "TBD",
         opponent: "Minnesota Vikings",
         location: "away",
