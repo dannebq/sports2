@@ -852,7 +852,22 @@ function parseDate(dateString) {
     if (swedishMatch) {
         const day = parseInt(swedishMatch[1]);
         const month = monthMap[swedishMatch[2].toLowerCase()];
-        const year = swedishMatch[3] ? parseInt(swedishMatch[3]) : 2025;
+        let year = swedishMatch[3] ? parseInt(swedishMatch[3]) : null;
+        
+        // If no year specified, determine based on current date
+        if (!year) {
+            const now = new Date();
+            const currentYear = now.getFullYear();
+            const currentMonth = now.getMonth();
+            
+            // If the month is before current month, assume next year
+            // (for winter sports season spanning Dec-Mar)
+            if (month < currentMonth - 1) {
+                year = currentYear + 1;
+            } else {
+                year = currentYear;
+            }
+        }
         return new Date(year, month, day);
     }
     
