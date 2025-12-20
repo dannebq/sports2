@@ -2104,6 +2104,38 @@ function displayOverview() {
     // Create container for both sections
     const container = document.createElement('div');
     
+    // Murder Mystery button section
+    const mysterySection = document.createElement('div');
+    mysterySection.style.marginBottom = '30px';
+    
+    const mysteryButton = document.createElement('a');
+    mysteryButton.href = 'murder-mystery.html';
+    mysteryButton.style.display = 'flex';
+    mysteryButton.style.alignItems = 'center';
+    mysteryButton.style.justifyContent = 'center';
+    mysteryButton.style.gap = '12px';
+    mysteryButton.style.padding = '16px 24px';
+    mysteryButton.style.background = 'linear-gradient(135deg, #1e293b 0%, #334155 100%)';
+    mysteryButton.style.color = '#fff';
+    mysteryButton.style.borderRadius = '12px';
+    mysteryButton.style.textDecoration = 'none';
+    mysteryButton.style.fontWeight = 'bold';
+    mysteryButton.style.fontSize = '18px';
+    mysteryButton.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+    mysteryButton.style.transition = 'transform 0.2s, box-shadow 0.2s';
+    mysteryButton.innerHTML = '<span style="font-size: 24px;">🔍</span> Mordet i växthuset';
+    mysteryButton.onmouseenter = function() {
+        this.style.transform = 'translateY(-2px)';
+        this.style.boxShadow = '0 6px 20px rgba(0,0,0,0.25)';
+    };
+    mysteryButton.onmouseleave = function() {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = '0 4px 15px rgba(0,0,0,0.2)';
+    };
+    
+    mysterySection.appendChild(mysteryButton);
+    container.appendChild(mysterySection);
+    
     // Today's events section
     const todaySection = document.createElement('div');
     todaySection.style.marginBottom = '50px';
