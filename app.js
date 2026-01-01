@@ -2104,10 +2104,42 @@ function displayOverview() {
     // Create container for both sections
     const container = document.createElement('div');
     
-    // Murder Mystery button section
+    // Murder Mystery buttons section
     const mysterySection = document.createElement('div');
     mysterySection.style.marginBottom = '30px';
+    mysterySection.style.display = 'flex';
+    mysterySection.style.flexDirection = 'column';
+    mysterySection.style.gap = '12px';
     
+    // New mystery button - Herrgårdens Hemlighet (purple/indigo theme)
+    const mystery2Button = document.createElement('a');
+    mystery2Button.href = 'mystery-2.html';
+    mystery2Button.style.display = 'flex';
+    mystery2Button.style.alignItems = 'center';
+    mystery2Button.style.justifyContent = 'center';
+    mystery2Button.style.gap = '12px';
+    mystery2Button.style.padding = '16px 24px';
+    mystery2Button.style.background = 'linear-gradient(135deg, #4c1d95 0%, #6d28d9 100%)';
+    mystery2Button.style.color = '#fff';
+    mystery2Button.style.borderRadius = '12px';
+    mystery2Button.style.textDecoration = 'none';
+    mystery2Button.style.fontWeight = 'bold';
+    mystery2Button.style.fontSize = '18px';
+    mystery2Button.style.boxShadow = '0 4px 15px rgba(109, 40, 217, 0.3)';
+    mystery2Button.style.transition = 'transform 0.2s, box-shadow 0.2s';
+    mystery2Button.innerHTML = '<span style="font-size: 24px;">📜</span> Herrgårdens Hemlighet';
+    mystery2Button.onmouseenter = function() {
+        this.style.transform = 'translateY(-2px)';
+        this.style.boxShadow = '0 6px 20px rgba(109, 40, 217, 0.4)';
+    };
+    mystery2Button.onmouseleave = function() {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = '0 4px 15px rgba(109, 40, 217, 0.3)';
+    };
+    
+    mysterySection.appendChild(mystery2Button);
+    
+    // Original mystery button - Mordet i växthuset (dark theme)
     const mysteryButton = document.createElement('a');
     mysteryButton.href = 'murder-mystery.html';
     mysteryButton.style.display = 'flex';
