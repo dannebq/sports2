@@ -2108,9 +2108,40 @@ function displayOverview() {
     // Create container for both sections
     const container = document.createElement('div');
     
-    // Murder Mystery button section
-    const mysterySection = document.createElement('div');
-    mysterySection.style.marginBottom = '30px';
+    // Special buttons section
+    const specialSection = document.createElement('div');
+    specialSection.style.marginBottom = '30px';
+    specialSection.style.display = 'flex';
+    specialSection.style.flexDirection = 'column';
+    specialSection.style.gap = '12px';
+    
+    // NFL Playoffs button (dark blue/football theme)
+    const nflPlayoffsButton = document.createElement('a');
+    nflPlayoffsButton.href = 'nfl-playoffs.html';
+    nflPlayoffsButton.style.display = 'flex';
+    nflPlayoffsButton.style.alignItems = 'center';
+    nflPlayoffsButton.style.justifyContent = 'center';
+    nflPlayoffsButton.style.gap = '12px';
+    nflPlayoffsButton.style.padding = '16px 24px';
+    nflPlayoffsButton.style.background = 'linear-gradient(135deg, #1e3a5f 0%, #0f172a 100%)';
+    nflPlayoffsButton.style.color = '#fff';
+    nflPlayoffsButton.style.borderRadius = '12px';
+    nflPlayoffsButton.style.textDecoration = 'none';
+    nflPlayoffsButton.style.fontWeight = 'bold';
+    nflPlayoffsButton.style.fontSize = '18px';
+    nflPlayoffsButton.style.boxShadow = '0 4px 15px rgba(30, 58, 95, 0.3)';
+    nflPlayoffsButton.style.transition = 'transform 0.2s, box-shadow 0.2s';
+    nflPlayoffsButton.innerHTML = '<span style="font-size: 24px;">🏈</span> NFL Playoff Bracket 2025';
+    nflPlayoffsButton.onmouseenter = function() {
+        this.style.transform = 'translateY(-2px)';
+        this.style.boxShadow = '0 6px 20px rgba(30, 58, 95, 0.4)';
+    };
+    nflPlayoffsButton.onmouseleave = function() {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = '0 4px 15px rgba(30, 58, 95, 0.3)';
+    };
+    
+    specialSection.appendChild(nflPlayoffsButton);
     
     // Mystery button - Herrgårdens Hemlighet (purple/indigo theme)
     const mysteryButton = document.createElement('a');
@@ -2138,8 +2169,8 @@ function displayOverview() {
         this.style.boxShadow = '0 4px 15px rgba(109, 40, 217, 0.3)';
     };
     
-    mysterySection.appendChild(mysteryButton);
-    container.appendChild(mysterySection);
+    specialSection.appendChild(mysteryButton);
+    container.appendChild(specialSection);
     
     // Today's events section
     const todaySection = document.createElement('div');
