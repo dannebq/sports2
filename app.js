@@ -1185,9 +1185,15 @@ function parseDate(dateString) {
             const currentYear = now.getFullYear();
             const currentMonth = now.getMonth();
             
-            // If the month is before current month, assume next year
-            // (for winter sports season spanning Dec-Mar)
-            if (month < currentMonth - 1) {
+            // For winter sports season spanning Oct-Mar:
+            // - If we're in Jan-Jun and month is Oct-Dec, it's previous year
+            // - If we're in Jul-Dec and month is Jan-May, it's next year
+            // - Otherwise, it's current year
+            if (currentMonth <= 5 && month >= 9) {
+                // We're in Jan-Jun, event is in Oct-Dec -> previous year
+                year = currentYear - 1;
+            } else if (currentMonth >= 6 && month <= 4) {
+                // We're in Jul-Dec, event is in Jan-May -> next year
                 year = currentYear + 1;
             } else {
                 year = currentYear;
