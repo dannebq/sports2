@@ -1128,6 +1128,28 @@ const packersSchedule = [
     }
 ];
 
+// NFL Playoffs 2026
+const nflPlayoffsSchedule = [
+    // NFC Wild Card
+    { date: "2026-01-10", time: "22:30", home: "Panthers", away: "Rams", conference: "NFC", round: "Wild Card" },
+    { date: "2026-01-11", time: "02:00", home: "Bears", away: "Packers", conference: "NFC", round: "Wild Card", packers: true },
+    { date: "2026-01-11", time: "22:30", home: "Eagles", away: "49ers", conference: "NFC", round: "Wild Card" },
+    // AFC Wild Card
+    { date: "2026-01-11", time: "19:00", home: "Jaguars", away: "Bills", conference: "AFC", round: "Wild Card" },
+    { date: "2026-01-12", time: "02:00", home: "Patriots", away: "Chargers", conference: "AFC", round: "Wild Card" },
+    { date: "2026-01-13", time: "02:15", home: "Steelers", away: "Texans", conference: "AFC", round: "Wild Card" },
+    // Divisional Round
+    { date: "2026-01-17", time: "TBD", home: "Broncos", away: "TBD", conference: "AFC", round: "Divisional" },
+    { date: "2026-01-17", time: "TBD", home: "TBD", away: "TBD", conference: "AFC", round: "Divisional" },
+    { date: "2026-01-18", time: "TBD", home: "Seahawks", away: "TBD", conference: "NFC", round: "Divisional" },
+    { date: "2026-01-18", time: "TBD", home: "TBD", away: "TBD", conference: "NFC", round: "Divisional" },
+    // Conference Championships
+    { date: "2026-01-25", time: "TBD", home: "TBD", away: "TBD", conference: "AFC", round: "AFC Championship" },
+    { date: "2026-01-25", time: "TBD", home: "TBD", away: "TBD", conference: "NFC", round: "NFC Championship" },
+    // Super Bowl
+    { date: "2026-02-08", time: "TBD", home: "TBD", away: "TBD", conference: "", round: "Super Bowl LX" }
+];
+
 // DOM Elements
 const scheduleContainer = document.getElementById('schedule-container');
 
@@ -1210,7 +1232,7 @@ function formatDateSwedish(date) {
 function getAllEvents() {
     const events = [];
     
-    // Add Packers games
+    // Add Packers regular season games
     packersSchedule.forEach(game => {
         if (game.opponent !== null) {
             const date = parseDate(game.date);
@@ -1229,6 +1251,25 @@ function getAllEvents() {
                     time: game.time
                 });
             }
+        }
+    });
+    
+    // Add NFL Playoffs games
+    nflPlayoffsSchedule.forEach(game => {
+        const date = parseDate(game.date);
+        if (date) {
+            const description = `${game.home} – ${game.away}`;
+            const isPackersGame = game.packers === true;
+            
+            events.push({
+                date: date,
+                dateString: formatDateSwedish(date),
+                sport: `NFL Playoffs`,
+                team: isPackersGame ? 'Packers' : game.round,
+                description: `${game.round}: ${description}`,
+                location: game.conference,
+                time: game.time
+            });
         }
     });
     
