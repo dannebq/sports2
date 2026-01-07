@@ -2131,7 +2131,7 @@ function displayOverview() {
     nflPlayoffsButton.style.fontSize = '18px';
     nflPlayoffsButton.style.boxShadow = '0 4px 15px rgba(30, 58, 95, 0.3)';
     nflPlayoffsButton.style.transition = 'transform 0.2s, box-shadow 0.2s';
-    nflPlayoffsButton.innerHTML = '<span style="font-size: 24px;">🏈</span> NFL Playoff Bracket 2025';
+    nflPlayoffsButton.innerHTML = '<span style="font-size: 24px;">🏈</span> NFL Playoff Bracket 2026';
     nflPlayoffsButton.onmouseenter = function() {
         this.style.transform = 'translateY(-2px)';
         this.style.boxShadow = '0 6px 20px rgba(30, 58, 95, 0.4)';
