@@ -117,13 +117,8 @@ const biathlonSchedule = [
             { 
                 date: "8 januari", 
                 races: [
-                    { name: "Sprint 10 km, herrar", tv: "14:10, SVT/SVT Play" }
-                ]
-            },
-            { 
-                date: "9 januari", 
-                races: [
-                    { name: "Sprint 7,5 km, damer", tv: "14:25, SVT/SVT Play" }
+                    { name: "Sprint 10 km, herrar", tv: "11:20, SVT1/SVT Play" },
+                    { name: "Sprint 7,5 km, damer", tv: "14:05, SVT1/SVT Play" }
                 ]
             },
             { 
@@ -952,8 +947,8 @@ const vinterstudionSchedule = [
     { date: "2025-12-21", time: "12:00–16:00", sport: "Vinterstudion", event: "–" },
     { date: "2025-12-21", time: "12:15–13:00", sport: "Skidskytte, Annecy", event: "Masstart (d)" },
     { date: "2025-12-21", time: "14:45–15:30", sport: "Skidskytte, Annecy", event: "Masstart (h)" },
-    { date: "2026-01-08", time: "14:00–15:40", sport: "Skidskytte, Oberhof", event: "Sprint (h)" },
-    { date: "2026-01-09", time: "14:15–15:50", sport: "Skidskytte, Oberhof", event: "Sprint (d)" },
+    { date: "2026-01-08", time: "11:20–12:50", sport: "Skidskytte, Oberhof", event: "Sprint (h)" },
+    { date: "2026-01-08", time: "14:05–15:35", sport: "Skidskytte, Oberhof", event: "Sprint (d)" },
     { date: "2026-01-10", time: "11:30–16:00", sport: "Vinterstudion", event: "–" },
     { date: "2026-01-10", time: "12:00–12:45", sport: "Skidskytte, Oberhof", event: "Jaktstart (h)" },
     { date: "2026-01-10", time: "14:25–15:40", sport: "Skidskytte, Oberhof", event: "Stafett (d)" },
