@@ -247,16 +247,6 @@
             font-style: italic;
         }
         
-        .vs-divider {
-            text-align: center;
-            font-size: 10px;
-            color: #cbd5e1;
-            padding: 0;
-            margin: -8px 0;
-            position: relative;
-            z-index: 1;
-        }
-        
         /* Championship styling */
         .championship .matchup {
             border: 2px solid #6366f1;
@@ -266,6 +256,14 @@
         .championship .matchup-time {
             background: #6366f1;
             color: white;
+        }
+        
+        /* Arrow connector */
+        .arrow-down {
+            text-align: center;
+            padding: 8px 0;
+            color: #cbd5e1;
+            font-size: 20px;
         }
         
         /* Games grid for larger screens */
@@ -291,123 +289,6 @@
     </header>
     
     <div class="container">
-        
-        <!-- Super Bowl -->
-        <div class="super-bowl-card">
-            <h2>🏆 Super Bowl LX</h2>
-            <div class="location">Santa Clara, CA</div>
-            <div class="date">8 februari</div>
-        </div>
-        
-        <!-- Conference Championships -->
-        <div class="round-section championship">
-            <div class="round-header">
-                <span class="round-title">Conference Championships</span>
-                <span class="round-date">25 jan</span>
-            </div>
-            
-            <div class="games-grid">
-                <div>
-                    <div class="conference-label afc">AFC</div>
-                    <div class="matchup">
-                        <div class="matchup-time">TBD</div>
-                        <div class="matchup-teams">
-                            <div class="team">
-                                <span class="team-name tbd">TBD</span>
-                            </div>
-                            <div class="team">
-                                <span class="team-name tbd">TBD</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div>
-                    <div class="conference-label nfc">NFC</div>
-                    <div class="matchup">
-                        <div class="matchup-time">TBD</div>
-                        <div class="matchup-teams">
-                            <div class="team">
-                                <span class="team-name tbd">TBD</span>
-                            </div>
-                            <div class="team">
-                                <span class="team-name tbd">TBD</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Divisional Round -->
-        <div class="round-section">
-            <div class="round-header">
-                <span class="round-title">Divisional Round</span>
-                <span class="round-date">17–18 jan</span>
-            </div>
-            
-            <!-- AFC Divisional -->
-            <div class="conference-section">
-                <div class="conference-label afc">AFC</div>
-                <div class="games-grid">
-                    <div class="matchup">
-                        <div class="matchup-time">17 jan</div>
-                        <div class="matchup-teams">
-                            <div class="team">
-                                <span class="seed">1</span>
-                                <span class="team-logo">🐴</span>
-                                <span class="team-name">Broncos</span>
-                            </div>
-                            <div class="team">
-                                <span class="team-name tbd">Lowest seed</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="matchup">
-                        <div class="matchup-time">17 jan</div>
-                        <div class="matchup-teams">
-                            <div class="team">
-                                <span class="team-name tbd">TBD</span>
-                            </div>
-                            <div class="team">
-                                <span class="team-name tbd">TBD</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- NFC Divisional -->
-            <div class="conference-section">
-                <div class="conference-label nfc">NFC</div>
-                <div class="games-grid">
-                    <div class="matchup">
-                        <div class="matchup-time">18 jan</div>
-                        <div class="matchup-teams">
-                            <div class="team">
-                                <span class="seed">1</span>
-                                <span class="team-logo">🦅</span>
-                                <span class="team-name">Seahawks</span>
-                            </div>
-                            <div class="team">
-                                <span class="team-name tbd">Lowest seed</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="matchup">
-                        <div class="matchup-time">18 jan</div>
-                        <div class="matchup-teams">
-                            <div class="team">
-                                <span class="team-name tbd">TBD</span>
-                            </div>
-                            <div class="team">
-                                <span class="team-name tbd">TBD</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
         
         <!-- Wild Card Round -->
         <div class="round-section">
@@ -555,6 +436,129 @@
                     </div>
                 </div>
             </div>
+        </div>
+        
+        <div class="arrow-down">▼</div>
+        
+        <!-- Divisional Round -->
+        <div class="round-section">
+            <div class="round-header">
+                <span class="round-title">Divisional Round</span>
+                <span class="round-date">17–18 jan</span>
+            </div>
+            
+            <!-- AFC Divisional -->
+            <div class="conference-section">
+                <div class="conference-label afc">AFC</div>
+                <div class="games-grid">
+                    <div class="matchup">
+                        <div class="matchup-time">17 jan</div>
+                        <div class="matchup-teams">
+                            <div class="team">
+                                <span class="seed">1</span>
+                                <span class="team-logo">🐴</span>
+                                <span class="team-name">Broncos</span>
+                            </div>
+                            <div class="team">
+                                <span class="team-name tbd">Lowest seed</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="matchup">
+                        <div class="matchup-time">17 jan</div>
+                        <div class="matchup-teams">
+                            <div class="team">
+                                <span class="team-name tbd">TBD</span>
+                            </div>
+                            <div class="team">
+                                <span class="team-name tbd">TBD</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- NFC Divisional -->
+            <div class="conference-section">
+                <div class="conference-label nfc">NFC</div>
+                <div class="games-grid">
+                    <div class="matchup">
+                        <div class="matchup-time">18 jan</div>
+                        <div class="matchup-teams">
+                            <div class="team">
+                                <span class="seed">1</span>
+                                <span class="team-logo">🦅</span>
+                                <span class="team-name">Seahawks</span>
+                            </div>
+                            <div class="team">
+                                <span class="team-name tbd">Lowest seed</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="matchup">
+                        <div class="matchup-time">18 jan</div>
+                        <div class="matchup-teams">
+                            <div class="team">
+                                <span class="team-name tbd">TBD</span>
+                            </div>
+                            <div class="team">
+                                <span class="team-name tbd">TBD</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="arrow-down">▼</div>
+        
+        <!-- Conference Championships -->
+        <div class="round-section championship">
+            <div class="round-header">
+                <span class="round-title">Conference Championships</span>
+                <span class="round-date">25 jan</span>
+            </div>
+            
+            <div class="games-grid">
+                <div>
+                    <div class="conference-label afc">AFC</div>
+                    <div class="matchup">
+                        <div class="matchup-time">TBD</div>
+                        <div class="matchup-teams">
+                            <div class="team">
+                                <span class="team-name tbd">TBD</span>
+                            </div>
+                            <div class="team">
+                                <span class="team-name tbd">TBD</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="conference-label nfc">NFC</div>
+                    <div class="matchup">
+                        <div class="matchup-time">TBD</div>
+                        <div class="matchup-teams">
+                            <div class="team">
+                                <span class="team-name tbd">TBD</span>
+                            </div>
+                            <div class="team">
+                                <span class="team-name tbd">TBD</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="arrow-down">▼</div>
+        
+        <!-- Super Bowl -->
+        <div class="super-bowl-card">
+            <h2>🏆 Super Bowl LX</h2>
+            <div class="location">Santa Clara, CA</div>
+            <div class="date">8 februari</div>
         </div>
         
     </div>
