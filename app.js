@@ -1123,6 +1123,226 @@ const packersSchedule = [
     }
 ];
 
+// Vinter OS 2026 (Milano-Cortina)
+const winterOlympicsSchedule = [
+    { date: "2026-02-04", time: "19:05", sport: "Curling", event: "Mixed dubbel, omg 1: Sverige–Kvallag B", location: "Cortina" },
+    { date: "2026-02-05", time: "10:05", sport: "Curling", event: "Mixed dubbel, omg 2: Sverige–Kvallag A", location: "Cortina" },
+    { date: "2026-02-05", time: "12:10", sport: "Ishockey", event: "Damer gruppspel: Sverige–Tyskland", location: "Milano" },
+    { date: "2026-02-05", time: "19:05", sport: "Curling", event: "Mixed dubbel, omg 4: Estland–Sverige", location: "Cortina" },
+    { date: "2026-02-05", time: "19:30", sport: "Snowboard", event: "Big air kval, herrar", location: "Livigno" },
+    { date: "2026-02-06", time: "09:55", sport: "Konståkning", event: "Lagtävling (Isdans/rytm, par/kort, damer/kort)", location: "Milano" },
+    { date: "2026-02-06", time: "10:05", sport: "Curling", event: "Mixed dubbel, omg 5: Sverige–Storbritannien", location: "Cortina" },
+    { date: "2026-02-06", time: "14:35", sport: "Curling", event: "Mixed dubbel, omg 6: Sverige–Norge", location: "Cortina" },
+    { date: "2026-02-06", time: "20:00", sport: "Ceremoni", event: "INVIGNING", location: "Milano" },
+    { date: "2026-02-07", time: "10:05", sport: "Curling", event: "Mixed dubbel, omg 7: Sverige–Schweiz", location: "Cortina" },
+    { date: "2026-02-07", time: "10:30", sport: "Freeski", event: "Slopestyle kval, damer", location: "Livigno" },
+    { date: "2026-02-07", time: "11:30", sport: "Alpint", event: "Störtlopp, herrar", location: "Stelvio" },
+    { date: "2026-02-07", time: "13:00", sport: "Längdskidor", event: "Skiathlon 10+10 km, damer", location: "Tesero" },
+    { date: "2026-02-07", time: "14:00", sport: "Freeski", event: "Slopestyle kval, herrar", location: "Livigno" },
+    { date: "2026-02-07", time: "14:35", sport: "Curling", event: "Mixed dubbel, omg 8: Sverige–Italien", location: "Cortina" },
+    { date: "2026-02-07", time: "14:40", sport: "Ishockey", event: "Damer gruppspel: Sverige–Italien", location: "Milano" },
+    { date: "2026-02-07", time: "16:00", sport: "Skridsko", event: "3 000 m, damer", location: "Milano" },
+    { date: "2026-02-07", time: "17:00", sport: "Rodel", event: "Singel åk 1 och 2, herrar", location: "Cortina" },
+    { date: "2026-02-07", time: "18:45", sport: "Backhoppning", event: "Normalbacke, damer", location: "Predazzo" },
+    { date: "2026-02-07", time: "19:30", sport: "Snowboard", event: "Big air final, herrar", location: "Livigno" },
+    { date: "2026-02-07", time: "19:45", sport: "Konståkning", event: "Lagtävling (herrar/kort, isdans/fri)", location: "Milano" },
+    { date: "2026-02-08", time: "09:00", sport: "Snowboard", event: "Parallellstorslalom kval, damer & herrar", location: "Livigno" },
+    { date: "2026-02-08", time: "11:30", sport: "Alpint", event: "Störtlopp, damer", location: "Tofane" },
+    { date: "2026-02-08", time: "12:30", sport: "Längdskidor", event: "Skiathlon 10+10 km, herrar", location: "Tesero" },
+    { date: "2026-02-08", time: "13:00", sport: "Snowboard", event: "Parallellstorslalom final, damer & herrar", location: "Livigno" },
+    { date: "2026-02-08", time: "14:05", sport: "Skidskytte", event: "Mixedstafett 4x6 km", location: "Anterselva" },
+    { date: "2026-02-08", time: "14:35", sport: "Curling", event: "Mixed dubbel, omg 11: Kanada–Sverige", location: "Cortina" },
+    { date: "2026-02-08", time: "16:00", sport: "Skridsko", event: "5 000 m, herrar", location: "Milano" },
+    { date: "2026-02-08", time: "16:40", sport: "Ishockey", event: "Damer gruppspel: Frankrike–Sverige", location: "Milano" },
+    { date: "2026-02-08", time: "17:00", sport: "Rodel", event: "Singel åk 3 och 4, herrar", location: "Cortina" },
+    { date: "2026-02-08", time: "19:05", sport: "Curling", event: "Mixed dubbel, omg 12: USA–Sverige", location: "Cortina" },
+    { date: "2026-02-08", time: "19:30", sport: "Snowboard", event: "Big air kval, damer", location: "Livigno" },
+    { date: "2026-02-08", time: "19:30", sport: "Konståkning", event: "Lagtävling (par, damer, herrar/fritt)", location: "Milano" },
+    { date: "2026-02-09", time: "10:30", sport: "Alpint", event: "Lagkombination störtlopp, herrar", location: "Stelvio" },
+    { date: "2026-02-09", time: "12:30", sport: "Freeski", event: "Slopestyle final, damer", location: "Livigno" },
+    { date: "2026-02-09", time: "14:00", sport: "Alpint", event: "Lagkombination slalom, herrar", location: "Stelvio" },
+    { date: "2026-02-09", time: "17:00", sport: "Rodel", event: "Singel åk 1 och 2, damer", location: "Cortina" },
+    { date: "2026-02-09", time: "17:30", sport: "Skridsko", event: "1 000 m, damer", location: "Milano" },
+    { date: "2026-02-09", time: "18:05", sport: "Curling", event: "Mixed dubbel, semifinaler", location: "Cortina" },
+    { date: "2026-02-09", time: "19:00", sport: "Backhoppning", event: "Normalbacke, herrar", location: "Predazzo" },
+    { date: "2026-02-09", time: "19:20", sport: "Konståkning", event: "Isdans, rytmdans", location: "Milano" },
+    { date: "2026-02-09", time: "19:30", sport: "Snowboard", event: "Big air final, damer", location: "Livigno" },
+    { date: "2026-02-10", time: "09:15", sport: "Längdskidor", event: "Sprint-kval, damer & herrar", location: "Tesero" },
+    { date: "2026-02-10", time: "10:30", sport: "Alpint", event: "Lagkombination störtlopp, damer", location: "Tofane" },
+    { date: "2026-02-10", time: "10:30", sport: "Shorttrack", event: "500m kval (D), 1000m kval (H), mixed stafett", location: "Milano" },
+    { date: "2026-02-10", time: "11:15", sport: "Puckelpist", event: "Puckelkval 1, herrar", location: "Livigno" },
+    { date: "2026-02-10", time: "11:45", sport: "Längdskidor", event: "Sprint-final, damer & herrar", location: "Tesero" },
+    { date: "2026-02-10", time: "12:10", sport: "Ishockey", event: "Damer gruppspel: Japan–Sverige", location: "Milano" },
+    { date: "2026-02-10", time: "12:30", sport: "Freeski", event: "Slopestyle final, herrar", location: "Livigno" },
+    { date: "2026-02-10", time: "13:30", sport: "Skidskytte", event: "Distans 20 km, herrar", location: "Anterselva" },
+    { date: "2026-02-10", time: "14:00", sport: "Alpint", event: "Lagkombination slalom, damer", location: "Tofane" },
+    { date: "2026-02-10", time: "14:05", sport: "Curling", event: "Mixed dubbel, bronsmatch", location: "Cortina" },
+    { date: "2026-02-10", time: "14:15", sport: "Puckelpist", event: "Puckelkval 1, damer", location: "Livigno" },
+    { date: "2026-02-10", time: "17:00", sport: "Rodel", event: "Singel åk 3 och 4, damer", location: "Cortina" },
+    { date: "2026-02-10", time: "18:05", sport: "Curling", event: "Mixed dubbel, final", location: "Cortina" },
+    { date: "2026-02-10", time: "18:30", sport: "Konståkning", event: "Kortprogram, herrar", location: "Milano" },
+    { date: "2026-02-10", time: "18:45", sport: "Backhoppning", event: "Mixed team", location: "Predazzo" },
+    { date: "2026-02-11", time: "10:00", sport: "Nordisk kombination", event: "Individuell Gundersen normalbacke", location: "Predazzo" },
+    { date: "2026-02-11", time: "10:30", sport: "Snowboard", event: "Halfpipe kval, damer", location: "Livigno" },
+    { date: "2026-02-11", time: "11:00", sport: "Puckelpist", event: "Puckelkval 2, damer", location: "Livigno" },
+    { date: "2026-02-11", time: "11:30", sport: "Alpint", event: "Super-G, herrar", location: "Stelvio" },
+    { date: "2026-02-11", time: "13:45", sport: "Nordisk kombination", event: "Individuell 10 km (normal)", location: "Tesero" },
+    { date: "2026-02-11", time: "14:15", sport: "Puckelpist", event: "Final, damer", location: "Livigno" },
+    { date: "2026-02-11", time: "14:15", sport: "Skidskytte", event: "Distans 15 km, damer", location: "Anterselva" },
+    { date: "2026-02-11", time: "17:00", sport: "Rodel", event: "Dubbel åk 1 och 2, damer & herrar", location: "Cortina" },
+    { date: "2026-02-11", time: "18:30", sport: "Skridsko", event: "1 000 m, herrar", location: "Milano" },
+    { date: "2026-02-11", time: "19:05", sport: "Curling", event: "Herrar omg 1: Sverige–Italien", location: "Cortina" },
+    { date: "2026-02-11", time: "19:30", sport: "Snowboard", event: "Halfpipe kval, herrar", location: "Livigno" },
+    { date: "2026-02-11", time: "19:30", sport: "Konståkning", event: "Isdans, fritt program", location: "Milano" },
+    { date: "2026-02-11", time: "21:10", sport: "Ishockey", event: "Herrar gruppspel: Sverige–Italien", location: "Milano" },
+    { date: "2026-02-12", time: "09:05", sport: "Curling", event: "Damer omg 1: Kvallag B–Sverige", location: "Cortina" },
+    { date: "2026-02-12", time: "09:30", sport: "Skeleton", event: "Heat 1 och 2, herrar", location: "Cortina" },
+    { date: "2026-02-12", time: "10:00", sport: "Puckelpist", event: "Puckelkval 2, herrar", location: "Livigno" },
+    { date: "2026-02-12", time: "10:00", sport: "Snowboard", event: "Snowboardcross kval, herrar", location: "Livigno" },
+    { date: "2026-02-12", time: "11:30", sport: "Alpint", event: "Super-G, damer", location: "Tofane" },
+    { date: "2026-02-12", time: "12:15", sport: "Puckelpist", event: "Final, herrar", location: "Livigno" },
+    { date: "2026-02-12", time: "13:00", sport: "Längdskidor", event: "10 km fri stil, damer", location: "Tesero" },
+    { date: "2026-02-12", time: "13:45", sport: "Snowboard", event: "Snowboardcross final, herrar", location: "Livigno" },
+    { date: "2026-02-12", time: "14:05", sport: "Curling", event: "Herrar omg 2: Storbritannien–Sverige", location: "Cortina" },
+    { date: "2026-02-12", time: "16:30", sport: "Skridsko", event: "5 000 m, damer", location: "Milano" },
+    { date: "2026-02-12", time: "18:30", sport: "Rodel", event: "Lagstafetter", location: "Cortina" },
+    { date: "2026-02-12", time: "19:05", sport: "Curling", event: "Damer omg 2: Sverige–Kvallag A", location: "Cortina" },
+    { date: "2026-02-12", time: "19:30", sport: "Snowboard", event: "Halfpipe final, damer", location: "Livigno" },
+    { date: "2026-02-12", time: "20:15", sport: "Shorttrack", event: "500m (D), 1000m (H) finaler", location: "Milano" },
+    { date: "2026-02-13", time: "10:00", sport: "Snowboard", event: "Snowboardcross kval, damer", location: "Livigno" },
+    { date: "2026-02-13", time: "12:00", sport: "Längdskidor", event: "10 km fri stil, herrar", location: "Tesero" },
+    { date: "2026-02-13", time: "12:10", sport: "Ishockey", event: "Herrar gruppspel: Finland–Sverige", location: "Milano" },
+    { date: "2026-02-13", time: "13:30", sport: "Snowboard", event: "Snowboardcross final, damer", location: "Livigno" },
+    { date: "2026-02-13", time: "14:00", sport: "Skidskytte", event: "Sprint 10 km, herrar", location: "Anterselva" },
+    { date: "2026-02-13", time: "14:05", sport: "Curling", event: "Damer omg 3: Danmark–Sverige", location: "Cortina" },
+    { date: "2026-02-13", time: "16:00", sport: "Skeleton", event: "Heat 1 och 2, damer", location: "Cortina" },
+    { date: "2026-02-13", time: "16:00", sport: "Skridsko", event: "10 000 m, herrar", location: "Milano" },
+    { date: "2026-02-13", time: "16:40", sport: "Ishockey", event: "Damer, Kvartsfinal 1", location: "Milano" },
+    { date: "2026-02-13", time: "19:00", sport: "Konståkning", event: "Fritt program, herrar", location: "Milano" },
+    { date: "2026-02-13", time: "19:05", sport: "Curling", event: "Herrar omg 4: Kanada–Sverige", location: "Cortina" },
+    { date: "2026-02-13", time: "19:30", sport: "Skeleton", event: "Heat 3 och 4, herrar", location: "Cortina" },
+    { date: "2026-02-13", time: "19:30", sport: "Snowboard", event: "Halfpipe final, herrar", location: "Livigno" },
+    { date: "2026-02-13", time: "21:10", sport: "Ishockey", event: "Damer, Kvartsfinal 2", location: "Milano" },
+    { date: "2026-02-14", time: "10:00", sport: "Alpint", event: "Storslalom åk 1, herrar", location: "Stelvio" },
+    { date: "2026-02-14", time: "10:30", sport: "Puckelpist", event: "Damer parallellpuckel final", location: "Livigno" },
+    { date: "2026-02-14", time: "12:00", sport: "Längdskidor", event: "Damstafett 4x7,5 km", location: "Tesero" },
+    { date: "2026-02-14", time: "12:10", sport: "Ishockey", event: "Herrar gruppspel: Sverige–Slovakien", location: "Milano" },
+    { date: "2026-02-14", time: "13:30", sport: "Alpint", event: "Storslalom åk 2, herrar", location: "Stelvio" },
+    { date: "2026-02-14", time: "14:00", sport: "Skidskytte", event: "Sprint 7,5 km, damer", location: "Anterselva" },
+    { date: "2026-02-14", time: "14:05", sport: "Curling", event: "Herrar omg 5: Sverige–Kvallag A", location: "Cortina" },
+    { date: "2026-02-14", time: "16:00", sport: "Skridsko", event: "Stafett kval (D), 500m (H)", location: "Milano" },
+    { date: "2026-02-14", time: "16:40", sport: "Ishockey", event: "Damer, Kvartsfinal 3", location: "Milano" },
+    { date: "2026-02-14", time: "18:00", sport: "Skeleton", event: "Heat 3 och 4, damer", location: "Cortina" },
+    { date: "2026-02-14", time: "18:45", sport: "Backhoppning", event: "Stora backen, herrar", location: "Predazzo" },
+    { date: "2026-02-14", time: "19:05", sport: "Curling", event: "Damer omg 5: Italien–Sverige", location: "Cortina" },
+    { date: "2026-02-14", time: "19:30", sport: "Freeski", event: "Big air kval, damer", location: "Livigno" },
+    { date: "2026-02-14", time: "20:15", sport: "Shorttrack", event: "1000m kval (D), 1500m (H), 3000m stafett (D)", location: "Milano" },
+    { date: "2026-02-14", time: "21:10", sport: "Ishockey", event: "Damer, Kvartsfinal 4", location: "Milano" },
+    { date: "2026-02-15", time: "09:05", sport: "Curling", event: "Herrar omg 6: Kvallag B–Sverige", location: "Cortina" },
+    { date: "2026-02-15", time: "10:00", sport: "Alpint", event: "Storslalom åk 1, damer", location: "Tofane" },
+    { date: "2026-02-15", time: "10:00", sport: "Bob", event: "Monobob heat 1 och 2, damer", location: "Cortina" },
+    { date: "2026-02-15", time: "10:30", sport: "Puckelpist", event: "Parallellpuckel final, herrar", location: "Livigno" },
+    { date: "2026-02-15", time: "11:00", sport: "Snowboard", event: "Mixed team snowboardcross kval", location: "Livigno" },
+    { date: "2026-02-15", time: "11:15", sport: "Skidskytte", event: "Jaktstart 12,5 km, herrar", location: "Anterselva" },
+    { date: "2026-02-15", time: "12:00", sport: "Längdskidor", event: "Herrstafett 4x7,5 km", location: "Tesero" },
+    { date: "2026-02-15", time: "13:30", sport: "Alpint", event: "Storslalom åk 2, damer", location: "Tofane" },
+    { date: "2026-02-15", time: "13:45", sport: "Snowboard", event: "Mixed team snowboardcross final", location: "Livigno" },
+    { date: "2026-02-15", time: "14:05", sport: "Curling", event: "Damer omg 6: Storbritannien–Sverige", location: "Cortina" },
+    { date: "2026-02-15", time: "14:45", sport: "Skidskytte", event: "Jaktstart 10 km, damer", location: "Anterselva" },
+    { date: "2026-02-15", time: "16:00", sport: "Skridsko", event: "Stafett kval (H), 500m (D)", location: "Milano" },
+    { date: "2026-02-15", time: "18:00", sport: "Skeleton", event: "Mixed team", location: "Cortina" },
+    { date: "2026-02-15", time: "18:45", sport: "Backhoppning", event: "Stora backen, damer", location: "Predazzo" },
+    { date: "2026-02-15", time: "19:30", sport: "Freeski", event: "Big air kval, herrar", location: "Livigno" },
+    { date: "2026-02-15", time: "19:45", sport: "Konståkning", event: "Partävling, kortprogram", location: "Milano" },
+    { date: "2026-02-16", time: "09:05", sport: "Curling", event: "Damer omg 7: Sverige–Schweiz", location: "Cortina" },
+    { date: "2026-02-16", time: "10:00", sport: "Alpint", event: "Slalom åk 1, herrar", location: "Tofane" },
+    { date: "2026-02-16", time: "10:00", sport: "Bob", event: "Tvåmanna heat 1 och 2, herrar", location: "Cortina" },
+    { date: "2026-02-16", time: "10:30", sport: "Snowboard", event: "Slopestyle kval, damer", location: "Livigno" },
+    { date: "2026-02-16", time: "11:00", sport: "Shorttrack", event: "500m kval (H), 1000m (D), 5000m stafett (H)", location: "Milano" },
+    { date: "2026-02-16", time: "13:30", sport: "Alpint", event: "Slalom åk 2, herrar", location: "Tofane" },
+    { date: "2026-02-16", time: "14:00", sport: "Snowboard", event: "Slopestyle kval, herrar", location: "Livigno" },
+    { date: "2026-02-16", time: "14:05", sport: "Curling", event: "Herrar omg 8: Sverige–Tyskland", location: "Cortina" },
+    { date: "2026-02-16", time: "16:40", sport: "Ishockey", event: "Damer, Semifinal 1", location: "Milano" },
+    { date: "2026-02-16", time: "19:00", sport: "Bob", event: "Monobob heat 3 och 4, damer", location: "Cortina" },
+    { date: "2026-02-16", time: "19:00", sport: "Backhoppning", event: "Super team, herrar", location: "Predazzo" },
+    { date: "2026-02-16", time: "19:30", sport: "Freeski", event: "Big air final, damer", location: "Livigno" },
+    { date: "2026-02-16", time: "20:00", sport: "Konståkning", event: "Partävling, fritt program", location: "Milano" },
+    { date: "2026-02-16", time: "21:10", sport: "Ishockey", event: "Damer, Semifinal 2", location: "Milano" },
+    { date: "2026-02-17", time: "09:05", sport: "Curling", event: "Herrar omg 9: Schweiz–Sverige", location: "Cortina" },
+    { date: "2026-02-17", time: "10:00", sport: "Nordisk kombination", event: "Individuell Gundersen stora backen", location: "Predazzo" },
+    { date: "2026-02-17", time: "10:45", sport: "Freestyle hopp", event: "Kval, damer", location: "Livigno" },
+    { date: "2026-02-17", time: "12:10", sport: "Ishockey", event: "Herrar, Kvalspel 1", location: "Milano" },
+    { date: "2026-02-17", time: "13:00", sport: "Snowboard", event: "Slopestyle final, damer", location: "Livigno" },
+    { date: "2026-02-17", time: "13:30", sport: "Freestyle hopp", event: "Kval, herrar", location: "Livigno" },
+    { date: "2026-02-17", time: "13:45", sport: "Nordisk kombination", event: "Individuell 10 km (stora)", location: "Tesero" },
+    { date: "2026-02-17", time: "14:05", sport: "Curling", event: "Damer omg 9: Sverige–Kanada", location: "Cortina" },
+    { date: "2026-02-17", time: "14:30", sport: "Skidskytte", event: "Stafett 4x7,5km, herrar", location: "Anterselva" },
+    { date: "2026-02-17", time: "14:30", sport: "Skridsko", event: "Stafett final, herrar och damer", location: "Milano" },
+    { date: "2026-02-17", time: "16:40", sport: "Ishockey", event: "Herrar, Kvalspel 2", location: "Milano" },
+    { date: "2026-02-17", time: "18:45", sport: "Konståkning", event: "Kortprogram, damer", location: "Milano" },
+    { date: "2026-02-17", time: "19:00", sport: "Bob", event: "Tvåmanna heat 3 och 4, herrar", location: "Cortina" },
+    { date: "2026-02-17", time: "19:05", sport: "Curling", event: "Herrar omg 10: Sverige–Norge", location: "Cortina" },
+    { date: "2026-02-17", time: "19:30", sport: "Freeski", event: "Big air final, herrar", location: "Livigno" },
+    { date: "2026-02-17", time: "21:10", sport: "Ishockey", event: "Herrar, Kvalspel 3", location: "Milano" },
+    { date: "2026-02-18", time: "09:05", sport: "Curling", event: "Damer omg 10: Sverige–Sydkorea", location: "Cortina" },
+    { date: "2026-02-18", time: "09:45", sport: "Längdskidor", event: "Teamsprint fri stil kval, damer & herrar", location: "Tesero" },
+    { date: "2026-02-18", time: "10:00", sport: "Alpint", event: "Slalom åk 1, damer", location: "Tofane" },
+    { date: "2026-02-18", time: "11:30", sport: "Freestyle hopp", event: "Final, damer", location: "Livigno" },
+    { date: "2026-02-18", time: "11:45", sport: "Längdskidor", event: "Teamsprint fri stil final, damer & herrar", location: "Tesero" },
+    { date: "2026-02-18", time: "12:10", sport: "Ishockey", event: "Herrar, Kvartsfinal 1", location: "Milano" },
+    { date: "2026-02-18", time: "12:30", sport: "Snowboard", event: "Slopestyle final, herrar", location: "Livigno" },
+    { date: "2026-02-18", time: "13:30", sport: "Alpint", event: "Slalom åk 2, damer", location: "Tofane" },
+    { date: "2026-02-18", time: "14:45", sport: "Skidskytte", event: "Stafett 4x6 km, damer", location: "Anterselva" },
+    { date: "2026-02-18", time: "16:40", sport: "Ishockey", event: "Herrar, Kvartsfinal 2", location: "Milano" },
+    { date: "2026-02-18", time: "18:10", sport: "Ishockey", event: "Herrar, Kvartsfinal 3", location: "Milano" },
+    { date: "2026-02-18", time: "19:05", sport: "Curling", event: "Damer omg 11: Kina–Sverige", location: "Cortina" },
+    { date: "2026-02-18", time: "20:15", sport: "Shorttrack", event: "500m (H) final, 3000m stafett final (D)", location: "Milano" },
+    { date: "2026-02-18", time: "21:10", sport: "Ishockey", event: "Herrar, Kvartsfinal 4", location: "Milano" },
+    { date: "2026-02-19", time: "09:05", sport: "Curling", event: "Herrar omg 12: Sverige–Tjeckien", location: "Cortina" },
+    { date: "2026-02-19", time: "09:50", sport: "Skimo", event: "Sprint kval, damer & herrar", location: "Stelvio" },
+    { date: "2026-02-19", time: "10:00", sport: "Nordisk kombination", event: "Teamsprint stora backen", location: "Predazzo" },
+    { date: "2026-02-19", time: "10:30", sport: "Freeski", event: "Halfpipe kval, herrar", location: "Livigno" },
+    { date: "2026-02-19", time: "11:30", sport: "Freestyle hopp", event: "Final, herrar", location: "Livigno" },
+    { date: "2026-02-19", time: "12:55", sport: "Skimo", event: "Sprint final, damer & herrar", location: "Stelvio" },
+    { date: "2026-02-19", time: "14:00", sport: "Nordisk kombination", event: "Teamsprint 2x7,5 km", location: "Tesero" },
+    { date: "2026-02-19", time: "14:40", sport: "Ishockey", event: "Damer, Bronsmatch", location: "Milano" },
+    { date: "2026-02-19", time: "16:30", sport: "Skridsko", event: "1 500 m, herrar", location: "Milano" },
+    { date: "2026-02-19", time: "19:00", sport: "Konståkning", event: "Fritt program, damer", location: "Milano" },
+    { date: "2026-02-19", time: "19:05", sport: "Curling", event: "Semifinaler, herrar", location: "Cortina" },
+    { date: "2026-02-19", time: "19:10", sport: "Ishockey", event: "Damer, Final", location: "Milano" },
+    { date: "2026-02-19", time: "19:30", sport: "Freeski", event: "Halfpipe kval, damer", location: "Livigno" },
+    { date: "2026-02-20", time: "10:00", sport: "Skicross", event: "Kval, damer", location: "Livigno" },
+    { date: "2026-02-20", time: "12:00", sport: "Skicross", event: "Final, damer", location: "Livigno" },
+    { date: "2026-02-20", time: "14:05", sport: "Curling", event: "Semifinaler, damer", location: "Cortina" },
+    { date: "2026-02-20", time: "14:15", sport: "Skidskytte", event: "Masstart 15 km, herrar", location: "Anterselva" },
+    { date: "2026-02-20", time: "16:30", sport: "Skridsko", event: "1 500 m, damer", location: "Milano" },
+    { date: "2026-02-20", time: "16:40", sport: "Ishockey", event: "Herrar, Semifinal 1", location: "Milano" },
+    { date: "2026-02-20", time: "18:00", sport: "Bob", event: "Tvåmanna heat 1 och 2, damer", location: "Cortina" },
+    { date: "2026-02-20", time: "19:05", sport: "Curling", event: "Bronsmatch, herrar", location: "Cortina" },
+    { date: "2026-02-20", time: "19:30", sport: "Freeski", event: "Halfpipe final, herrar", location: "Livigno" },
+    { date: "2026-02-20", time: "20:15", sport: "Shorttrack", event: "1500m (D) final, 5000m stafett final (H)", location: "Milano" },
+    { date: "2026-02-20", time: "21:10", sport: "Ishockey", event: "Herrar, Semifinal 2", location: "Milano" },
+    { date: "2026-02-21", time: "10:00", sport: "Bob", event: "Fyrmanna heat 1 och 2, herrar", location: "Cortina" },
+    { date: "2026-02-21", time: "10:00", sport: "Skicross", event: "Kval, herrar", location: "Livigno" },
+    { date: "2026-02-21", time: "10:45", sport: "Freestyle hopp", event: "Mixed team final", location: "Livigno" },
+    { date: "2026-02-21", time: "11:00", sport: "Längdskidor", event: "50 km masstart (k), herrar", location: "Tesero" },
+    { date: "2026-02-21", time: "12:00", sport: "Skicross", event: "Final, herrar", location: "Livigno" },
+    { date: "2026-02-21", time: "13:30", sport: "Skimo", event: "Mixed stafett finaler", location: "Stelvio" },
+    { date: "2026-02-21", time: "14:05", sport: "Curling", event: "Bronsmatch, damer", location: "Cortina" },
+    { date: "2026-02-21", time: "14:15", sport: "Skidskytte", event: "Masstart 12,5 km, damer", location: "Anterselva" },
+    { date: "2026-02-21", time: "15:00", sport: "Skridsko", event: "Masstart, damer och herrar", location: "Milano" },
+    { date: "2026-02-21", time: "19:00", sport: "Bob", event: "Tvåmanna heat 3 och 4, damer", location: "Cortina" },
+    { date: "2026-02-21", time: "19:05", sport: "Curling", event: "Final, herrar", location: "Cortina" },
+    { date: "2026-02-21", time: "19:30", sport: "Freeski", event: "Halfpipe final, damer", location: "Livigno" },
+    { date: "2026-02-21", time: "20:00", sport: "Konståkning", event: "Uppvisningsgala", location: "Milano" },
+    { date: "2026-02-21", time: "20:40", sport: "Ishockey", event: "Herrar, Bronsmatch", location: "Milano" },
+    { date: "2026-02-22", time: "10:00", sport: "Bob", event: "Fyrmanna heat 3 och 4, herrar", location: "Cortina" },
+    { date: "2026-02-22", time: "10:00", sport: "Längdskidor", event: "50 km masstart (k), damer", location: "Tesero" },
+    { date: "2026-02-22", time: "11:05", sport: "Curling", event: "Final, damer", location: "Cortina" },
+    { date: "2026-02-22", time: "14:10", sport: "Ishockey", event: "Herrar, Final", location: "Milano" },
+    { date: "2026-02-22", time: "20:00", sport: "Ceremoni", event: "AVSLUTNING", location: "Verona" }
+];
+
 // NFL Playoffs 2026
 const nflPlayoffsSchedule = [
     // NFC Wild Card
@@ -1270,6 +1490,22 @@ function getAllEvents() {
                 description: `${game.round}: ${description}`,
                 location: game.conference,
                 time: game.time
+            });
+        }
+    });
+    
+    // Add Winter Olympics events
+    winterOlympicsSchedule.forEach(event => {
+        const date = parseDate(event.date);
+        if (date) {
+            events.push({
+                date: date,
+                dateString: formatDateSwedish(date),
+                sport: 'Vinter-OS',
+                team: event.sport,
+                description: event.event,
+                location: event.location,
+                time: event.time
             });
         }
     });
@@ -1932,6 +2168,168 @@ function displaySkiClassicsSchedule(schedule) {
     scheduleContainer.appendChild(table);
 }
 
+// Function to create Winter Olympics table with sport filter
+function createWinterOlympicsTable(schedule, filterSport = null) {
+    const container = document.createElement('div');
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Get unique sports for filter buttons
+    const sports = [...new Set(schedule.map(e => e.sport))].sort();
+    
+    // Filter buttons container
+    const filterContainer = document.createElement('div');
+    filterContainer.style.display = 'flex';
+    filterContainer.style.flexWrap = 'wrap';
+    filterContainer.style.gap = '8px';
+    filterContainer.style.marginBottom = '20px';
+    
+    // "All" button
+    const allBtn = document.createElement('button');
+    allBtn.textContent = 'Alla';
+    allBtn.style.padding = '8px 16px';
+    allBtn.style.border = '2px solid #1e293b';
+    allBtn.style.borderRadius = '6px';
+    allBtn.style.cursor = 'pointer';
+    allBtn.style.fontWeight = 'bold';
+    allBtn.style.fontSize = '13px';
+    allBtn.style.transition = 'all 0.2s';
+    if (!filterSport) {
+        allBtn.style.background = '#1e293b';
+        allBtn.style.color = '#fff';
+    } else {
+        allBtn.style.background = '#fff';
+        allBtn.style.color = '#1e293b';
+    }
+    allBtn.onclick = () => displayWinterOlympicsSchedule(schedule, null);
+    filterContainer.appendChild(allBtn);
+    
+    // Sport filter buttons
+    sports.forEach(sport => {
+        const btn = document.createElement('button');
+        btn.textContent = sport;
+        btn.style.padding = '8px 16px';
+        btn.style.border = '2px solid #1e293b';
+        btn.style.borderRadius = '6px';
+        btn.style.cursor = 'pointer';
+        btn.style.fontWeight = 'bold';
+        btn.style.fontSize = '13px';
+        btn.style.transition = 'all 0.2s';
+        if (filterSport === sport) {
+            btn.style.background = '#1e293b';
+            btn.style.color = '#fff';
+        } else {
+            btn.style.background = '#fff';
+            btn.style.color = '#1e293b';
+        }
+        btn.onclick = () => displayWinterOlympicsSchedule(schedule, sport);
+        filterContainer.appendChild(btn);
+    });
+    
+    container.appendChild(filterContainer);
+    
+    // Filter events
+    let filteredEvents = filterSport 
+        ? schedule.filter(e => e.sport === filterSport)
+        : schedule;
+    
+    // Filter out past events
+    filteredEvents = filteredEvents.filter(e => {
+        const eventDate = parseDate(e.date);
+        return eventDate && eventDate >= today;
+    });
+    
+    // Group by date
+    const eventsByDate = {};
+    filteredEvents.forEach(event => {
+        const dateKey = event.date;
+        if (!eventsByDate[dateKey]) {
+            eventsByDate[dateKey] = [];
+        }
+        eventsByDate[dateKey].push(event);
+    });
+    
+    // Sort events within each date by time
+    Object.keys(eventsByDate).forEach(dateKey => {
+        eventsByDate[dateKey].sort((a, b) => {
+            return a.time.localeCompare(b.time);
+        });
+    });
+    
+    // Create table for each date
+    Object.keys(eventsByDate).sort().forEach(dateKey => {
+        const dayEvents = eventsByDate[dateKey];
+        const eventDate = parseDate(dateKey);
+        const formattedDate = formatDateSwedish(eventDate);
+        
+        const dateHeader = document.createElement('h3');
+        dateHeader.style.marginTop = '25px';
+        dateHeader.style.marginBottom = '10px';
+        dateHeader.style.fontSize = '16px';
+        dateHeader.style.fontWeight = 'bold';
+        dateHeader.style.color = '#1e293b';
+        dateHeader.textContent = formattedDate;
+        container.appendChild(dateHeader);
+        
+        const table = document.createElement('table');
+        table.className = 'schedule-table';
+        
+        let html = `
+            <thead>
+                <tr>
+                    <th>Tid</th>
+                    <th>Sport</th>
+                    <th>Gren / Match</th>
+                    <th>Plats</th>
+                </tr>
+            </thead>
+            <tbody>
+        `;
+        
+        dayEvents.forEach(event => {
+            html += `
+                <tr>
+                    <td>${event.time}</td>
+                    <td>${event.sport}</td>
+                    <td>${event.event}</td>
+                    <td>${event.location}</td>
+                </tr>
+            `;
+        });
+        
+        html += `</tbody>`;
+        table.innerHTML = html;
+        container.appendChild(table);
+    });
+    
+    if (Object.keys(eventsByDate).length === 0) {
+        const noEvents = document.createElement('p');
+        noEvents.style.padding = '20px';
+        noEvents.style.color = '#666';
+        noEvents.textContent = 'Inga kommande händelser för denna sport.';
+        container.appendChild(noEvents);
+    }
+    
+    return container;
+}
+
+// Function to display Winter Olympics schedule
+function displayWinterOlympicsSchedule(schedule, filterSport = null) {
+    scheduleContainer.innerHTML = '';
+    
+    // Title
+    const title = document.createElement('h2');
+    title.style.marginBottom = '20px';
+    title.style.fontSize = '24px';
+    title.style.fontWeight = 'bold';
+    title.innerHTML = '🏔️ Vinter-OS 2026 <span style="font-weight: normal; font-size: 16px; color: #666;">Milano-Cortina</span>';
+    scheduleContainer.appendChild(title);
+    
+    const table = createWinterOlympicsTable(schedule, filterSport);
+    scheduleContainer.appendChild(table);
+}
+
 // Function to create Vinterstudion table
 function createVinterstudionTable(schedule) {
     const table = document.createElement('table');
@@ -2283,6 +2681,8 @@ document.querySelectorAll('.team-btn').forEach(btn => {
         setTimeout(() => {
             if (sport === 'overview') {
                 displayOverview();
+            } else if (sport === 'winter-olympics') {
+                displayWinterOlympicsSchedule(winterOlympicsSchedule);
             } else if (sport === 'vinterstudion') {
                 displayVinterstudionSchedule(vinterstudionSchedule);
             } else if (sport === 'packers') {
