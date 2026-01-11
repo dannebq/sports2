@@ -2108,6 +2108,77 @@ function displayAllsvenskanSchedule(schedule) {
     scheduleContainer.appendChild(tables);
 }
 
+// Function to create Svenska Cupen table
+function createSvenskaCupenTable(schedule) {
+    const table = document.createElement('table');
+    table.className = 'schedule-table';
+    
+    // Find next match
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    let nextMatchDate = null;
+    for (let i = 0; i < schedule.length; i++) {
+        const matchDate = parseDate(schedule[i].date);
+        if (matchDate && matchDate >= today) {
+            nextMatchDate = matchDate;
+            break;
+        }
+    }
+    
+    let html = `
+        <caption>Svenska Cupen 2026 - Gruppspel</caption>
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Tid</th>
+                <th>Match</th>
+                <th>Grupp</th>
+            </tr>
+        </thead>
+        <tbody>
+    `;
+    
+    schedule.forEach((game) => {
+        // Skip matches that have already occurred
+        const matchDate = parseDate(game.date);
+        if (!matchDate || matchDate < today) {
+            return;
+        }
+        
+        const isNextMatch = nextMatchDate && matchDate && 
+                           matchDate.getTime() === nextMatchDate.getTime();
+        const isMalmoFFMatch = game.malmoff;
+        let rowClass = '';
+        if (isNextMatch) rowClass = 'next-event';
+        if (isMalmoFFMatch) rowClass = 'sweden-match';
+        if (isNextMatch && isMalmoFFMatch) rowClass = 'next-event sweden-match';
+        
+        // Format date to Swedish format
+        const formattedDate = formatDateSwedish(matchDate);
+        
+        html += `
+            <tr${rowClass ? ` class="${rowClass}"` : ''}>
+                <td>${formattedDate}</td>
+                <td>${game.time}</td>
+                <td>${game.match}</td>
+                <td>Grupp ${game.group}</td>
+            </tr>
+        `;
+    });
+    
+    html += `</tbody>`;
+    table.innerHTML = html;
+    return table;
+}
+
+// Function to display Svenska Cupen schedule
+function displaySvenskaCupenSchedule(schedule) {
+    scheduleContainer.innerHTML = '';
+    const table = createSvenskaCupenTable(schedule);
+    scheduleContainer.appendChild(table);
+}
+
 // Function to create cross country skiing table
 function createCrossCountryTable(schedule) {
     const table = document.createElement('table');
@@ -2661,34 +2732,6 @@ function displayOverview() {
     
     specialSection.appendChild(nflPlayoffsButton);
     
-    // Svenska Cupen button (green football theme)
-    const svenskaCupenButton = document.createElement('a');
-    svenskaCupenButton.href = 'svenska-cupen.html';
-    svenskaCupenButton.style.display = 'flex';
-    svenskaCupenButton.style.alignItems = 'center';
-    svenskaCupenButton.style.justifyContent = 'center';
-    svenskaCupenButton.style.gap = '12px';
-    svenskaCupenButton.style.padding = '16px 24px';
-    svenskaCupenButton.style.background = 'linear-gradient(135deg, #1a5f2a 0%, #0d3314 100%)';
-    svenskaCupenButton.style.color = '#fff';
-    svenskaCupenButton.style.borderRadius = '12px';
-    svenskaCupenButton.style.textDecoration = 'none';
-    svenskaCupenButton.style.fontWeight = 'bold';
-    svenskaCupenButton.style.fontSize = '18px';
-    svenskaCupenButton.style.boxShadow = '0 4px 15px rgba(26, 95, 42, 0.3)';
-    svenskaCupenButton.style.transition = 'transform 0.2s, box-shadow 0.2s';
-    svenskaCupenButton.innerHTML = '<span style="font-size: 24px;">⚽</span> Svenska Cupen 2026';
-    svenskaCupenButton.onmouseenter = function() {
-        this.style.transform = 'translateY(-2px)';
-        this.style.boxShadow = '0 6px 20px rgba(26, 95, 42, 0.4)';
-    };
-    svenskaCupenButton.onmouseleave = function() {
-        this.style.transform = 'translateY(0)';
-        this.style.boxShadow = '0 4px 15px rgba(26, 95, 42, 0.3)';
-    };
-    
-    specialSection.appendChild(svenskaCupenButton);
-    
     // Mystery button - Herrgårdens Hemlighet (hidden)
     /*
     const mysteryButton = document.createElement('a');
@@ -2807,6 +2850,8 @@ document.querySelectorAll('.team-btn').forEach(btn => {
                 displayHandballLeagueSchedule(handballLeagueSchedule);
             } else if (sport === 'allsvenskan') {
                 displayAllsvenskanSchedule(allsvenskanSchedule);
+            } else if (sport === 'svenska-cupen') {
+                displaySvenskaCupenSchedule(svenskaCupenSchedule);
             }
         }, 500);
     });
