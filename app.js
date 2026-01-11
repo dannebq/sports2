@@ -899,6 +899,58 @@ const allsvenskanSchedule = [
     ]}
 ];
 
+// Svenska Cupen 2026 - Group Stage
+const svenskaCupenSchedule = [
+    { date: "2026-02-20", time: "19:00", match: "Hammarby - IK Brage", group: 2 },
+    { date: "2026-02-20", time: "19:00", match: "IFK Skövde - IF Brommapojkarna", group: 5 },
+    { date: "2026-02-21", time: "13:00", match: "Mjällby AIF - Kalmar FF", group: 1 },
+    { date: "2026-02-21", time: "13:00", match: "IFK Göteborg - Östersund", group: 4 },
+    { date: "2026-02-21", time: "15:00", match: "Östers IF - Örebro", group: 2 },
+    { date: "2026-02-21", time: "15:00", match: "Djurgården - Falkenbergs FF", group: 5 },
+    { date: "2026-02-21", time: "17:00", match: "IFK Norrköping - Sandvikens IF", group: 3 },
+    { date: "2026-02-21", time: "17:00", match: "IK Sirius - GIF Sundsvall", group: 8 },
+    { date: "2026-02-22", time: "13:00", match: "IFK Värnamo - Örgryte IS", group: 1 },
+    { date: "2026-02-22", time: "13:00", match: "AIK - Västerås SK", group: 7 },
+    { date: "2026-02-22", time: "13:00", match: "BK Häcken - IK Oddevold", group: 7 },
+    { date: "2026-02-22", time: "15:00", match: "Degerfors IF - Trelleborgs FF", group: 4 },
+    { date: "2026-02-22", time: "15:00", match: "IF Elfsborg - Helsingborgs IF", group: 8 },
+    { date: "2026-02-22", time: "17:00", match: "Malmö FF - Varbergs BoIS", group: 6, malmoff: true },
+    { date: "2026-02-22", time: "17:00", match: "IF Karlstad - Halmstad", group: 6 },
+    { date: "2026-02-23", time: "19:00", match: "GAIS - Landskrona BoIS", group: 3 },
+    { date: "2026-02-27", time: "19:00", match: "Örgryte IS - Mjällby AIF", group: 1 },
+    { date: "2026-02-28", time: "13:00", match: "Östers IF - IK Brage", group: 2 },
+    { date: "2026-02-28", time: "13:00", match: "IK Oddevold - AIK", group: 7 },
+    { date: "2026-02-28", time: "15:00", match: "Trelleborgs FF - IFK Göteborg", group: 4 },
+    { date: "2026-02-28", time: "15:00", match: "GIF Sundsvall - IF Elfsborg", group: 8 },
+    { date: "2026-02-28", time: "17:00", match: "IFK Norrköping - Landskrona BoIS", group: 3 },
+    { date: "2026-02-28", time: "17:00", match: "Degerfors IF - Östersund", group: 4 },
+    { date: "2026-03-01", time: "13:00", match: "IFK Värnamo - Kalmar FF", group: 1 },
+    { date: "2026-03-01", time: "13:00", match: "IF Brommapojkarna - Falkenbergs FF", group: 5 },
+    { date: "2026-03-01", time: "13:00", match: "Halmstad - Varbergs BoIS", group: 6 },
+    { date: "2026-03-01", time: "15:00", match: "IF Karlstad - Malmö FF", group: 6, malmoff: true },
+    { date: "2026-03-01", time: "15:00", match: "BK Häcken - Västerås SK", group: 7 },
+    { date: "2026-03-01", time: "17:00", match: "IFK Skövde - Djurgården", group: 5 },
+    { date: "2026-03-01", time: "17:00", match: "IK Sirius - Helsingborgs IF", group: 8 },
+    { date: "2026-03-02", time: "19:00", match: "Örebro - Hammarby", group: 2 },
+    { date: "2026-03-02", time: "19:00", match: "Sandvikens IF - GAIS", group: 3 },
+    { date: "2026-03-07", time: "13:00", match: "Kalmar FF - Örgryte IS", group: 1 },
+    { date: "2026-03-07", time: "13:00", match: "Mjällby AIF - IFK Värnamo", group: 1 },
+    { date: "2026-03-07", time: "13:00", match: "IK Brage - Örebro", group: 2 },
+    { date: "2026-03-07", time: "13:00", match: "Hammarby - Östers IF", group: 2 },
+    { date: "2026-03-07", time: "15:00", match: "Landskrona BoIS - Sandvikens IF", group: 3 },
+    { date: "2026-03-07", time: "15:00", match: "GAIS - IFK Norrköping", group: 3 },
+    { date: "2026-03-08", time: "13:00", match: "Falkenbergs FF - IFK Skövde", group: 5 },
+    { date: "2026-03-08", time: "13:00", match: "Djurgården - IF Brommapojkarna", group: 5 },
+    { date: "2026-03-08", time: "13:00", match: "Helsingborgs IF - GIF Sundsvall", group: 8 },
+    { date: "2026-03-08", time: "13:00", match: "IF Elfsborg - IK Sirius", group: 8 },
+    { date: "2026-03-08", time: "15:00", match: "Östersund - Trelleborgs FF", group: 4 },
+    { date: "2026-03-08", time: "15:00", match: "IFK Göteborg - Degerfors IF", group: 4 },
+    { date: "2026-03-08", time: "17:00", match: "Varbergs BoIS - IF Karlstad", group: 6 },
+    { date: "2026-03-08", time: "17:00", match: "Malmö FF - Halmstad", group: 6, malmoff: true },
+    { date: "2026-03-09", time: "19:00", match: "Västerås SK - IK Oddevold", group: 7 },
+    { date: "2026-03-09", time: "19:00", match: "AIK - BK Häcken", group: 7 }
+];
+
 // Vinterstudion Schedule 2025/2026
 const vinterstudionSchedule = [
     { date: "2025-11-15", time: "09:30–13:45", sport: "Vinterstudion", event: "–" },
@@ -1550,7 +1602,8 @@ function getAllEvents() {
                     team: 'Sverige',
                     description: game.match,
                     location: '-',
-                    time: game.time
+                    time: game.time,
+                    isHighlightedTeam: true
                 });
             }
         }
@@ -1602,6 +1655,25 @@ function getAllEvents() {
                 location: '-',
                 time: game.time
             });
+        }
+    });
+    
+    // Add Svenska Cupen matches (only Malmö FF's matches for overview)
+    svenskaCupenSchedule.forEach(game => {
+        if (game.malmoff) {
+            const date = parseDate(game.date);
+            if (date) {
+                events.push({
+                    date: date,
+                    dateString: formatDateSwedish(date),
+                    sport: 'Svenska Cupen',
+                    team: 'Malmö FF',
+                    description: game.match,
+                    location: '-',
+                    time: game.time,
+                    isHighlightedTeam: true
+                });
+            }
         }
     });
     
@@ -2445,9 +2517,12 @@ function createOverviewTable(events, title) {
         const sportWithLocation = event.location && event.location !== '-' 
             ? `${event.sport}, ${event.location}` 
             : event.sport;
+        
+        // Add sweden-match class for highlighted teams (Malmö FF, Sweden etc.)
+        const rowClass = event.isHighlightedTeam ? ' class="sweden-match"' : '';
             
         html += `
-            <tr>
+            <tr${rowClass}>
                 <td>${event.time}</td>
                 <td>${sportWithLocation}</td>
                 <td>${event.description}</td>
@@ -2521,8 +2596,11 @@ function createUpcomingEventsGroupedByDay(events, title) {
         `;
         
         dayEvents.forEach(event => {
+            // Add sweden-match class for highlighted teams (Malmö FF, Sweden etc.)
+            const rowClass = event.isHighlightedTeam ? ' class="sweden-match"' : '';
+            
             html += `
-                <tr>
+                <tr${rowClass}>
                     <td>${event.time}</td>
                     <td>${event.sport}</td>
                     <td>${event.description}</td>
@@ -2582,6 +2660,34 @@ function displayOverview() {
     };
     
     specialSection.appendChild(nflPlayoffsButton);
+    
+    // Svenska Cupen button (green football theme)
+    const svenskaCupenButton = document.createElement('a');
+    svenskaCupenButton.href = 'svenska-cupen.html';
+    svenskaCupenButton.style.display = 'flex';
+    svenskaCupenButton.style.alignItems = 'center';
+    svenskaCupenButton.style.justifyContent = 'center';
+    svenskaCupenButton.style.gap = '12px';
+    svenskaCupenButton.style.padding = '16px 24px';
+    svenskaCupenButton.style.background = 'linear-gradient(135deg, #1a5f2a 0%, #0d3314 100%)';
+    svenskaCupenButton.style.color = '#fff';
+    svenskaCupenButton.style.borderRadius = '12px';
+    svenskaCupenButton.style.textDecoration = 'none';
+    svenskaCupenButton.style.fontWeight = 'bold';
+    svenskaCupenButton.style.fontSize = '18px';
+    svenskaCupenButton.style.boxShadow = '0 4px 15px rgba(26, 95, 42, 0.3)';
+    svenskaCupenButton.style.transition = 'transform 0.2s, box-shadow 0.2s';
+    svenskaCupenButton.innerHTML = '<span style="font-size: 24px;">⚽</span> Svenska Cupen 2026';
+    svenskaCupenButton.onmouseenter = function() {
+        this.style.transform = 'translateY(-2px)';
+        this.style.boxShadow = '0 6px 20px rgba(26, 95, 42, 0.4)';
+    };
+    svenskaCupenButton.onmouseleave = function() {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = '0 4px 15px rgba(26, 95, 42, 0.3)';
+    };
+    
+    specialSection.appendChild(svenskaCupenButton);
     
     // Mystery button - Herrgårdens Hemlighet (hidden)
     /*

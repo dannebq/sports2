@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Svenska Cupen 2026</title>
+    
+    <!-- Apple Touch Icons -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    
+    <!-- Web App Capable -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Svenska Cupen">
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+            color: #1e293b;
+        }
+        
+        .back-button {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 100;
+            background: rgba(255,255,255,0.95);
+            border: none;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            font-size: 20px;
+            text-decoration: none;
+            color: #1e293b;
+            transition: transform 0.2s;
+        }
+        
+        .back-button:hover {
+            transform: scale(1.1);
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a5f2a 0%, #0d3314 100%);
+            color: white;
+            padding: 24px 20px;
+            padding-left: 70px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+        
+        header p {
+            font-size: 13px;
+            opacity: 0.8;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .group-section {
+            margin-bottom: 32px;
+        }
+        
+        .group-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #1a5f2a;
+        }
+        
+        .group-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a5f2a;
+        }
+        
+        /* Match Table */
+        .match-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        
+        .match-table th {
+            text-align: left;
+            padding: 12px 16px;
+            font-weight: 600;
+            font-size: 13px;
+            background: #f1f5f9;
+            color: #475569;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .match-table td {
+            padding: 14px 16px;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 14px;
+        }
+        
+        .match-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .match-table tr:hover {
+            background: #f8fafc;
+        }
+        
+        /* Malmö FF highlight - same blue as Sweden handball matches */
+        .match-table tr.malmoff-match {
+            background: #e6f0ff;
+        }
+        
+        .match-table tr.malmoff-match:hover {
+            background: #d6e6ff;
+        }
+        
+        .match-table tr.malmoff-match td {
+            font-weight: 600;
+        }
+        
+        .malmoff-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #0a3d91 0%, #6cc4ee 100%);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        .date-cell {
+            white-space: nowrap;
+            color: #64748b;
+        }
+        
+        .time-cell {
+            white-space: nowrap;
+            font-weight: 500;
+        }
+        
+        .group-badge {
+            display: inline-block;
+            background: #e2e8f0;
+            color: #475569;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        /* Legend */
+        .legend {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 24px;
+            padding: 16px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: #475569;
+        }
+        
+        .legend-color {
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+        }
+        
+        .legend-color.malmoff {
+            background: #e6f0ff;
+            border: 1px solid #c5d9f7;
+        }
+        
+        /* All matches table */
+        .all-matches {
+            margin-top: 32px;
+        }
+        
+        .section-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            color: #1e293b;
+        }
+
+        @media (max-width: 600px) {
+            .match-table th,
+            .match-table td {
+                padding: 10px 12px;
+                font-size: 13px;
+            }
+            
+            header {
+                padding: 20px 16px;
+                padding-left: 60px;
+            }
+            
+            header h1 {
+                font-size: 20px;
+            }
+            
+            .legend {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-button" title="Tillbaka till Sport">←</a>
+    
+    <header>
+        <h1>⚽ Svenska Cupen 2026</h1>
+        <p>Gruppspel</p>
+    </header>
+    
+    <div class="container">
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color malmoff"></div>
+                <span>Malmö FF:s matcher</span>
+            </div>
+        </div>
+        
+        <!-- All matches sorted by date -->
+        <div class="all-matches">
+            <table class="match-table" id="matchTable">
+                <thead>
+                    <tr>
+                        <th>Datum</th>
+                        <th>Tid</th>
+                        <th>Match</th>
+                        <th>Grupp</th>
+                    </tr>
+                </thead>
+                <tbody id="matchTableBody">
+                    <!-- Matches will be inserted here by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Svenska Cupen 2026 - Group Stage
+        const svenskaCupenMatches = [
+            { date: "2026-02-20", time: "19:00", match: "Hammarby - IK Brage", group: 2 },
+            { date: "2026-02-20", time: "19:00", match: "IFK Skövde - IF Brommapojkarna", group: 5 },
+            { date: "2026-02-21", time: "13:00", match: "Mjällby AIF - Kalmar FF", group: 1 },
+            { date: "2026-02-21", time: "13:00", match: "IFK Göteborg - Östersund", group: 4 },
+            { date: "2026-02-21", time: "15:00", match: "Östers IF - Örebro", group: 2 },
+            { date: "2026-02-21", time: "15:00", match: "Djurgården - Falkenbergs FF", group: 5 },
+            { date: "2026-02-21", time: "17:00", match: "IFK Norrköping - Sandvikens IF", group: 3 },
+            { date: "2026-02-21", time: "17:00", match: "IK Sirius - GIF Sundsvall", group: 8 },
+            { date: "2026-02-22", time: "13:00", match: "IFK Värnamo - Örgryte IS", group: 1 },
+            { date: "2026-02-22", time: "13:00", match: "AIK - Västerås SK", group: 7 },
+            { date: "2026-02-22", time: "13:00", match: "BK Häcken - IK Oddevold", group: 7 },
+            { date: "2026-02-22", time: "15:00", match: "Degerfors IF - Trelleborgs FF", group: 4 },
+            { date: "2026-02-22", time: "15:00", match: "IF Elfsborg - Helsingborgs IF", group: 8 },
+            { date: "2026-02-22", time: "17:00", match: "Malmö FF - Varbergs BoIS", group: 6, malmoff: true },
+            { date: "2026-02-22", time: "17:00", match: "IF Karlstad - Halmstad", group: 6 },
+            { date: "2026-02-23", time: "19:00", match: "GAIS - Landskrona BoIS", group: 3 },
+            { date: "2026-02-27", time: "19:00", match: "Örgryte IS - Mjällby AIF", group: 1 },
+            { date: "2026-02-28", time: "13:00", match: "Östers IF - IK Brage", group: 2 },
+            { date: "2026-02-28", time: "13:00", match: "IK Oddevold - AIK", group: 7 },
+            { date: "2026-02-28", time: "15:00", match: "Trelleborgs FF - IFK Göteborg", group: 4 },
+            { date: "2026-02-28", time: "15:00", match: "GIF Sundsvall - IF Elfsborg", group: 8 },
+            { date: "2026-02-28", time: "17:00", match: "IFK Norrköping - Landskrona BoIS", group: 3 },
+            { date: "2026-02-28", time: "17:00", match: "Degerfors IF - Östersund", group: 4 },
+            { date: "2026-03-01", time: "13:00", match: "IFK Värnamo - Kalmar FF", group: 1 },
+            { date: "2026-03-01", time: "13:00", match: "IF Brommapojkarna - Falkenbergs FF", group: 5 },
+            { date: "2026-03-01", time: "13:00", match: "Halmstad - Varbergs BoIS", group: 6 },
+            { date: "2026-03-01", time: "15:00", match: "IF Karlstad - Malmö FF", group: 6, malmoff: true },
+            { date: "2026-03-01", time: "15:00", match: "BK Häcken - Västerås SK", group: 7 },
+            { date: "2026-03-01", time: "17:00", match: "IFK Skövde - Djurgården", group: 5 },
+            { date: "2026-03-01", time: "17:00", match: "IK Sirius - Helsingborgs IF", group: 8 },
+            { date: "2026-03-02", time: "19:00", match: "Örebro - Hammarby", group: 2 },
+            { date: "2026-03-02", time: "19:00", match: "Sandvikens IF - GAIS", group: 3 },
+            { date: "2026-03-07", time: "13:00", match: "Kalmar FF - Örgryte IS", group: 1 },
+            { date: "2026-03-07", time: "13:00", match: "Mjällby AIF - IFK Värnamo", group: 1 },
+            { date: "2026-03-07", time: "13:00", match: "IK Brage - Örebro", group: 2 },
+            { date: "2026-03-07", time: "13:00", match: "Hammarby - Östers IF", group: 2 },
+            { date: "2026-03-07", time: "15:00", match: "Landskrona BoIS - Sandvikens IF", group: 3 },
+            { date: "2026-03-07", time: "15:00", match: "GAIS - IFK Norrköping", group: 3 },
+            { date: "2026-03-08", time: "13:00", match: "Falkenbergs FF - IFK Skövde", group: 5 },
+            { date: "2026-03-08", time: "13:00", match: "Djurgården - IF Brommapojkarna", group: 5 },
+            { date: "2026-03-08", time: "13:00", match: "Helsingborgs IF - GIF Sundsvall", group: 8 },
+            { date: "2026-03-08", time: "13:00", match: "IF Elfsborg - IK Sirius", group: 8 },
+            { date: "2026-03-08", time: "15:00", match: "Östersund - Trelleborgs FF", group: 4 },
+            { date: "2026-03-08", time: "15:00", match: "IFK Göteborg - Degerfors IF", group: 4 },
+            { date: "2026-03-08", time: "17:00", match: "Varbergs BoIS - IF Karlstad", group: 6 },
+            { date: "2026-03-08", time: "17:00", match: "Malmö FF - Halmstad", group: 6, malmoff: true },
+            { date: "2026-03-09", time: "19:00", match: "Västerås SK - IK Oddevold", group: 7 },
+            { date: "2026-03-09", time: "19:00", match: "AIK - BK Häcken", group: 7 }
+        ];
+
+        // Format date to Swedish format
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const months = ['jan', 'feb', 'mars', 'apr', 'maj', 'juni', 'juli', 'aug', 'sep', 'okt', 'nov', 'dec'];
+            const days = ['sön', 'mån', 'tis', 'ons', 'tors', 'fre', 'lör'];
+            return `${days[date.getDay()]} ${date.getDate()} ${months[date.getMonth()]}`;
+        }
+
+        // Populate match table
+        function populateMatchTable() {
+            const tbody = document.getElementById('matchTableBody');
+            
+            svenskaCupenMatches.forEach(match => {
+                const row = document.createElement('tr');
+                if (match.malmoff) {
+                    row.className = 'malmoff-match';
+                }
+                
+                row.innerHTML = `
+                    <td class="date-cell">${formatDate(match.date)}</td>
+                    <td class="time-cell">${match.time}</td>
+                    <td>${match.match}</td>
+                    <td><span class="group-badge">Grupp ${match.group}</span></td>
+                `;
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        // Initialize
+        populateMatchTable();
+    </script>
+</body>
+</html>
+
