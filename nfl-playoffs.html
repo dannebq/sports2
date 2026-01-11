@@ -247,6 +247,26 @@
             font-style: italic;
         }
         
+        .score {
+            font-weight: 700;
+            font-size: 16px;
+            color: #64748b;
+            min-width: 28px;
+            text-align: right;
+        }
+        
+        .score.winner {
+            color: #16a34a;
+        }
+        
+        .team.winner {
+            background: linear-gradient(90deg, #16a34a 0%, #16a34a 4px, #f0fdf4 4px);
+        }
+        
+        .team.loser .team-name {
+            color: #94a3b8;
+        }
+        
         /* Championship styling */
         .championship .matchup {
             border: 2px solid #6366f1;
@@ -388,15 +408,17 @@
                     <div class="matchup">
                         <div class="matchup-time">Lör 10 jan 22:30</div>
                         <div class="matchup-teams">
-                            <div class="team">
+                            <div class="team loser">
                                 <span class="seed">4</span>
                                 <span class="team-logo">🐆</span>
                                 <span class="team-name">Panthers</span>
+                                <span class="score">31</span>
                             </div>
-                            <div class="team">
+                            <div class="team winner">
                                 <span class="seed">5</span>
                                 <span class="team-logo">🐏</span>
                                 <span class="team-name">Rams</span>
+                                <span class="score winner">34</span>
                             </div>
                         </div>
                     </div>
@@ -405,15 +427,17 @@
                     <div class="matchup">
                         <div class="matchup-time">Sön 11 jan 02:00</div>
                         <div class="matchup-teams">
-                            <div class="team">
+                            <div class="team winner">
                                 <span class="seed">2</span>
                                 <span class="team-logo">🐻</span>
                                 <span class="team-name">Bears</span>
+                                <span class="score winner">31</span>
                             </div>
-                            <div class="team packers">
+                            <div class="team loser">
                                 <span class="seed">7</span>
                                 <span class="team-logo">🧀</span>
-                                <span class="team-name highlight">Packers</span>
+                                <span class="team-name">Packers</span>
+                                <span class="score">27</span>
                             </div>
                         </div>
                     </div>
