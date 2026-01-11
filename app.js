@@ -2583,7 +2583,8 @@ function displayOverview() {
     
     specialSection.appendChild(nflPlayoffsButton);
     
-    // Mystery button - Herrgårdens Hemlighet (purple/indigo theme)
+    // Mystery button - Herrgårdens Hemlighet (hidden)
+    /*
     const mysteryButton = document.createElement('a');
     mysteryButton.href = 'mystery-2.html';
     mysteryButton.style.display = 'flex';
@@ -2610,6 +2611,7 @@ function displayOverview() {
     };
     
     specialSection.appendChild(mysteryButton);
+    */
     container.appendChild(specialSection);
     
     // Today's events section
