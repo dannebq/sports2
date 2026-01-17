@@ -1406,10 +1406,10 @@ const nflPlayoffsSchedule = [
     { date: "2026-01-12", time: "02:00", home: "Patriots", away: "Chargers", conference: "AFC", round: "Wild Card" },
     { date: "2026-01-13", time: "02:15", home: "Steelers", away: "Texans", conference: "AFC", round: "Wild Card" },
     // Divisional Round
-    { date: "2026-01-17", time: "TBD", home: "Broncos", away: "TBD", conference: "AFC", round: "Divisional" },
-    { date: "2026-01-17", time: "TBD", home: "TBD", away: "TBD", conference: "AFC", round: "Divisional" },
-    { date: "2026-01-18", time: "TBD", home: "Seahawks", away: "TBD", conference: "NFC", round: "Divisional" },
-    { date: "2026-01-18", time: "TBD", home: "TBD", away: "TBD", conference: "NFC", round: "Divisional" },
+    { date: "2026-01-17", time: "22:30", home: "Broncos", away: "Bills", conference: "AFC", round: "Divisional" },
+    { date: "2026-01-18", time: "02:00", home: "Seahawks", away: "49ers", conference: "NFC", round: "Divisional" },
+    { date: "2026-01-18", time: "21:00", home: "Patriots", away: "Texans", conference: "AFC", round: "Divisional" },
+    { date: "2026-01-19", time: "00:30", home: "Bears", away: "Rams", conference: "NFC", round: "Divisional" },
     // Conference Championships
     { date: "2026-01-25", time: "TBD", home: "TBD", away: "TBD", conference: "AFC", round: "AFC Championship" },
     { date: "2026-01-25", time: "TBD", home: "TBD", away: "TBD", conference: "NFC", round: "NFC Championship" },
