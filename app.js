@@ -1428,8 +1428,8 @@ const nflPlayoffsSchedule = [
     { date: "2026-01-18", time: "21:00", home: "Patriots", away: "Texans", conference: "AFC", round: "Divisional" },
     { date: "2026-01-19", time: "00:30", home: "Bears", away: "Rams", conference: "NFC", round: "Divisional" },
     // Conference Championships
-    { date: "2026-01-25", time: "TBD", home: "TBD", away: "TBD", conference: "AFC", round: "AFC Championship" },
-    { date: "2026-01-25", time: "TBD", home: "TBD", away: "TBD", conference: "NFC", round: "NFC Championship" },
+    { date: "2026-01-25", time: "21:00", home: "Broncos", away: "Patriots", conference: "AFC", round: "AFC Championship" },
+    { date: "2026-01-26", time: "00:30", home: "Seahawks", away: "Rams", conference: "NFC", round: "NFC Championship" },
     // Super Bowl
     { date: "2026-02-08", time: "TBD", home: "TBD", away: "TBD", conference: "", round: "Super Bowl LX" }
 ];
