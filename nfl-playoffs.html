@@ -125,6 +125,54 @@
             margin-bottom: 12px;
         }
         
+        .round-header.collapsible {
+            cursor: pointer;
+            padding: 10px 14px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 0;
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+        
+        .round-header.collapsible:hover {
+            background: #f8fafc;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .round-header.collapsible .toggle-icon {
+            margin-left: auto;
+            font-size: 14px;
+            color: #94a3b8;
+            transition: transform 0.3s ease;
+        }
+        
+        .round-header.collapsible.expanded .toggle-icon {
+            transform: rotate(180deg);
+        }
+        
+        .round-header.collapsible .completed-badge {
+            font-size: 11px;
+            color: #16a34a;
+            background: #dcfce7;
+            padding: 3px 8px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+        
+        .round-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.3s ease;
+            padding-top: 0;
+        }
+        
+        .round-content.expanded {
+            max-height: 2000px;
+            padding-top: 12px;
+        }
+        
         .round-title {
             font-size: 16px;
             font-weight: 700;
@@ -311,12 +359,15 @@
     <div class="container">
         
         <!-- Wild Card Round -->
-        <div class="round-section">
-            <div class="round-header">
+        <div class="round-section" id="wildcard-section">
+            <div class="round-header collapsible" onclick="toggleRound('wildcard')">
                 <span class="round-title">Wild Card Round</span>
                 <span class="round-date">Lör 10 – Tis 13 jan</span>
+                <span class="completed-badge">✓ Avslutad</span>
+                <span class="toggle-icon">▼</span>
             </div>
             
+            <div class="round-content" id="wildcard-content">
             <!-- AFC Wild Card -->
             <div class="conference-section">
                 <div class="conference-label afc">AFC</div>
@@ -468,17 +519,21 @@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
         
         <div class="arrow-down">▼</div>
         
         <!-- Divisional Round -->
-        <div class="round-section">
-            <div class="round-header">
+        <div class="round-section" id="divisional-section">
+            <div class="round-header collapsible" onclick="toggleRound('divisional')">
                 <span class="round-title">Divisional Round</span>
                 <span class="round-date">Lör 17 – Sön 18 jan</span>
+                <span class="completed-badge">✓ Avslutad</span>
+                <span class="toggle-icon">▼</span>
             </div>
             
+            <div class="round-content" id="divisional-content">
             <!-- AFC Divisional -->
             <div class="conference-section">
                 <div class="conference-label afc">AFC</div>
@@ -560,6 +615,7 @@
                     </div>
                 </div>
             </div>
+            </div>
         </div>
         
         <div class="arrow-down">▼</div>
@@ -623,5 +679,17 @@
         </div>
         
     </div>
+    
+    <script>
+        function toggleRound(roundId) {
+            const header = document.querySelector(`#${roundId}-section .round-header`);
+            const content = document.getElementById(`${roundId}-content`);
+            
+            header.classList.toggle('expanded');
+            content.classList.toggle('expanded');
+        }
+        
+        // Both rounds start collapsed (no 'expanded' class)
+    </script>
 </body>
 </html>
