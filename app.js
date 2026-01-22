@@ -1962,13 +1962,24 @@ function createHandballEMTable(schedule) {
     const table = document.createElement('table');
     table.className = 'schedule-table';
     
+    // Sort schedule by date and time
+    const sortedSchedule = [...schedule].sort((a, b) => {
+        const dateA = parseDate(a.date);
+        const dateB = parseDate(b.date);
+        if (dateA.getTime() !== dateB.getTime()) {
+            return dateA - dateB;
+        }
+        // Same date, sort by time
+        return a.time.localeCompare(b.time);
+    });
+    
     // Find next match
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
     let nextMatchDate = null;
-    for (let i = 0; i < schedule.length; i++) {
-        const matchDate = parseDate(schedule[i].date);
+    for (let i = 0; i < sortedSchedule.length; i++) {
+        const matchDate = parseDate(sortedSchedule[i].date);
         if (matchDate && matchDate >= today) {
             nextMatchDate = matchDate;
             break;
@@ -1976,7 +1987,7 @@ function createHandballEMTable(schedule) {
     }
     
     let html = `
-        <caption>Handboll EM 2026 - Gruppspel</caption>
+        <caption>Handboll EM 2026 - Huvudrunda</caption>
         <thead>
             <tr>
                 <th>Datum</th>
@@ -1987,7 +1998,7 @@ function createHandballEMTable(schedule) {
         <tbody>
     `;
     
-    schedule.forEach((game) => {
+    sortedSchedule.forEach((game) => {
         // Skip matches that have already occurred
         const matchDate = parseDate(game.date);
         if (!matchDate || matchDate < today) {
