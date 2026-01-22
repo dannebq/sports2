@@ -408,7 +408,33 @@ const handballEMSchedule = [
     { date: "2026-01-20", time: "20:30", match: "Ungern – Island" },
     { date: "2026-01-20", time: "20:30", match: "Slovenien – Färöarna" },
     { date: "2026-01-21", time: "18:00", match: "Nederländerna – Georgien" },
-    { date: "2026-01-21", time: "20:30", match: "Sverige – Kroatien", sweden: true }
+    { date: "2026-01-21", time: "20:30", match: "Sverige – Kroatien", sweden: true },
+    // Main Round - Group I (Grupp I)
+    { date: "2026-01-22", time: "18:00", match: "Tyskland – Portugal" },
+    { date: "2026-01-22", time: "18:00", match: "Spanien – Norge" },
+    { date: "2026-01-22", time: "20:30", match: "Frankrike – Danmark" },
+    { date: "2026-01-24", time: "18:00", match: "Frankrike – Portugal" },
+    { date: "2026-01-24", time: "18:00", match: "Spanien – Danmark" },
+    { date: "2026-01-24", time: "20:30", match: "Tyskland – Norge" },
+    { date: "2026-01-26", time: "18:00", match: "Portugal – Norge" },
+    { date: "2026-01-26", time: "18:00", match: "Spanien – Frankrike" },
+    { date: "2026-01-26", time: "20:30", match: "Tyskland – Danmark" },
+    { date: "2026-01-28", time: "18:00", match: "Spanien – Portugal" },
+    { date: "2026-01-28", time: "18:00", match: "Tyskland – Frankrike" },
+    { date: "2026-01-28", time: "20:30", match: "Danmark – Norge" },
+    // Main Round - Group II (Grupp II)
+    { date: "2026-01-23", time: "18:00", match: "Island – Kroatien" },
+    { date: "2026-01-23", time: "18:00", match: "Schweiz – Ungern" },
+    { date: "2026-01-23", time: "20:30", match: "Slovenien – Sverige", sweden: true },
+    { date: "2026-01-25", time: "18:00", match: "Slovenien – Ungern" },
+    { date: "2026-01-25", time: "18:00", match: "Island – Sverige", sweden: true },
+    { date: "2026-01-25", time: "20:30", match: "Schweiz – Kroatien" },
+    { date: "2026-01-27", time: "18:00", match: "Schweiz – Island" },
+    { date: "2026-01-27", time: "18:00", match: "Slovenien – Kroatien" },
+    { date: "2026-01-27", time: "20:30", match: "Sverige – Ungern", sweden: true },
+    { date: "2026-01-28", time: "18:00", match: "Slovenien – Island" },
+    { date: "2026-01-28", time: "18:00", match: "Kroatien – Ungern" },
+    { date: "2026-01-28", time: "20:30", match: "Schweiz – Sverige", sweden: true }
 ];
 
 // Cross Country Skiing World Cup 2025/2026
