@@ -621,27 +621,32 @@
         <div class="arrow-down">▼</div>
         
         <!-- Conference Championships -->
-        <div class="round-section championship">
-            <div class="round-header">
+        <div class="round-section championship" id="championship-section">
+            <div class="round-header collapsible" onclick="toggleRound('championship')">
                 <span class="round-title">Conference Championships</span>
                 <span class="round-date">Lör 25 – Sön 26 jan</span>
+                <span class="completed-badge">✓ Avslutad</span>
+                <span class="toggle-icon">▼</span>
             </div>
             
+            <div class="round-content" id="championship-content">
             <div class="games-grid">
                 <div>
                     <div class="conference-label afc">AFC Championship</div>
                     <div class="matchup">
                         <div class="matchup-time">Lör 25 jan 21:00</div>
                         <div class="matchup-teams">
-                            <div class="team">
+                            <div class="team winner">
                                 <span class="seed">2</span>
                                 <span class="team-logo">🔴</span>
                                 <span class="team-name">Patriots</span>
+                                <span class="score winner">10</span>
                             </div>
-                            <div class="team">
+                            <div class="team loser">
                                 <span class="seed">1</span>
                                 <span class="team-logo">🐴</span>
                                 <span class="team-name">Broncos</span>
+                                <span class="score">7</span>
                             </div>
                         </div>
                     </div>
@@ -652,19 +657,22 @@
                     <div class="matchup">
                         <div class="matchup-time">Sön 26 jan 00:30</div>
                         <div class="matchup-teams">
-                            <div class="team">
+                            <div class="team loser">
                                 <span class="seed">5</span>
                                 <span class="team-logo">🐏</span>
                                 <span class="team-name">Rams</span>
+                                <span class="score">27</span>
                             </div>
-                            <div class="team">
+                            <div class="team winner">
                                 <span class="seed">1</span>
                                 <span class="team-logo">🦅</span>
                                 <span class="team-name">Seahawks</span>
+                                <span class="score winner">31</span>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
         
@@ -675,6 +683,19 @@
             <img src="Super_Bowl_LX_Logo.svg.png" alt="Super Bowl LX" style="width: 120px; height: auto; margin-bottom: 10px;">
             <h2>Super Bowl LX</h2>
             <div class="location">Santa Clara, CA</div>
+            <div style="display: flex; justify-content: center; align-items: center; gap: 16px; margin: 16px 0;">
+                <div style="text-align: center;">
+                    <span style="font-size: 36px;">🔴</span>
+                    <div style="color: white; font-weight: 700; font-size: 16px; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">Patriots</div>
+                    <div style="color: rgba(255,255,255,0.8); font-size: 12px;">AFC Champion</div>
+                </div>
+                <div style="color: white; font-size: 24px; font-weight: 800;">VS</div>
+                <div style="text-align: center;">
+                    <span style="font-size: 36px;">🦅</span>
+                    <div style="color: white; font-weight: 700; font-size: 16px; text-shadow: 0 1px 2px rgba(0,0,0,0.2);">Seahawks</div>
+                    <div style="color: rgba(255,255,255,0.8); font-size: 12px;">NFC Champion</div>
+                </div>
+            </div>
             <div class="date">Sön 8 februari</div>
         </div>
         
