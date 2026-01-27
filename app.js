@@ -2174,7 +2174,7 @@ function createAllsvenskanTable(schedule) {
         
         round.matches.forEach(match => {
             const isMalmoMatch = match.malmoff;
-            const matchDate = parseDate(match.date);
+            const matchDate = match.date ? parseDate(match.date) : null;
             const isNextMalmoMatch = nextMalmoMatchDate && matchDate && 
                                      matchDate.getTime() === nextMalmoMatchDate.getTime() && isMalmoMatch;
             
@@ -2182,8 +2182,8 @@ function createAllsvenskanTable(schedule) {
             if (isNextMalmoMatch) rowClass = 'next-event sweden-match';
             else if (isMalmoMatch) rowClass = 'sweden-match';
             
-            // Format date to Swedish format
-            const formattedDate = matchDate ? formatDateSwedish(matchDate) : match.date;
+            // Format date to Swedish format, or show dash if no date
+            const formattedDate = matchDate ? formatDateSwedish(matchDate) : '–';
             
             html += `
                 <tr${rowClass ? ` class="${rowClass}"` : ''}>
