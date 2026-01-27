@@ -2520,7 +2520,7 @@ function displayWinterOlympicsSchedule(schedule, filterSport = null) {
     title.style.marginBottom = '20px';
     title.style.fontSize = '24px';
     title.style.fontWeight = 'bold';
-    title.innerHTML = '🏔️ Vinter-OS 2026 <span style="font-weight: normal; font-size: 16px; color: #666;">Milano-Cortina</span>';
+    title.innerHTML = '<img src="Olympic_rings.svg" alt="Olympic Rings" style="height: 1em; vertical-align: middle; margin-right: 0.3em;"> Vinter-OS 2026 <span style="font-weight: normal; font-size: 16px; color: #666;">Milano-Cortina</span>';
     scheduleContainer.appendChild(title);
     
     const table = createWinterOlympicsTable(schedule, filterSport);
