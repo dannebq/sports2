@@ -2639,9 +2639,14 @@ function createOverviewTable(events, title) {
     
     events.forEach(event => {
         // Combine sport and location for better context
-        const sportWithLocation = event.location && event.location !== '-' 
+        let sportWithLocation = event.location && event.location !== '-' 
             ? `${event.sport}, ${event.location}` 
             : event.sport;
+        
+        // Add Olympic rings icon for Vinter-OS events
+        if (event.sport === 'Vinter-OS') {
+            sportWithLocation = `<img src="Olympic_rings.svg" alt="" style="height: 0.9em; vertical-align: middle; margin-right: 4px;">${sportWithLocation}`;
+        }
         
         // Add sweden-match class for highlighted teams (Malmö FF, Sweden etc.)
         const rowClass = event.isHighlightedTeam ? ' class="sweden-match"' : '';
@@ -2721,13 +2726,19 @@ function createUpcomingEventsGroupedByDay(events, title) {
         `;
         
         dayEvents.forEach(event => {
+            // Add Olympic rings icon for Vinter-OS events
+            let sportDisplay = event.sport;
+            if (event.sport === 'Vinter-OS') {
+                sportDisplay = `<img src="Olympic_rings.svg" alt="" style="height: 0.9em; vertical-align: middle; margin-right: 4px;">${event.sport}`;
+            }
+            
             // Add sweden-match class for highlighted teams (Malmö FF, Sweden etc.)
             const rowClass = event.isHighlightedTeam ? ' class="sweden-match"' : '';
             
             html += `
                 <tr${rowClass}>
                     <td>${event.time}</td>
-                    <td>${event.sport}</td>
+                    <td>${sportDisplay}</td>
                     <td>${event.description}</td>
                 </tr>
             `;
