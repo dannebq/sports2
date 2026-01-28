@@ -2689,10 +2689,13 @@ function createOverviewTable(events, title) {
     `;
     
     events.forEach(event => {
+        // For Vinter-OS events, use the team field (which contains the actual sport like "Curling")
+        const displaySport = event.sport === 'Vinter-OS' ? event.team : event.sport;
+        
         // Combine sport and location for better context
         let sportWithLocation = event.location && event.location !== '-' 
-            ? `${event.sport}, ${event.location}` 
-            : event.sport;
+            ? `${displaySport}, ${event.location}` 
+            : displaySport;
         
         // Add Olympic rings icon for Vinter-OS events
         if (event.sport === 'Vinter-OS') {
@@ -2777,10 +2780,13 @@ function createUpcomingEventsGroupedByDay(events, title) {
         `;
         
         dayEvents.forEach(event => {
+            // For Vinter-OS events, use the team field (which contains the actual sport like "Curling")
+            const displaySport = event.sport === 'Vinter-OS' ? event.team : event.sport;
+            
             // Add Olympic rings icon for Vinter-OS events
-            let sportDisplay = event.sport;
+            let sportDisplay = displaySport;
             if (event.sport === 'Vinter-OS') {
-                sportDisplay = `<img src="Olympic_rings.svg" alt="" style="height: 0.9em; vertical-align: middle; margin-right: 4px;">${event.sport}`;
+                sportDisplay = `<img src="Olympic_rings.svg" alt="" style="height: 0.9em; vertical-align: middle; margin-right: 4px;">${displaySport}`;
             }
             
             // Add sweden-match class for highlighted teams (Malmö FF, Sweden etc.)
