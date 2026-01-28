@@ -1220,7 +1220,7 @@ const packersSchedule = [
 
 // Vinter OS 2026 (Milano-Cortina)
 const winterOlympicsSchedule = [
-    { date: "2026-02-04", time: "19:05", sport: "Curling", event: "Mixed dubbel, omg 1: Sverige–Kvallag B", location: "Cortina" },
+    { date: "2026-02-04", time: "19:05", sport: "Curling", event: "Mixed dubbel, omg 1: Sverige - Korea", location: "Cortina" },
     { date: "2026-02-05", time: "10:05", sport: "Curling", event: "Mixed dubbel, omg 2: Sverige–Kvallag A", location: "Cortina" },
     { date: "2026-02-05", time: "12:10", sport: "Ishockey", event: "Damer gruppspel: Sverige–Tyskland", location: "Milano" },
     { date: "2026-02-05", time: "19:05", sport: "Curling", event: "Mixed dubbel, omg 4: Estland–Sverige", location: "Cortina" },
