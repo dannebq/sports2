@@ -2693,14 +2693,14 @@ function createOverviewTable(events, title) {
         const displaySport = event.sport === 'Vinter-OS' ? event.team : event.sport;
         
         // Combine sport and location for better context
-        let sportWithLocation = event.location && event.location !== '-' 
+        const sportWithLocation = event.location && event.location !== '-' 
             ? `${displaySport}, ${event.location}` 
             : displaySport;
         
-        // Add Olympic rings icon for Vinter-OS events
-        if (event.sport === 'Vinter-OS') {
-            sportWithLocation = `<img src="Olympic_rings.svg" alt="" style="height: 0.9em; vertical-align: middle; margin-right: 4px;">${sportWithLocation}`;
-        }
+        // Add Olympic rings icon at the end of description for Vinter-OS events
+        const descriptionWithIcon = event.sport === 'Vinter-OS'
+            ? `${event.description} <img src="Olympic_rings.svg" alt="" style="height: 0.9em; vertical-align: middle; margin-left: 6px;">`
+            : event.description;
         
         // Add sweden-match class for highlighted teams (Malmö FF, Sweden etc.)
         const rowClass = event.isHighlightedTeam ? ' class="sweden-match"' : '';
@@ -2709,7 +2709,7 @@ function createOverviewTable(events, title) {
             <tr${rowClass}>
                 <td>${event.time}</td>
                 <td>${sportWithLocation}</td>
-                <td>${event.description}</td>
+                <td>${descriptionWithIcon}</td>
             </tr>
         `;
     });
@@ -2783,11 +2783,10 @@ function createUpcomingEventsGroupedByDay(events, title) {
             // For Vinter-OS events, use the team field (which contains the actual sport like "Curling")
             const displaySport = event.sport === 'Vinter-OS' ? event.team : event.sport;
             
-            // Add Olympic rings icon for Vinter-OS events
-            let sportDisplay = displaySport;
-            if (event.sport === 'Vinter-OS') {
-                sportDisplay = `<img src="Olympic_rings.svg" alt="" style="height: 0.9em; vertical-align: middle; margin-right: 4px;">${displaySport}`;
-            }
+            // Add Olympic rings icon at the end of description for Vinter-OS events
+            const descriptionWithIcon = event.sport === 'Vinter-OS'
+                ? `${event.description} <img src="Olympic_rings.svg" alt="" style="height: 0.9em; vertical-align: middle; margin-left: 6px;">`
+                : event.description;
             
             // Add sweden-match class for highlighted teams (Malmö FF, Sweden etc.)
             const rowClass = event.isHighlightedTeam ? ' class="sweden-match"' : '';
@@ -2795,8 +2794,8 @@ function createUpcomingEventsGroupedByDay(events, title) {
             html += `
                 <tr${rowClass}>
                     <td>${event.time}</td>
-                    <td>${sportDisplay}</td>
-                    <td>${event.description}</td>
+                    <td>${displaySport}</td>
+                    <td>${descriptionWithIcon}</td>
                 </tr>
             `;
         });
