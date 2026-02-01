@@ -1544,6 +1544,15 @@ function formatDateSwedish(date) {
     return `${day} ${month} (${dayName})`;
 }
 
+// Helper function to check if we're in the Olympics period
+function isOlympicsPeriod() {
+    const today = new Date();
+    const olympicsStart = new Date('2026-02-04');
+    const olympicsEnd = new Date('2026-02-22');
+    olympicsEnd.setHours(23, 59, 59, 999); // Include the entire last day
+    return today >= olympicsStart && today <= olympicsEnd;
+}
+
 // Function to get all events from all sports
 function getAllEvents() {
     const events = [];
@@ -2702,8 +2711,11 @@ function createOverviewTable(events, title) {
             ? `${event.description} <img src="Olympic_rings.svg" alt="" style="height: 0.9em; vertical-align: middle; margin-left: 6px;">`
             : event.description;
         
-        // Add sweden-match class for highlighted teams (Malmö FF, Sweden etc.)
-        const rowClass = event.isHighlightedTeam ? ' class="sweden-match"' : '';
+        // Build row classes
+        const classes = [];
+        if (event.isHighlightedTeam) classes.push('sweden-match');
+        if (isOlympicsPeriod() && event.sport !== 'Vinter-OS') classes.push('non-olympic');
+        const rowClass = classes.length > 0 ? ` class="${classes.join(' ')}"` : '';
             
         html += `
             <tr${rowClass}>
@@ -2788,8 +2800,11 @@ function createUpcomingEventsGroupedByDay(events, title) {
                 ? `${event.description} <img src="Olympic_rings.svg" alt="" style="height: 0.9em; vertical-align: middle; margin-left: 6px;">`
                 : event.description;
             
-            // Add sweden-match class for highlighted teams (Malmö FF, Sweden etc.)
-            const rowClass = event.isHighlightedTeam ? ' class="sweden-match"' : '';
+            // Build row classes
+            const classes = [];
+            if (event.isHighlightedTeam) classes.push('sweden-match');
+            if (isOlympicsPeriod() && event.sport !== 'Vinter-OS') classes.push('non-olympic');
+            const rowClass = classes.length > 0 ? ` class="${classes.join(' ')}"` : '';
             
             html += `
                 <tr${rowClass}>

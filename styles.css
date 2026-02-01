@@ -137,6 +137,15 @@ body {
     font-weight: 600;
 }
 
+/* Non-Olympic events during Olympics period */
+.schedule-table tr.non-olympic td {
+    background: #fff0f3;
+}
+
+.schedule-table tr.non-olympic.sweden-match td {
+    background: linear-gradient(135deg, #fff0f3 0%, #e6f0ff 100%);
+}
+
 /* Biathlon specific */
 .competition-section {
     margin-bottom: 50px;
