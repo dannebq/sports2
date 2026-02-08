@@ -388,111 +388,20 @@ const skiClassicsSchedule = [
     { date: "2026-03-29", location: "Bardufoss–Finnsnes, Norge", time: "08:35", event: "Grand Finale Summit 2 Senja, 60 km (damer)" }
 ];
 
-// Handball League Schedule 2025/2026
+// IFK Kristianstad Schedule 2025/2026
 const handballLeagueSchedule = [
-    { date: "2025-11-26", time: "19:00", home: "Eskilstuna Guif IF", away: "OV Helsingborg HK" },
-    { date: "2025-11-27", time: "19:00", home: "IFK Skövde HK", away: "Alingsås HK" },
-    { date: "2025-11-28", time: "19:00", home: "Önnereds HK", away: "Ystads IF HF" },
-    { date: "2025-11-28", time: "19:00", home: "HF Karlskrona", away: "IK Sävehof" },
-    { date: "2025-11-29", time: "17:00", home: "Amo HK", away: "IFK Kristianstad" },
-    { date: "2025-11-29", time: "17:00", home: "IF Hallby HK", away: "Hammarby IF HF" },
-    { date: "2025-11-30", time: "16:00", home: "HK Malmö", away: "VästeråsIrsta HF" },
-    { date: "2025-12-01", time: "19:00", home: "Alingsås HK", away: "Eskilstuna Guif IF" },
-    { date: "2025-12-04", time: "19:00", home: "VästeråsIrsta HF", away: "OV Helsingborg HK" },
-    { date: "2025-12-04", time: "19:00", home: "Ystads IF HF", away: "Önnereds HK" },
-    { date: "2025-12-05", time: "19:00", home: "HF Karlskrona", away: "HK Malmö" },
-    { date: "2025-12-06", time: "15:00", home: "IF Hallby HK", away: "IK Sävehof" },
-    { date: "2025-12-06", time: "17:00", home: "Hammarby IF HF", away: "Eskilstuna Guif IF" },
-    { date: "2025-12-07", time: "16:00", home: "IFK Kristianstad", away: "Amo HK" },
-    { date: "2025-12-07", time: "16:30", home: "Alingsås HK", away: "IFK Skövde HK" },
-    { date: "2025-12-09", time: "19:00", home: "VästeråsIrsta HF", away: "IK Sävehof" },
-    { date: "2025-12-10", time: "19:00", home: "Önnereds HK", away: "IFK Kristianstad" },
-    { date: "2025-12-11", time: "19:00", home: "OV Helsingborg HK", away: "Hammarby IF HF" },
-    { date: "2025-12-11", time: "19:00", home: "HF Karlskrona", away: "IFK Skövde HK" },
-    { date: "2025-12-11", time: "19:00", home: "HK Malmö", away: "Ystads IF HF" },
-    { date: "2025-12-12", time: "19:00", home: "Amo HK", away: "IF Hallby HK" },
-    { date: "2025-12-12", time: "19:00", home: "Eskilstuna Guif IF", away: "VästeråsIrsta HF" },
-    { date: "2025-12-12", time: "19:30", home: "IK Sävehof", away: "Alingsås HK" },
-    { date: "2025-12-14", time: "16:00", home: "IFK Kristianstad", away: "Hammarby IF HF" },
-    { date: "2025-12-17", time: "19:00", home: "Alingsås HK", away: "IF Hallby HK" },
-    { date: "2025-12-17", time: "19:45", home: "VästeråsIrsta HF", away: "IFK Skövde HK" },
-    { date: "2025-12-17", time: "19:45", home: "IK Sävehof", away: "HF Karlskrona" },
-    { date: "2025-12-18", time: "19:00", home: "Ystads IF HF", away: "Amo HK" },
-    { date: "2025-12-19", time: "19:00", home: "OV Helsingborg HK", away: "Eskilstuna Guif IF" },
-    { date: "2025-12-19", time: "19:00", home: "IFK Kristianstad", away: "HK Malmö" },
-    { date: "2025-12-19", time: "19:00", home: "Hammarby IF HF", away: "Önnereds HK" },
-    { date: "2025-12-26", time: "13:15", home: "IK Sävehof", away: "VästeråsIrsta HF" },
-    { date: "2025-12-26", time: "16:00", home: "Alingsås HK", away: "HF Karlskrona" },
-    { date: "2025-12-26", time: "17:00", home: "IF Hallby HK", away: "IFK Kristianstad" },
-    { date: "2025-12-26", time: "19:00", home: "HK Malmö", away: "OV Helsingborg HK" },
-    { date: "2025-12-27", time: "14:00", home: "Önnereds HK", away: "Eskilstuna Guif IF" },
-    { date: "2025-12-27", time: "15:00", home: "IFK Skövde HK", away: "Ystads IF HF" },
-    { date: "2025-12-27", time: "18:00", home: "Amo HK", away: "Hammarby IF HF" },
-    { date: "2025-12-29", time: "19:45", home: "VästeråsIrsta HF", away: "Amo HK" },
-    { date: "2025-12-30", time: "19:00", home: "OV Helsingborg HK", away: "Önnereds HK" },
-    { date: "2025-12-30", time: "19:00", home: "Eskilstuna Guif IF", away: "IFK Skövde HK" },
-    { date: "2025-12-30", time: "19:00", home: "HF Karlskrona", away: "IF Hallby HK" },
-    { date: "2025-12-30", time: "19:00", home: "Ystads IF HF", away: "IK Sävehof" },
-    { date: "2025-12-30", time: "19:00", home: "Hammarby IF HF", away: "HK Malmö" },
-    { date: "2025-12-30", time: "19:00", home: "IFK Kristianstad", away: "Alingsås HK" },
-    { date: "2026-02-03", time: "19:00", home: "Alingsås HK", away: "Ystads IF HF" },
-    { date: "2026-02-04", time: "19:00", home: "IK Sävehof", away: "IFK Kristianstad" },
-    { date: "2026-02-04", time: "19:00", home: "IF Hallby HK", away: "VästeråsIrsta HF" },
-    { date: "2026-02-04", time: "19:00", home: "IFK Skövde HK", away: "Hammarby IF HF" },
-    { date: "2026-02-04", time: "19:00", home: "HK Malmö", away: "Eskilstuna Guif IF" },
-    { date: "2026-02-04", time: "19:00", home: "Amo HK", away: "OV Helsingborg HK" },
-    { date: "2026-02-04", time: "20:00", home: "Önnereds HK", away: "HF Karlskrona" },
-    { date: "2026-02-07", time: "14:00", home: "VästeråsIrsta HF", away: "Alingsås HK" },
-    { date: "2026-02-07", time: "16:30", home: "Ystads IF HF", away: "IF Hallby HK" },
-    { date: "2026-02-07", time: "17:00", home: "Hammarby IF HF", away: "IK Sävehof" },
-    { date: "2026-02-08", time: "16:00", home: "HF Karlskrona", away: "IFK Kristianstad" },
-    { date: "2026-02-08", time: "16:00", home: "OV Helsingborg HK", away: "IFK Skövde HK" },
-    { date: "2026-02-09", time: "19:00", home: "Eskilstuna Guif IF", away: "Amo HK" },
-    { date: "2026-02-09", time: "19:00", home: "HK Malmö", away: "Önnereds HK" },
-    { date: "2026-02-12", time: "19:00", home: "HK Malmö", away: "IFK Kristianstad" },
-    { date: "2026-02-13", time: "18:00", home: "IK Sävehof", away: "Eskilstuna Guif IF" },
-    { date: "2026-02-13", time: "19:00", home: "Alingsås HK", away: "Hammarby IF HF" },
-    { date: "2026-02-13", time: "19:00", home: "Amo HK", away: "Önnereds HK" },
-    { date: "2026-02-14", time: "16:00", home: "HF Karlskrona", away: "Ystads IF HF" },
-    { date: "2026-02-16", time: "19:00", home: "IFK Skövde HK", away: "HK Malmö" },
-    { date: "2026-02-16", time: "19:00", home: "IF Hallby HK", away: "OV Helsingborg HK" },
-    { date: "2026-02-17", time: "19:00", home: "IFK Kristianstad", away: "VästeråsIrsta HF" },
+    { date: "2026-02-10", time: "19:00", home: "IFK Kristianstad", away: "VästeråsIrsta HF" },
+    { date: "2026-02-13", time: "19:00", home: "HK Malmö", away: "IFK Kristianstad" },
+    { date: "2026-02-17", time: "20:45", home: "MT Melsungen", away: "IFK Kristianstad" },
     { date: "2026-02-20", time: "19:00", home: "Ystads IF HF", away: "IFK Kristianstad" },
-    { date: "2026-02-21", time: "16:00", home: "Eskilstuna Guif IF", away: "Alingsås HK" },
-    { date: "2026-02-21", time: "16:00", home: "VästeråsIrsta HF", away: "HF Karlskrona" },
-    { date: "2026-02-21", time: "16:00", home: "Önnereds HK", away: "IFK Skövde HK" },
-    { date: "2026-02-22", time: "16:00", home: "HK Malmö", away: "Amo HK" },
-    { date: "2026-02-25", time: "19:00", home: "Hammarby IF HF", away: "IF Hallby HK" },
-    { date: "2026-02-25", time: "19:00", home: "OV Helsingborg HK", away: "IK Sävehof" },
-    { date: "2026-02-27", time: "19:00", home: "HF Karlskrona", away: "Alingsås HK" },
-    { date: "2026-02-28", time: "15:00", home: "VästeråsIrsta HF", away: "Ystads IF HF" },
-    { date: "2026-02-28", time: "16:00", home: "IFK Kristianstad", away: "Eskilstuna Guif IF" },
-    { date: "2026-02-28", time: "16:15", home: "IK Sävehof", away: "HK Malmö" },
-    { date: "2026-03-02", time: "19:00", home: "IF Hallby HK", away: "Önnereds HK" },
-    { date: "2026-03-04", time: "19:00", home: "Alingsås HK", away: "OV Helsingborg HK" },
-    { date: "2026-03-04", time: "19:00", home: "HF Karlskrona", away: "Hammarby IF HF" },
-    { date: "2026-03-04", time: "19:00", home: "IFK Skövde HK", away: "Amo HK" },
-    { date: "2026-03-07", time: "17:00", home: "Hammarby IF HF", away: "IFK Kristianstad" },
-    { date: "2026-03-07", time: "18:00", home: "Eskilstuna Guif IF", away: "Ystads IF HF" },
-    { date: "2026-03-08", time: "16:00", home: "IFK Skövde HK", away: "IF Hallby HK" },
-    { date: "2026-03-08", time: "16:30", home: "HK Malmö", away: "Alingsås HK" },
-    { date: "2026-03-09", time: "19:00", home: "OV Helsingborg HK", away: "HF Karlskrona" },
-    { date: "2026-03-09", time: "19:00", home: "Önnereds HK", away: "VästeråsIrsta HF" },
-    { date: "2026-03-09", time: "19:00", home: "IK Sävehof", away: "Amo HK" },
-    { date: "2026-03-12", time: "19:00", home: "IK Sävehof", away: "IFK Skövde HK" },
+    { date: "2026-02-24", time: "18:45", home: "IFK Kristianstad", away: "Sport Lisboa e Benfica" },
+    { date: "2026-02-28", time: "16:00", home: "IFK Kristianstad", away: "Eskilstuna Guif" },
+    { date: "2026-03-03", time: "18:45", home: "IFK Kristianstad", away: "MT Melsungen" },
+    { date: "2026-03-07", time: "16:30", home: "Hammarby IF HF", away: "IFK Kristianstad" },
+    { date: "2026-03-10", time: "19:00", home: "Sport Lisboa e Benfica", away: "IFK Kristianstad" },
     { date: "2026-03-12", time: "19:00", home: "IFK Kristianstad", away: "OV Helsingborg HK" },
-    { date: "2026-03-13", time: "19:00", home: "IF Hallby HK", away: "Eskilstuna Guif IF" },
-    { date: "2026-03-13", time: "19:00", home: "VästeråsIrsta HF", away: "HK Malmö" },
-    { date: "2026-03-13", time: "19:00", home: "HF Karlskrona", away: "Amo HK" },
-    { date: "2026-03-13", time: "19:00", home: "Alingsås HK", away: "Önnereds HK" },
-    { date: "2026-03-13", time: "19:00", home: "Ystads IF HF", away: "Hammarby IF HF" },
-    { date: "2026-03-24", time: "19:00", home: "OV Helsingborg HK", away: "Ystads IF HF" },
-    { date: "2026-03-24", time: "19:00", home: "Eskilstuna Guif IF", away: "HF Karlskrona" },
-    { date: "2026-03-24", time: "19:00", home: "Önnereds HK", away: "IK Sävehof" },
-    { date: "2026-03-24", time: "19:00", home: "IFK Skövde HK", away: "IFK Kristianstad" },
-    { date: "2026-03-24", time: "19:00", home: "HK Malmö", away: "IF Hallby HK" },
-    { date: "2026-03-24", time: "19:00", home: "Hammarby IF HF", away: "VästeråsIrsta HF" },
-    { date: "2026-03-24", time: "19:00", home: "Amo HK", away: "Alingsås HK" }
+    { date: "2026-03-25", time: "19:00", home: "IFK Skövde HK", away: "IFK Kristianstad" },
+    { date: "2026-03-28", time: "13:00", home: "HF Karlskrona", away: "IFK Kristianstad" }
 ];
 
 // Allsvenskan 2026
@@ -1541,16 +1450,15 @@ function getAllEvents() {
         }
     });
     
-    // Add Handball League matches
+    // Add IFK Kristianstad matches
     handballLeagueSchedule.forEach(game => {
         const date = parseDate(game.date);
-        // Only show IFK Kristianstad matches in overview
-        if (date && (game.home === 'IFK Kristianstad' || game.away === 'IFK Kristianstad')) {
+        if (date) {
             events.push({
                 date: date,
                 dateString: formatDateSwedish(date),
-                sport: 'Handbollsligan',
-                team: 'Handbollsligan',
+                sport: 'Handboll',
+                team: 'IFK Kristianstad',
                 description: `${game.home} – ${game.away}`,
                 location: '-',
                 time: game.time
@@ -1854,7 +1762,7 @@ function createHandballLeagueTable(schedule) {
     }
     
     let html = `
-        <caption>Handbollsligan 2025/2026</caption>
+        <caption>IFK Kristianstad 2025/2026</caption>
         <thead>
             <tr>
                 <th>Datum</th>
