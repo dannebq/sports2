@@ -1034,7 +1034,7 @@ const winterOlympicsSchedule = [
     { date: "2026-02-09", time: "14:00", sport: "Alpint", event: "Lagkombination slalom, herrar", location: "Stelvio" },
     { date: "2026-02-09", time: "17:00", sport: "Rodel", event: "Singel åk 1 och 2, damer", location: "Cortina" },
     { date: "2026-02-09", time: "17:30", sport: "Skridsko", event: "1 000 m, damer", location: "Milano" },
-    { date: "2026-02-09", time: "18:05", sport: "Curling", event: "Mixed dubbel, semifinaler", location: "Cortina" },
+    { date: "2026-02-09", time: "18:05", sport: "Curling", event: "Mixed dubbel, semifinaler: Storbritannien–Sverige", location: "Cortina" },
     { date: "2026-02-09", time: "19:00", sport: "Backhoppning", event: "Normalbacke, herrar", location: "Predazzo" },
     { date: "2026-02-09", time: "19:20", sport: "Konståkning", event: "Isdans, rytmdans", location: "Milano" },
     { date: "2026-02-09", time: "19:30", sport: "Snowboard", event: "Big air final, damer", location: "Livigno" },
