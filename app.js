@@ -2516,7 +2516,8 @@ function displayOverview() {
     specialSection.style.flexDirection = 'column';
     specialSection.style.gap = '12px';
     
-    // NFL Playoffs button (dark blue/football theme)
+    // NFL Playoffs button (dark blue/football theme) - hidden, event has passed
+    /*
     const nflPlayoffsButton = document.createElement('a');
     nflPlayoffsButton.href = 'nfl-playoffs.html';
     nflPlayoffsButton.style.display = 'flex';
@@ -2543,6 +2544,7 @@ function displayOverview() {
     };
     
     specialSection.appendChild(nflPlayoffsButton);
+    */
     
     // Mystery button - Herrgårdens Hemlighet (hidden)
     /*
