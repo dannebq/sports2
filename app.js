@@ -1088,12 +1088,12 @@ const winterOlympicsSchedule = [
     { date: "2026-02-13", time: "14:05", sport: "Curling", event: "Damer omg 3: Danmark–Sverige", location: "Cortina" },
     { date: "2026-02-13", time: "16:00", sport: "Skeleton", event: "Heat 1 och 2, damer", location: "Cortina" },
     { date: "2026-02-13", time: "16:00", sport: "Skridsko", event: "10 000 m, herrar", location: "Milano" },
-    { date: "2026-02-13", time: "16:40", sport: "Ishockey", event: "Damer, Kvartsfinal 1", location: "Milano" },
+    { date: "2026-02-13", time: "16:40", sport: "Ishockey", event: "Damer, Kvartsfinal Tjeckien - Sverige", location: "Milano" },
     { date: "2026-02-13", time: "19:00", sport: "Konståkning", event: "Fritt program, herrar", location: "Milano" },
     { date: "2026-02-13", time: "19:05", sport: "Curling", event: "Herrar omg 4: Kanada–Sverige", location: "Cortina" },
     { date: "2026-02-13", time: "19:30", sport: "Skeleton", event: "Heat 3 och 4, herrar", location: "Cortina" },
     { date: "2026-02-13", time: "19:30", sport: "Snowboard", event: "Halfpipe final, herrar", location: "Livigno" },
-    { date: "2026-02-13", time: "21:10", sport: "Ishockey", event: "Damer, Kvartsfinal 2", location: "Milano" },
+    { date: "2026-02-13", time: "21:10", sport: "Ishockey", event: "Damer, Kvartsfinal USA - Italien", location: "Milano" },
     { date: "2026-02-14", time: "10:00", sport: "Alpint", event: "Storslalom åk 1, herrar", location: "Stelvio" },
     { date: "2026-02-14", time: "10:30", sport: "Puckelpist", event: "Damer parallellpuckel final", location: "Livigno" },
     { date: "2026-02-14", time: "12:00", sport: "Längdskidor", event: "Damstafett 4x7,5 km", location: "Tesero" },
@@ -1102,13 +1102,13 @@ const winterOlympicsSchedule = [
     { date: "2026-02-14", time: "14:00", sport: "Skidskytte", event: "Sprint 7,5 km, damer", location: "Anterselva" },
     { date: "2026-02-14", time: "14:05", sport: "Curling", event: "Herrar omg 5: Sverige–Kina", location: "Cortina" },
     { date: "2026-02-14", time: "16:00", sport: "Skridsko", event: "Stafett kval (D), 500m (H)", location: "Milano" },
-    { date: "2026-02-14", time: "16:40", sport: "Ishockey", event: "Damer, Kvartsfinal 3", location: "Milano" },
+    { date: "2026-02-14", time: "16:40", sport: "Ishockey", event: "Damer, Kvartsfinal Kanada - Tyskland", location: "Milano" },
     { date: "2026-02-14", time: "18:00", sport: "Skeleton", event: "Heat 3 och 4, damer", location: "Cortina" },
     { date: "2026-02-14", time: "18:45", sport: "Backhoppning", event: "Stora backen, herrar", location: "Predazzo" },
     { date: "2026-02-14", time: "19:05", sport: "Curling", event: "Damer omg 5: Italien–Sverige", location: "Cortina" },
     { date: "2026-02-14", time: "19:30", sport: "Freeski", event: "Big air kval, damer", location: "Livigno" },
     { date: "2026-02-14", time: "20:15", sport: "Shorttrack", event: "1000m kval (D), 1500m (H), 3000m stafett (D)", location: "Milano" },
-    { date: "2026-02-14", time: "21:10", sport: "Ishockey", event: "Damer, Kvartsfinal 4", location: "Milano" },
+    { date: "2026-02-14", time: "21:10", sport: "Ishockey", event: "Damer, Kvartsfinal Finland - Schweiz", location: "Milano" },
     { date: "2026-02-15", time: "09:05", sport: "Curling", event: "Herrar omg 6: USA–Sverige", location: "Cortina" },
     { date: "2026-02-15", time: "10:00", sport: "Alpint", event: "Storslalom åk 1, damer", location: "Tofane" },
     { date: "2026-02-15", time: "10:00", sport: "Bob", event: "Monobob heat 1 och 2, damer", location: "Cortina" },
@@ -1378,6 +1378,7 @@ function getAllEvents() {
     winterOlympicsSchedule.forEach(event => {
         const date = parseDate(event.date);
         if (date) {
+            const isSwedenMatch = event.event.includes('Sverige');
             events.push({
                 date: date,
                 dateString: formatDateSwedish(date),
@@ -1385,7 +1386,8 @@ function getAllEvents() {
                 team: event.sport,
                 description: event.event,
                 location: event.location,
-                time: event.time
+                time: event.time,
+                isHighlightedTeam: isSwedenMatch
             });
         }
     });
