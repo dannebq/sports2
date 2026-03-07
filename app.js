@@ -385,7 +385,7 @@ const skiClassicsSchedule = [
     { date: "2026-02-01", location: "Bedřichov, Tjeckien", time: "08:30", event: "Jizerská50, 50 km (herrar)" },
     { date: "2026-03-01", location: "Sälen–Mora, Sverige", time: "08:00", event: "Vasaloppet, 90 km" },
     { date: "2026-03-07", location: "Grönklitt, Sverige", time: "08:00", event: "Orsa Grönklitt 50k ITT damer, 50 km" },
-    { date: "2026-03-08", location: "Grönklitt, Sverige", time: "08:00", event: "Orsa Grönklitt 50k ITT herrar, 50 km" },
+    { date: "2026-03-08", location: "Grönklitt, Sverige", time: "09:00", event: "Orsa Grönklitt 50k ITT herrar, 50 km" },
     { date: "2026-03-14", location: "Rena–Lillehammer, Norge", time: "07:45", event: "Birkebeinerrennet, 54 km (herrar)" },
     { date: "2026-03-14", location: "Rena–Lillehammer, Norge", time: "08:00", event: "Birkebeinerrennet, 54 km (damer)" },
     { date: "2026-03-21", location: "Bodø, Norge", time: "10:15", event: "Marcialonga Bodø, 50 km (herrar)" },
