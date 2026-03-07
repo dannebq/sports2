@@ -368,7 +368,8 @@ const crossCountrySchedule = [
     { date: "2026-03-12", location: "Drammen", time: "14:00", event: "Sprint (k) kval, herrar" },
     { date: "2026-03-12", location: "Drammen", time: "16:30", event: "Sprint (k) final, damer" },
     { date: "2026-03-12", location: "Drammen", time: "16:30", event: "Sprint (k) final, herrar" },
-    { date: "2026-03-14", location: "Oslo", time: "–", event: "50 km fristil, masstart" },
+    { date: "2026-03-14", location: "Oslo", time: "10:00", event: "50 km (f) masstart, herrar" },
+    { date: "2026-03-14", location: "Oslo", time: "10:45", event: "50 km (f) masstart, damer" },
     { date: "2026-03-20", location: "Lake Placid", time: "–", event: "10 km klassiskt, individuell start" },
     { date: "2026-03-21", location: "Lake Placid", time: "–", event: "Sprint fristil" },
     { date: "2026-03-22", location: "Lake Placid", time: "–", event: "20 km fristil, masstart" }
