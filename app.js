@@ -370,9 +370,14 @@ const crossCountrySchedule = [
     { date: "2026-03-12", location: "Drammen", time: "16:30", event: "Sprint (k) final, herrar" },
     { date: "2026-03-14", location: "Oslo", time: "10:00", event: "50 km (f) masstart, herrar" },
     { date: "2026-03-14", location: "Oslo", time: "10:45", event: "50 km (f) masstart, damer" },
-    { date: "2026-03-20", location: "Lake Placid", time: "–", event: "10 km klassiskt, individuell start" },
-    { date: "2026-03-21", location: "Lake Placid", time: "–", event: "Sprint fristil" },
-    { date: "2026-03-22", location: "Lake Placid", time: "–", event: "20 km fristil, masstart" }
+    { date: "2026-03-20", location: "Lake Placid", time: "18:00", event: "10 km (k) intervallstart, damer" },
+    { date: "2026-03-20", location: "Lake Placid", time: "20:00", event: "10 km (k) intervallstart, herrar" },
+    { date: "2026-03-21", location: "Lake Placid", time: "15:30", event: "Sprint (f) kval, damer" },
+    { date: "2026-03-21", location: "Lake Placid", time: "15:30", event: "Sprint (f) kval, herrar" },
+    { date: "2026-03-21", location: "Lake Placid", time: "18:00", event: "Sprint (f) final, damer" },
+    { date: "2026-03-21", location: "Lake Placid", time: "18:00", event: "Sprint (f) final, herrar" },
+    { date: "2026-03-22", location: "Lake Placid", time: "17:30", event: "20 km (f) masstart, herrar" },
+    { date: "2026-03-22", location: "Lake Placid", time: "19:30", event: "20 km (f) masstart, damer" }
 ];
 
 // Ski Classics 2025/2026
