@@ -1034,6 +1034,239 @@ const nflPlayoffsSchedule = [
     { date: "2026-02-08", time: "00:30", home: "Seahawks", away: "Patriots", conference: "", round: "Super Bowl LX" }
 ];
 
+const f1Schedule = [
+    {
+        name: "Kinas Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-03-13", time: "04:30" },
+            { name: "Sprintkvalificering", date: "2026-03-13", time: "08:30" },
+            { name: "Sprint", date: "2026-03-14", time: "04:00" },
+            { name: "Kvalificering", date: "2026-03-14", time: "08:00" },
+            { name: "Grand Prix", date: "2026-03-15", time: "08:00" }
+        ]
+    },
+    {
+        name: "Japans Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-03-27", time: "03:30" },
+            { name: "Fri Träning 2", date: "2026-03-27", time: "07:00" },
+            { name: "Fri Träning 3", date: "2026-03-28", time: "03:30" },
+            { name: "Kvalificering", date: "2026-03-28", time: "07:00" },
+            { name: "Grand Prix", date: "2026-03-29", time: "07:00" }
+        ]
+    },
+    {
+        name: "Bahrains Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-04-10", time: "13:30" },
+            { name: "Fri Träning 2", date: "2026-04-10", time: "17:00" },
+            { name: "Fri Träning 3", date: "2026-04-11", time: "14:30" },
+            { name: "Kvalificering", date: "2026-04-11", time: "18:00" },
+            { name: "Grand Prix", date: "2026-04-12", time: "17:00" }
+        ]
+    },
+    {
+        name: "Saudiarabiens Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-04-17", time: "15:30" },
+            { name: "Fri Träning 2", date: "2026-04-17", time: "19:00" },
+            { name: "Fri Träning 3", date: "2026-04-18", time: "15:30" },
+            { name: "Kvalificering", date: "2026-04-18", time: "19:00" },
+            { name: "Grand Prix", date: "2026-04-19", time: "19:00" }
+        ]
+    },
+    {
+        name: "Miamis Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-05-01", time: "18:30" },
+            { name: "Sprintkvalificering", date: "2026-05-01", time: "22:30" },
+            { name: "Sprint", date: "2026-05-02", time: "18:00" },
+            { name: "Kvalificering", date: "2026-05-02", time: "22:00" },
+            { name: "Grand Prix", date: "2026-05-03", time: "22:00" }
+        ]
+    },
+    {
+        name: "Kanadas Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-05-22", time: "18:30" },
+            { name: "Sprintkvalificering", date: "2026-05-22", time: "22:30" },
+            { name: "Sprint", date: "2026-05-23", time: "18:00" },
+            { name: "Kvalificering", date: "2026-05-23", time: "22:00" },
+            { name: "Grand Prix", date: "2026-05-24", time: "22:00" }
+        ]
+    },
+    {
+        name: "Monacos Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-06-05", time: "13:30" },
+            { name: "Fri Träning 2", date: "2026-06-05", time: "17:00" },
+            { name: "Fri Träning 3", date: "2026-06-06", time: "12:30" },
+            { name: "Kvalificering", date: "2026-06-06", time: "16:00" },
+            { name: "Grand Prix", date: "2026-06-07", time: "15:00" }
+        ]
+    },
+    {
+        name: "Barcelona-Catalunya",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-06-12", time: "13:30" },
+            { name: "Fri Träning 2", date: "2026-06-12", time: "17:00" },
+            { name: "Fri Träning 3", date: "2026-06-13", time: "12:30" },
+            { name: "Kvalificering", date: "2026-06-13", time: "16:00" },
+            { name: "Grand Prix", date: "2026-06-14", time: "15:00" }
+        ]
+    },
+    {
+        name: "Österrikes Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-06-26", time: "13:30" },
+            { name: "Fri Träning 2", date: "2026-06-26", time: "17:00" },
+            { name: "Fri Träning 3", date: "2026-06-27", time: "12:30" },
+            { name: "Kvalificering", date: "2026-06-27", time: "16:00" },
+            { name: "Grand Prix", date: "2026-06-28", time: "15:00" }
+        ]
+    },
+    {
+        name: "Storbritanniens Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-07-03", time: "13:30" },
+            { name: "Sprintkvalificering", date: "2026-07-03", time: "17:30" },
+            { name: "Sprint", date: "2026-07-04", time: "13:00" },
+            { name: "Kvalificering", date: "2026-07-04", time: "17:00" },
+            { name: "Grand Prix", date: "2026-07-05", time: "16:00" }
+        ]
+    },
+    {
+        name: "Belgiens Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-07-17", time: "13:30" },
+            { name: "Fri Träning 2", date: "2026-07-17", time: "17:00" },
+            { name: "Fri Träning 3", date: "2026-07-18", time: "12:30" },
+            { name: "Kvalificering", date: "2026-07-18", time: "16:00" },
+            { name: "Grand Prix", date: "2026-07-19", time: "15:00" }
+        ]
+    },
+    {
+        name: "Ungerns Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-07-24", time: "13:30" },
+            { name: "Fri Träning 2", date: "2026-07-24", time: "17:00" },
+            { name: "Fri Träning 3", date: "2026-07-25", time: "12:30" },
+            { name: "Kvalificering", date: "2026-07-25", time: "16:00" },
+            { name: "Grand Prix", date: "2026-07-26", time: "15:00" }
+        ]
+    },
+    {
+        name: "Nederländernas Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-08-21", time: "12:30" },
+            { name: "Sprintkvalificering", date: "2026-08-21", time: "16:30" },
+            { name: "Sprint", date: "2026-08-22", time: "12:00" },
+            { name: "Kvalificering", date: "2026-08-22", time: "16:00" },
+            { name: "Grand Prix", date: "2026-08-23", time: "15:00" }
+        ]
+    },
+    {
+        name: "Italiens Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-09-04", time: "12:30" },
+            { name: "Fri Träning 2", date: "2026-09-04", time: "16:00" },
+            { name: "Fri Träning 3", date: "2026-09-05", time: "12:30" },
+            { name: "Kvalificering", date: "2026-09-05", time: "16:00" },
+            { name: "Grand Prix", date: "2026-09-06", time: "15:00" }
+        ]
+    },
+    {
+        name: "Spaniens Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-09-11", time: "13:30" },
+            { name: "Fri Träning 2", date: "2026-09-11", time: "17:00" },
+            { name: "Fri Träning 3", date: "2026-09-12", time: "12:30" },
+            { name: "Kvalificering", date: "2026-09-12", time: "16:00" },
+            { name: "Grand Prix", date: "2026-09-13", time: "15:00" }
+        ]
+    },
+    {
+        name: "Azerbaijans Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-09-24", time: "10:30" },
+            { name: "Fri Träning 2", date: "2026-09-24", time: "14:00" },
+            { name: "Fri Träning 3", date: "2026-09-25", time: "10:30" },
+            { name: "Kvalificering", date: "2026-09-25", time: "14:00" },
+            { name: "Grand Prix", date: "2026-09-26", time: "13:00" }
+        ]
+    },
+    {
+        name: "Singapores Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-10-09", time: "10:30" },
+            { name: "Sprintkvalificering", date: "2026-10-09", time: "14:30" },
+            { name: "Sprint", date: "2026-10-10", time: "11:00" },
+            { name: "Kvalificering", date: "2026-10-10", time: "15:00" },
+            { name: "Grand Prix", date: "2026-10-11", time: "14:00" }
+        ]
+    },
+    {
+        name: "USA:s Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-10-23", time: "19:30" },
+            { name: "Fri Träning 2", date: "2026-10-23", time: "23:00" },
+            { name: "Fri Träning 3", date: "2026-10-24", time: "19:30" },
+            { name: "Kvalificering", date: "2026-10-24", time: "23:00" },
+            { name: "Grand Prix", date: "2026-10-25", time: "21:00" }
+        ]
+    },
+    {
+        name: "Mexikos Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-10-30", time: "19:30" },
+            { name: "Fri Träning 2", date: "2026-10-30", time: "23:00" },
+            { name: "Fri Träning 3", date: "2026-10-31", time: "18:30" },
+            { name: "Kvalificering", date: "2026-10-31", time: "22:00" },
+            { name: "Grand Prix", date: "2026-11-01", time: "21:00" }
+        ]
+    },
+    {
+        name: "Brasiliens Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-11-06", time: "16:30" },
+            { name: "Fri Träning 2", date: "2026-11-06", time: "20:00" },
+            { name: "Fri Träning 3", date: "2026-11-07", time: "15:30" },
+            { name: "Kvalificering", date: "2026-11-07", time: "19:00" },
+            { name: "Grand Prix", date: "2026-11-08", time: "18:00" }
+        ]
+    },
+    {
+        name: "Las Vegas Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-11-20", time: "01:30" },
+            { name: "Fri Träning 2", date: "2026-11-20", time: "05:00" },
+            { name: "Fri Träning 3", date: "2026-11-21", time: "01:30" },
+            { name: "Kvalificering", date: "2026-11-21", time: "05:00" },
+            { name: "Grand Prix", date: "2026-11-22", time: "05:00" }
+        ]
+    },
+    {
+        name: "Qatars Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-11-27", time: "14:30" },
+            { name: "Fri Träning 2", date: "2026-11-27", time: "18:00" },
+            { name: "Fri Träning 3", date: "2026-11-28", time: "15:30" },
+            { name: "Kvalificering", date: "2026-11-28", time: "19:00" },
+            { name: "Grand Prix", date: "2026-11-29", time: "17:00" }
+        ]
+    },
+    {
+        name: "Abu Dhabis Grand Prix",
+        sessions: [
+            { name: "Fri Träning 1", date: "2026-12-04", time: "10:30" },
+            { name: "Fri Träning 2", date: "2026-12-04", time: "14:00" },
+            { name: "Fri Träning 3", date: "2026-12-05", time: "11:30" },
+            { name: "Kvalificering", date: "2026-12-05", time: "15:00" },
+            { name: "Grand Prix", date: "2026-12-06", time: "14:00" }
+        ]
+    }
+];
+
 // DOM Elements
 const scheduleContainer = document.getElementById('schedule-container');
 
@@ -1277,6 +1510,25 @@ function getAllEvents() {
                 }
             }
         });
+    });
+    
+    // Add F1 Grand Prix races
+    f1Schedule.forEach(gp => {
+        const raceSession = gp.sessions.find(s => s.name === 'Grand Prix');
+        if (raceSession) {
+            const date = parseDate(raceSession.date);
+            if (date) {
+                events.push({
+                    date: date,
+                    dateString: formatDateSwedish(date),
+                    sport: 'Formel 1',
+                    team: gp.name,
+                    description: gp.name,
+                    location: '-',
+                    time: raceSession.time
+                });
+            }
+        }
     });
     
     return events;
@@ -1668,6 +1920,101 @@ function createAllsvenskanTable(schedule) {
 function displayAllsvenskanSchedule(schedule) {
     scheduleContainer.innerHTML = '';
     const tables = createAllsvenskanTable(schedule);
+    scheduleContainer.appendChild(tables);
+}
+
+// Function to create F1 tables (grouped by Grand Prix)
+function createF1Tables(schedule) {
+    const container = document.createElement('div');
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let nextSessionDate = null;
+    for (const gp of schedule) {
+        for (const session of gp.sessions) {
+            const sessionDate = parseDate(session.date);
+            if (sessionDate && sessionDate >= today) {
+                if (!nextSessionDate || sessionDate < nextSessionDate) {
+                    nextSessionDate = sessionDate;
+                }
+            }
+        }
+    }
+
+    let isFirstFutureGP = true;
+
+    schedule.forEach(gp => {
+        const hasFutureSessions = gp.sessions.some(session => {
+            const sessionDate = parseDate(session.date);
+            return sessionDate && sessionDate >= today;
+        });
+
+        if (!hasFutureSessions) return;
+
+        const section = document.createElement('div');
+        section.className = 'competition-section';
+
+        const title = document.createElement('div');
+        title.className = 'competition-title';
+        title.textContent = gp.name;
+
+        if (isFirstFutureGP) {
+            const nextBadge = document.createElement('span');
+            nextBadge.textContent = 'NÄSTA';
+            nextBadge.style.cssText = 'background:#e53e3e;color:#fff;font-size:11px;padding:2px 8px;border-radius:4px;margin-left:10px;vertical-align:middle;';
+            title.appendChild(nextBadge);
+            isFirstFutureGP = false;
+        }
+
+        const table = document.createElement('table');
+        table.className = 'schedule-table';
+
+        let html = `
+            <thead>
+                <tr>
+                    <th>Session</th>
+                    <th>Datum</th>
+                    <th>Tid</th>
+                </tr>
+            </thead>
+            <tbody>
+        `;
+
+        gp.sessions.forEach(session => {
+            const sessionDate = parseDate(session.date);
+            if (!sessionDate || sessionDate < today) return;
+
+            const isNextSession = nextSessionDate &&
+                sessionDate.getTime() === nextSessionDate.getTime();
+            const rowClass = isNextSession ? ' class="next-event"' : '';
+
+            const formattedDate = formatDateSwedish(sessionDate);
+
+            html += `
+                <tr${rowClass}>
+                    <td>${session.name}</td>
+                    <td>${formattedDate}</td>
+                    <td>${session.time}</td>
+                </tr>
+            `;
+        });
+
+        html += `</tbody>`;
+        table.innerHTML = html;
+
+        section.appendChild(title);
+        section.appendChild(table);
+        container.appendChild(section);
+    });
+
+    return container;
+}
+
+// Function to display F1 schedule
+function displayF1Schedule(schedule) {
+    scheduleContainer.innerHTML = '';
+    const tables = createF1Tables(schedule);
     scheduleContainer.appendChild(tables);
 }
 
@@ -2244,6 +2591,8 @@ document.querySelectorAll('.team-btn').forEach(btn => {
                 displaySkiClassicsSchedule(skiClassicsSchedule);
             } else if (sport === 'handball-league') {
                 displayHandballLeagueSchedule(handballLeagueSchedule);
+            } else if (sport === 'f1') {
+                displayF1Schedule(f1Schedule);
             } else if (sport === 'allsvenskan') {
                 displayAllsvenskanSchedule(allsvenskanSchedule);
             } else if (sport === 'svenska-cupen') {
