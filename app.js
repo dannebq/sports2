@@ -419,6 +419,7 @@ const handballLeagueSchedule = [
     { date: "2026-03-12", time: "19:00", home: "IFK Kristianstad", away: "OV Helsingborg HK" },
     { date: "2026-03-25", time: "19:00", home: "IFK Skövde HK", away: "IFK Kristianstad" },
     { date: "2026-03-28", time: "13:00", home: "HF Karlskrona", away: "IFK Kristianstad" },
+    { date: "2026-03-29", time: "15:45", home: "IFK Kristianstad", away: "TBD" },
     { date: "2026-03-31", time: "18:45", home: "IFK Kristianstad", away: "RK Nexe" },
     { date: "2026-04-07", time: "20:45", home: "RK Nexe", away: "IFK Kristianstad" }
 ];
