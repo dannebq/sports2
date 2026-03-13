@@ -783,7 +783,11 @@ const svenskaCupenSchedule = [
     { date: "2026-03-08", time: "17:00", match: "Varbergs BoIS - IF Karlstad", group: 6 },
     { date: "2026-03-08", time: "17:00", match: "Malmö FF - Halmstad", group: 6, malmoff: true },
     { date: "2026-03-09", time: "19:00", match: "Västerås SK - IK Oddevold", group: 7 },
-    { date: "2026-03-09", time: "19:00", match: "AIK - BK Häcken", group: 7 }
+    { date: "2026-03-09", time: "19:00", match: "AIK - BK Häcken", group: 7 },
+    { date: "2026-03-14", time: "13:00", match: "GAIS - AIK" },
+    { date: "2026-03-14", time: "15:15", match: "Mjällby AIF - Malmö FF", malmoff: true },
+    { date: "2026-03-15", time: "15:00", match: "Hammarby - Djurgården" },
+    { date: "2026-03-15", time: "17:15", match: "IK Sirius FK - IFK Göteborg" }
 ];
 
 // Packers 2025 NFL Season Schedule (Swedish Times)
