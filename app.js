@@ -417,6 +417,8 @@ const handballLeagueSchedule = [
     { date: "2026-03-07", time: "16:30", home: "Hammarby IF HF", away: "IFK Kristianstad" },
     { date: "2026-03-10", time: "19:00", home: "Sport Lisboa e Benfica", away: "IFK Kristianstad" },
     { date: "2026-03-12", time: "19:00", home: "IFK Kristianstad", away: "OV Helsingborg HK" },
+    { date: "2026-03-19", time: "20:30", home: "Island", away: "Sverige (herrar)" },
+    { date: "2026-03-21", time: "18:00", home: "Island", away: "Sverige (herrar)" },
     { date: "2026-03-25", time: "19:00", home: "IFK Skövde HK", away: "IFK Kristianstad" },
     { date: "2026-03-28", time: "13:00", home: "HF Karlskrona", away: "IFK Kristianstad" },
     { date: "2026-03-29", time: "15:45", home: "IFK Kristianstad", away: "TBD" },
@@ -1704,7 +1706,7 @@ function createHandballLeagueTable(schedule) {
     }
     
     let html = `
-        <caption>IFK Kristianstad 2025/2026</caption>
+        <caption>Handboll 2025/2026</caption>
         <thead>
             <tr>
                 <th>Datum</th>
