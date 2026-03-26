@@ -137,6 +137,11 @@ body {
     font-weight: 600;
 }
 
+.schedule-table tr.ev-match td {
+    opacity: 0.6;
+    font-style: italic;
+}
+
 /* Biathlon specific */
 .competition-section {
     margin-bottom: 50px;

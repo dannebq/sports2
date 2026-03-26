@@ -405,29 +405,26 @@ const skiClassicsSchedule = [
     { date: "2026-03-29", location: "Bardufoss–Finnsnes, Norge", time: "08:35", event: "Grand Finale Summit 2 Senja, 60 km (damer)" }
 ];
 
-// IFK Kristianstad Schedule 2025/2026
+// IFK Kristianstad – Slutspel 2026 (bäst av 5)
 const handballLeagueSchedule = [
-    { date: "2026-02-10", time: "19:00", home: "IFK Kristianstad", away: "VästeråsIrsta HF" },
-    { date: "2026-02-13", time: "19:00", home: "HK Malmö", away: "IFK Kristianstad" },
-    { date: "2026-02-17", time: "20:45", home: "MT Melsungen", away: "IFK Kristianstad" },
-    { date: "2026-02-20", time: "19:00", home: "Ystads IF HF", away: "IFK Kristianstad" },
-    { date: "2026-02-24", time: "18:45", home: "IFK Kristianstad", away: "Sport Lisboa e Benfica" },
-    { date: "2026-02-28", time: "16:00", home: "IFK Kristianstad", away: "Eskilstuna Guif" },
-    { date: "2026-03-03", time: "18:45", home: "IFK Kristianstad", away: "MT Melsungen" },
-    { date: "2026-03-07", time: "16:30", home: "Hammarby IF HF", away: "IFK Kristianstad" },
-    { date: "2026-03-10", time: "19:00", home: "Sport Lisboa e Benfica", away: "IFK Kristianstad" },
-    { date: "2026-03-12", time: "19:00", home: "IFK Kristianstad", away: "OV Helsingborg HK" },
-    { date: "2026-03-19", time: "20:30", home: "Island", away: "Sverige (herrar)" },
-    { date: "2026-03-21", time: "18:00", home: "Island", away: "Sverige (herrar)" },
-    { date: "2026-03-25", time: "19:00", home: "IFK Skövde HK", away: "IFK Kristianstad" },
-    { date: "2026-03-28", time: "13:00", home: "HF Karlskrona", away: "IFK Kristianstad" },
-    { date: "2026-03-29", time: "15:45", home: "IFK Kristianstad", away: "TBD" },
-    { date: "2026-03-31", time: "18:45", home: "IFK Kristianstad", away: "RK Nexe" },
-    { date: "2026-04-07", time: "20:45", home: "RK Nexe", away: "IFK Kristianstad" },
-    { date: "2026-04-08", time: "14:00", home: "Ukraina", away: "Sverige (damer)" },
-    { date: "2026-04-12", time: "18:00", home: "Sverige", away: "Litauen (damer)" },
-    { date: "2026-05-13", time: "18:10", home: "Sverige", away: "Kroatien (herrar)" },
-    { date: "2026-05-16", time: "TBD", home: "Kroatien", away: "Sverige (herrar)" }
+    // Kvartsfinal: IFK Kristianstad–HF Karlskrona
+    { date: "2026-04-03", time: "19:00", home: "IFK Kristianstad", away: "HF Karlskrona", round: "Kvartsfinal" },
+    { date: "2026-04-09", time: "19:00", home: "HF Karlskrona", away: "IFK Kristianstad", round: "Kvartsfinal" },
+    { date: "2026-04-13", time: "19:00", home: "IFK Kristianstad", away: "HF Karlskrona", round: "Kvartsfinal" },
+    { date: "2026-04-16", time: "19:00", home: "HF Karlskrona", away: "IFK Kristianstad", round: "Kvartsfinal", ev: true },
+    { date: "2026-04-20", time: "19:00", home: "IFK Kristianstad", away: "HF Karlskrona", round: "Kvartsfinal", ev: true },
+    // Ev. Semifinal
+    { date: "2026-04-25", time: "TBD", home: "TBD", away: "TBD", round: "Semifinal", ev: true },
+    { date: "2026-04-28", time: "TBD", home: "TBD", away: "TBD", round: "Semifinal", ev: true },
+    { date: "2026-05-02", time: "TBD", home: "TBD", away: "TBD", round: "Semifinal", ev: true },
+    { date: "2026-05-05", time: "TBD", home: "TBD", away: "TBD", round: "Semifinal", ev: true },
+    { date: "2026-05-08", time: "TBD", home: "TBD", away: "TBD", round: "Semifinal", ev: true },
+    // Ev. SM-Final
+    { date: "2026-05-20", time: "TBD", home: "TBD", away: "TBD", round: "SM-Final", ev: true },
+    { date: "2026-05-23", time: "TBD", home: "TBD", away: "TBD", round: "SM-Final", ev: true },
+    { date: "2026-05-26", time: "TBD", home: "TBD", away: "TBD", round: "SM-Final", ev: true },
+    { date: "2026-05-29", time: "TBD", home: "TBD", away: "TBD", round: "SM-Final", ev: true },
+    { date: "2026-05-31", time: "TBD", home: "TBD", away: "TBD", round: "SM-Final", ev: true }
 ];
 
 // Allsvenskan 2026
@@ -1383,16 +1380,18 @@ function getAllEvents() {
         }
     });
     
-    // Add IFK Kristianstad matches
+    // Add IFK Kristianstad matches (skip TBD vs TBD from overview)
     handballLeagueSchedule.forEach(game => {
+        if (game.home === 'TBD' && game.away === 'TBD') return;
         const date = parseDate(game.date);
         if (date) {
+            const evPrefix = game.ev ? 'Ev. ' : '';
             events.push({
                 date: date,
                 dateString: formatDateSwedish(date),
                 sport: 'Handboll',
                 team: 'IFK Kristianstad',
-                description: `${game.home} – ${game.away}`,
+                description: `${evPrefix}${game.home} – ${game.away}`,
                 location: '-',
                 time: game.time
             });
@@ -1700,7 +1699,6 @@ function createHandballLeagueTable(schedule) {
     const table = document.createElement('table');
     table.className = 'schedule-table';
     
-    // Find next match
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
@@ -1714,9 +1712,10 @@ function createHandballLeagueTable(schedule) {
     }
     
     let html = `
-        <caption>Handboll 2025/2026</caption>
+        <caption>IFK Kristianstad – Slutspel 2026 (bäst av 5)</caption>
         <thead>
             <tr>
+                <th>Omgång</th>
                 <th>Datum</th>
                 <th>Tid</th>
                 <th>Hemmalag</th>
@@ -1726,22 +1725,26 @@ function createHandballLeagueTable(schedule) {
         <tbody>
     `;
     
+    let lastRound = '';
     schedule.forEach((game, index) => {
-        // Skip matches that have already occurred
         const matchDate = parseDate(game.date);
         if (!matchDate || matchDate < today) {
             return;
         }
         
         const isNextMatch = index === nextMatchIndex;
-        const rowClass = isNextMatch ? ' class="next-event"' : '';
+        const evClass = game.ev ? ' ev-match' : '';
+        const rowClass = isNextMatch ? `class="next-event${evClass}"` : (evClass ? `class="${evClass.trim()}"` : '');
         
-        // Format date to Swedish format
         const formattedDate = formatDateSwedish(matchDate);
+        const evPrefix = game.ev ? 'Ev. ' : '';
+        const roundLabel = game.round !== lastRound ? game.round : '';
+        lastRound = game.round;
         
         html += `
-            <tr${rowClass}>
-                <td>${formattedDate}</td>
+            <tr${rowClass ? ' ' + rowClass : ''}>
+                <td>${roundLabel}</td>
+                <td>${evPrefix}${formattedDate}</td>
                 <td>${game.time}</td>
                 <td>${game.home}</td>
                 <td>${game.away}</td>
