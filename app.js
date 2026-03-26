@@ -405,9 +405,29 @@ const skiClassicsSchedule = [
     { date: "2026-03-29", location: "Bardufoss–Finnsnes, Norge", time: "08:35", event: "Grand Finale Summit 2 Senja, 60 km (damer)" }
 ];
 
-// IFK Kristianstad – Slutspel 2026 (bäst av 5)
+// IFK Kristianstad 2025/2026
 const handballLeagueSchedule = [
-    // Kvartsfinal: IFK Kristianstad–HF Karlskrona
+    // Grundserie & EHF
+    { date: "2026-02-10", time: "19:00", home: "IFK Kristianstad", away: "VästeråsIrsta HF" },
+    { date: "2026-02-13", time: "19:00", home: "HK Malmö", away: "IFK Kristianstad" },
+    { date: "2026-02-17", time: "20:45", home: "MT Melsungen", away: "IFK Kristianstad" },
+    { date: "2026-02-20", time: "19:00", home: "Ystads IF HF", away: "IFK Kristianstad" },
+    { date: "2026-02-24", time: "18:45", home: "IFK Kristianstad", away: "Sport Lisboa e Benfica" },
+    { date: "2026-02-28", time: "16:00", home: "IFK Kristianstad", away: "Eskilstuna Guif" },
+    { date: "2026-03-03", time: "18:45", home: "IFK Kristianstad", away: "MT Melsungen" },
+    { date: "2026-03-07", time: "16:30", home: "Hammarby IF HF", away: "IFK Kristianstad" },
+    { date: "2026-03-10", time: "19:00", home: "Sport Lisboa e Benfica", away: "IFK Kristianstad" },
+    { date: "2026-03-12", time: "19:00", home: "IFK Kristianstad", away: "OV Helsingborg HK" },
+    { date: "2026-03-19", time: "20:30", home: "Island", away: "Sverige (herrar)" },
+    { date: "2026-03-21", time: "18:00", home: "Island", away: "Sverige (herrar)" },
+    { date: "2026-03-25", time: "19:00", home: "IFK Skövde HK", away: "IFK Kristianstad" },
+    { date: "2026-03-28", time: "13:00", home: "HF Karlskrona", away: "IFK Kristianstad" },
+    { date: "2026-03-29", time: "15:45", home: "IFK Kristianstad", away: "TBD" },
+    { date: "2026-03-31", time: "18:45", home: "IFK Kristianstad", away: "RK Nexe" },
+    { date: "2026-04-07", time: "20:45", home: "RK Nexe", away: "IFK Kristianstad" },
+    { date: "2026-04-08", time: "14:00", home: "Ukraina", away: "Sverige (damer)" },
+    { date: "2026-04-12", time: "18:00", home: "Sverige", away: "Litauen (damer)" },
+    // Kvartsfinal: IFK Kristianstad–HF Karlskrona (bäst av 5)
     { date: "2026-04-03", time: "19:00", home: "IFK Kristianstad", away: "HF Karlskrona", round: "Kvartsfinal" },
     { date: "2026-04-09", time: "19:00", home: "HF Karlskrona", away: "IFK Kristianstad", round: "Kvartsfinal" },
     { date: "2026-04-13", time: "19:00", home: "IFK Kristianstad", away: "HF Karlskrona", round: "Kvartsfinal" },
@@ -419,6 +439,9 @@ const handballLeagueSchedule = [
     { date: "2026-05-02", time: "TBD", home: "TBD", away: "TBD", round: "Semifinal", ev: true },
     { date: "2026-05-05", time: "TBD", home: "TBD", away: "TBD", round: "Semifinal", ev: true },
     { date: "2026-05-08", time: "TBD", home: "TBD", away: "TBD", round: "Semifinal", ev: true },
+    // Sverige
+    { date: "2026-05-13", time: "18:10", home: "Sverige", away: "Kroatien (herrar)" },
+    { date: "2026-05-16", time: "TBD", home: "Kroatien", away: "Sverige (herrar)" },
     // Ev. SM-Final
     { date: "2026-05-20", time: "TBD", home: "TBD", away: "TBD", round: "SM-Final", ev: true },
     { date: "2026-05-23", time: "TBD", home: "TBD", away: "TBD", round: "SM-Final", ev: true },
