@@ -1214,6 +1214,82 @@ const f1Schedule = [
     }
 ];
 
+// FIFA World Cup 2026 Group Stage Schedule
+const worldCupSchedule = [
+    { date: "11 juni", time: "21:00", home: "Mexiko", away: "Sydafrika", group: "A", tv: "TV4", city: "Mexico City" },
+    { date: "12 juni", time: "04:00", home: "Sydkorea", away: "Tjeckien", group: "A", tv: "TV4", city: "Guadalajara" },
+    { date: "12 juni", time: "21:00", home: "Kanada", away: "Bosnien & Hercegovina", group: "B", tv: "SVT", city: "Toronto" },
+    { date: "13 juni", time: "03:00", home: "USA", away: "Paraguay", group: "D", tv: "TV4", city: "Los Angeles" },
+    { date: "13 juni", time: "21:00", home: "Qatar", away: "Schweiz", group: "B", tv: "TV4", city: "San Francisco" },
+    { date: "14 juni", time: "00:00", home: "Brasilien", away: "Marocko", group: "C", tv: "SVT", city: "New Jersey" },
+    { date: "14 juni", time: "03:00", home: "Haiti", away: "Skottland", group: "C", tv: "SVT", city: "Boston" },
+    { date: "14 juni", time: "06:00", home: "Australien", away: "Turkiet", group: "D", tv: "TV4", city: "Vancouver" },
+    { date: "14 juni", time: "19:00", home: "Tyskland", away: "Curacao", group: "E", tv: "TV4", city: "Houston" },
+    { date: "14 juni", time: "22:00", home: "Nederländerna", away: "Japan", group: "F", tv: "TV4", city: "Dallas" },
+    { date: "15 juni", time: "01:00", home: "Elfenbenskusten", away: "Ecuador", group: "E", tv: "TV4", city: "Philadelphia" },
+    { date: "15 juni", time: "04:00", home: "Sverige", away: "Tunisien", group: "F", tv: "SVT", city: "Monterrey", sweden: true },
+    { date: "15 juni", time: "18:00", home: "Spanien", away: "Kap Verde", group: "H", tv: "SVT", city: "Atlanta" },
+    { date: "15 juni", time: "21:00", home: "Belgien", away: "Egypten", group: "G", tv: "SVT", city: "Seattle" },
+    { date: "16 juni", time: "00:00", home: "Saudiarabien", away: "Uruguay", group: "H", tv: "TV4", city: "Miami" },
+    { date: "16 juni", time: "03:00", home: "Iran", away: "Nya Zeeland", group: "G", tv: "TV4", city: "Los Angeles" },
+    { date: "16 juni", time: "21:00", home: "Frankrike", away: "Senegal", group: "I", tv: "SVT", city: "New Jersey" },
+    { date: "17 juni", time: "00:00", home: "Irak", away: "Norge", group: "I", tv: "TV4", city: "Boston" },
+    { date: "17 juni", time: "03:00", home: "Argentina", away: "Algeriet", group: "J", tv: "TV4", city: "Kansas City" },
+    { date: "17 juni", time: "06:00", home: "Österrike", away: "Jordanien", group: "J", tv: "TV4", city: "San Francisco" },
+    { date: "17 juni", time: "19:00", home: "Portugal", away: "DR Kongo", group: "K", tv: "TV4", city: "Houston" },
+    { date: "17 juni", time: "22:00", home: "England", away: "Kroatien", group: "L", tv: "TV4", city: "Dallas" },
+    { date: "18 juni", time: "01:00", home: "Ghana", away: "Panama", group: "L", tv: "TV4", city: "Toronto" },
+    { date: "18 juni", time: "04:00", home: "Uzbekistan", away: "Colombia", group: "K", tv: "TV4", city: "Mexico City" },
+    { date: "18 juni", time: "18:00", home: "Tjeckien", away: "Sydafrika", group: "A", tv: "TV4", city: "Atlanta" },
+    { date: "18 juni", time: "21:00", home: "Schweiz", away: "Bosnien & Hercegovina", group: "B", tv: "TV4", city: "Los Angeles" },
+    { date: "19 juni", time: "00:00", home: "Kanada", away: "Qatar", group: "B", tv: "TV4", city: "Vancouver" },
+    { date: "19 juni", time: "03:00", home: "Mexiko", away: "Sydkorea", group: "A", tv: "TV4", city: "Guadalajara" },
+    { date: "19 juni", time: "21:00", home: "USA", away: "Australien", group: "D", tv: "SVT", city: "Seattle" },
+    { date: "20 juni", time: "00:00", home: "Skottland", away: "Marocko", group: "C", tv: "SVT", city: "Boston" },
+    { date: "20 juni", time: "03:00", home: "Brasilien", away: "Haiti", group: "C", tv: "TV4", city: "Philadelphia" },
+    { date: "20 juni", time: "06:00", home: "Turkiet", away: "Paraguay", group: "D", tv: "TV4", city: "San Francisco" },
+    { date: "20 juni", time: "19:00", home: "Nederländerna", away: "Sverige", group: "F", tv: "TV4", city: "Houston", sweden: true },
+    { date: "20 juni", time: "22:00", home: "Tyskland", away: "Elfenbenskusten", group: "E", tv: "TV4", city: "Toronto" },
+    { date: "21 juni", time: "02:00", home: "Ecuador", away: "Curacao", group: "E", tv: "TV4", city: "Kansas City" },
+    { date: "21 juni", time: "06:00", home: "Tunisien", away: "Japan", group: "F", tv: "SVT", city: "Monterrey" },
+    { date: "21 juni", time: "18:00", home: "Spanien", away: "Saudiarabien", group: "H", tv: "TV4", city: "Atlanta" },
+    { date: "21 juni", time: "21:00", home: "Belgien", away: "Iran", group: "G", tv: "TV4", city: "Los Angeles" },
+    { date: "22 juni", time: "00:00", home: "Uruguay", away: "Kap Verde", group: "H", tv: "TV4", city: "Miami" },
+    { date: "22 juni", time: "03:00", home: "Nya Zeeland", away: "Egypten", group: "G", tv: "TV4", city: "Vancouver" },
+    { date: "22 juni", time: "19:00", home: "Argentina", away: "Österrike", group: "J", tv: "SVT", city: "Dallas" },
+    { date: "22 juni", time: "23:00", home: "Frankrike", away: "Irak", group: "I", tv: "SVT", city: "Philadelphia" },
+    { date: "23 juni", time: "02:00", home: "Norge", away: "Senegal", group: "I", tv: "SVT", city: "New Jersey" },
+    { date: "23 juni", time: "05:00", home: "Jordanien", away: "Algeriet", group: "J", tv: "TV4", city: "San Francisco" },
+    { date: "23 juni", time: "19:00", home: "Portugal", away: "Uzbekistan", group: "K", tv: "SVT", city: "Houston" },
+    { date: "23 juni", time: "22:00", home: "England", away: "Ghana", group: "L", tv: "SVT", city: "Boston" },
+    { date: "24 juni", time: "01:00", home: "Panama", away: "Kroatien", group: "L", tv: "TV4", city: "Toronto" },
+    { date: "24 juni", time: "04:00", home: "Colombia", away: "DR Kongo", group: "K", tv: "TV4", city: "Guadalajara" },
+    { date: "24 juni", time: "21:00", home: "Schweiz", away: "Kanada", group: "B", tv: "TV4", city: "Vancouver" },
+    { date: "24 juni", time: "21:00", home: "Bosnien & Hercegovina", away: "Qatar", group: "B", tv: "TV4", city: "Seattle" },
+    { date: "25 juni", time: "00:00", home: "Marocko", away: "Haiti", group: "C", tv: "TV4", city: "Atlanta" },
+    { date: "25 juni", time: "00:00", home: "Skottland", away: "Brasilien", group: "C", tv: "TV4", city: "Miami" },
+    { date: "25 juni", time: "03:00", home: "Sydafrika", away: "Sydkorea", group: "A", tv: "SVT", city: "Monterrey" },
+    { date: "25 juni", time: "03:00", home: "Tjeckien", away: "Mexiko", group: "A", tv: "SVT", city: "Mexico City" },
+    { date: "25 juni", time: "22:00", home: "Curacao", away: "Elfenbenskusten", group: "E", tv: "SVT", city: "Philadelphia" },
+    { date: "25 juni", time: "22:00", home: "Ecuador", away: "Tyskland", group: "E", tv: "SVT", city: "New Jersey" },
+    { date: "26 juni", time: "01:00", home: "Tunisien", away: "Nederländerna", group: "F", tv: "SVT", city: "Kansas City" },
+    { date: "26 juni", time: "01:00", home: "Japan", away: "Sverige", group: "F", tv: "SVT", city: "Dallas", sweden: true },
+    { date: "26 juni", time: "04:00", home: "Turkiet", away: "USA", group: "D", tv: "TV4", city: "Los Angeles" },
+    { date: "26 juni", time: "04:00", home: "Paraguay", away: "Australien", group: "D", tv: "TV4", city: "San Francisco" },
+    { date: "26 juni", time: "21:00", home: "Norge", away: "Frankrike", group: "I", tv: "TV4", city: "Boston" },
+    { date: "26 juni", time: "21:00", home: "Senegal", away: "Irak", group: "I", tv: "TV4", city: "" },
+    { date: "27 juni", time: "02:00", home: "Kap Verde", away: "Saudiarabien", group: "H", tv: "TV4", city: "Houston" },
+    { date: "27 juni", time: "02:00", home: "Uruguay", away: "Spanien", group: "H", tv: "TV4", city: "Guadalajara" },
+    { date: "27 juni", time: "05:00", home: "Nya Zeeland", away: "Belgien", group: "G", tv: "TV4", city: "Vancouver" },
+    { date: "27 juni", time: "05:00", home: "Egypten", away: "Iran", group: "G", tv: "TV4", city: "Seattle" },
+    { date: "27 juni", time: "23:00", home: "Panama", away: "England", group: "L", tv: "SVT", city: "New Jersey" },
+    { date: "27 juni", time: "23:00", home: "Kroatien", away: "Ghana", group: "L", tv: "SVT", city: "Philadelphia" },
+    { date: "28 juni", time: "01:30", home: "DR Kongo", away: "Uzbekistan", group: "K", tv: "TV4", city: "Atlanta" },
+    { date: "28 juni", time: "01:30", home: "Colombia", away: "Portugal", group: "K", tv: "TV4", city: "Miami" },
+    { date: "28 juni", time: "04:00", home: "Algeriet", away: "Österrike", group: "J", tv: "TV4", city: "Kansas City" },
+    { date: "28 juni", time: "04:00", home: "Jordanien", away: "Argentina", group: "J", tv: "TV4", city: "Dallas" }
+];
+
 // DOM Elements
 const scheduleContainer = document.getElementById('schedule-container');
 
@@ -1461,6 +1537,24 @@ function getAllEvents() {
         });
     });
     
+    // Add World Cup matches
+    worldCupSchedule.forEach(game => {
+        const date = parseDate(game.date);
+        if (date) {
+            events.push({
+                date: date,
+                dateString: formatDateSwedish(date),
+                sport: `VM Fotboll (Gr. ${game.group})`,
+                team: game.sweden ? 'Sverige' : game.group,
+                description: `${game.home} – ${game.away}`,
+                location: game.city || '-',
+                time: game.time,
+                tv: game.tv,
+                isHighlightedTeam: game.sweden === true
+            });
+        }
+    });
+
     // Add F1 Grand Prix races
     f1Schedule.forEach(gp => {
         const raceSession = gp.sessions.find(s => s.name === 'Grand Prix');
@@ -1873,6 +1967,96 @@ function createAllsvenskanTable(schedule) {
 function displayAllsvenskanSchedule(schedule) {
     scheduleContainer.innerHTML = '';
     const tables = createAllsvenskanTable(schedule);
+    scheduleContainer.appendChild(tables);
+}
+
+function createWorldCupTable(schedule) {
+    const container = document.createElement('div');
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let nextSwedenMatchDate = null;
+    for (const game of schedule) {
+        if (game.sweden) {
+            const matchDate = parseDate(game.date);
+            if (matchDate && matchDate >= today) {
+                nextSwedenMatchDate = matchDate;
+                break;
+            }
+        }
+    }
+
+    const groups = {};
+    schedule.forEach(game => {
+        if (!groups[game.group]) groups[game.group] = [];
+        groups[game.group].push(game);
+    });
+
+    const sortedGroupKeys = Object.keys(groups).sort();
+
+    sortedGroupKeys.forEach(groupKey => {
+        const matches = groups[groupKey];
+        const section = document.createElement('div');
+        section.className = 'competition-section';
+
+        const title = document.createElement('div');
+        title.className = 'competition-title';
+        title.textContent = `Grupp ${groupKey}`;
+
+        const table = document.createElement('table');
+        table.className = 'schedule-table';
+
+        let html = `
+            <thead>
+                <tr>
+                    <th>Datum</th>
+                    <th>Tid</th>
+                    <th>Match</th>
+                    <th>TV</th>
+                    <th>Ort</th>
+                </tr>
+            </thead>
+            <tbody>
+        `;
+
+        matches.forEach(game => {
+            const matchDate = parseDate(game.date);
+            const isSweden = game.sweden === true;
+            const isNextSweden = nextSwedenMatchDate && matchDate && isSweden &&
+                                 matchDate.getTime() === nextSwedenMatchDate.getTime();
+
+            let rowClass = '';
+            if (isNextSweden) rowClass = 'next-event sweden-match';
+            else if (isSweden) rowClass = 'sweden-match';
+
+            const formattedDate = matchDate ? formatDateSwedish(matchDate) : '–';
+
+            html += `
+                <tr${rowClass ? ` class="${rowClass}"` : ''}>
+                    <td>${formattedDate}</td>
+                    <td>${game.time}</td>
+                    <td>${game.home} – ${game.away}</td>
+                    <td>${game.tv}</td>
+                    <td>${game.city || '–'}</td>
+                </tr>
+            `;
+        });
+
+        html += `</tbody>`;
+        table.innerHTML = html;
+
+        section.appendChild(title);
+        section.appendChild(table);
+        container.appendChild(section);
+    });
+
+    return container;
+}
+
+function displayWorldCupSchedule(schedule) {
+    scheduleContainer.innerHTML = '';
+    const tables = createWorldCupTable(schedule);
     scheduleContainer.appendChild(tables);
 }
 
@@ -2480,6 +2664,8 @@ document.querySelectorAll('.team-btn').forEach(btn => {
                 displayAllsvenskanSchedule(allsvenskanSchedule);
             } else if (sport === 'svenska-cupen') {
                 displaySvenskaCupenSchedule(svenskaCupenSchedule);
+            } else if (sport === 'world-cup') {
+                displayWorldCupSchedule(worldCupSchedule);
             }
         }, 500);
     });
