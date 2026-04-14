@@ -479,6 +479,7 @@ function renderLeaderboard(container) {
     });
 
     html += `</div>`;
+    html += `<div class="trophy-container"><img src="world-cup-trophy.png" alt="VM-pokalen" class="trophy-img"></div>`;
     container.innerHTML = html;
 }
 
