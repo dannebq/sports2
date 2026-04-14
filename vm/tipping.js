@@ -339,7 +339,7 @@ function renderOthersTips(match, allData, result) {
     }).filter(Boolean);
 
     if (tips.length === 0) return '';
-    return `<div class="others-tips-row">${tips.join('')}</div>`;
+    return `<div class="others-tips-row"><span class="others-label">Andra spelares tips:</span>${tips.join('')}</div>`;
 }
 
 function renderMatchCard(match, pred, result, locked, allData) {
