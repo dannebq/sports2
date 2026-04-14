@@ -353,6 +353,91 @@ body {
     border-color: #888;
 }
 
+/* Players */
+.players-section {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.players-section h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+.add-player-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.add-player-row input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    outline: none;
+}
+
+.add-player-row input:focus {
+    border-color: #888;
+}
+
+.btn-add-player {
+    padding: 10px 20px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.btn-add-player:hover {
+    background: #333;
+}
+
+.player-list-empty {
+    color: #888;
+    font-size: 14px;
+    padding: 12px 0;
+}
+
+.player-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: #fafafa;
+    border-radius: 8px;
+    margin-bottom: 6px;
+}
+
+.player-name {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.btn-remove-player {
+    padding: 4px 12px;
+    background: transparent;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #888;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.btn-remove-player:hover {
+    border-color: #c0392b;
+    color: #c0392b;
+    background: #fff;
+}
+
 /* Save bar */
 .save-bar {
     position: fixed;

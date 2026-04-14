@@ -103,14 +103,6 @@ const Storage = {
         return JSON.parse(localStorage.getItem('wc26-players') || '[]');
     },
 
-    addPlayer(name) {
-        const players = this.getPlayers();
-        if (!players.includes(name)) {
-            players.push(name);
-            localStorage.setItem('wc26-players', JSON.stringify(players));
-        }
-    },
-
     load(player) {
         return JSON.parse(localStorage.getItem(this._key(player)) || '{"medals":{},"matches":{}}');
     },
@@ -238,7 +230,7 @@ function renderContent() {
     const main = document.getElementById('mainContent');
 
     if (!currentPlayer) {
-        main.innerHTML = '<div class="no-player-message"><p>Lägg till en spelare för att börja tippa!</p></div>';
+        main.innerHTML = '<div class="no-player-message"><p>Inga spelare tillagda ännu. Spelare läggs till via admin.</p></div>';
         return;
     }
 
@@ -619,38 +611,6 @@ function init() {
             currentTab = btn.dataset.tab;
             renderContent();
         });
-    });
-
-    const addBtn = document.getElementById('btnAddPlayer');
-    const addForm = document.getElementById('addPlayerForm');
-    const nameInput = document.getElementById('newPlayerName');
-    const confirmBtn = document.getElementById('btnConfirmPlayer');
-    const cancelBtn = document.getElementById('btnCancelPlayer');
-
-    addBtn.addEventListener('click', () => {
-        addForm.classList.toggle('hidden');
-        if (!addForm.classList.contains('hidden')) nameInput.focus();
-    });
-
-    cancelBtn.addEventListener('click', () => {
-        addForm.classList.add('hidden');
-        nameInput.value = '';
-    });
-
-    function addPlayer() {
-        const name = nameInput.value.trim();
-        if (!name) return;
-        Storage.addPlayer(name);
-        currentPlayer = name;
-        nameInput.value = '';
-        addForm.classList.add('hidden');
-        renderPlayerTabs();
-        renderContent();
-    }
-
-    confirmBtn.addEventListener('click', addPlayer);
-    nameInput.addEventListener('keydown', e => {
-        if (e.key === 'Enter') addPlayer();
     });
 
     const rulesModal = document.getElementById('rulesModal');

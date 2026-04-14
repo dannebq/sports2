@@ -196,13 +196,76 @@ function initLogin() {
 
 // ── Rendering ──
 
+function getPlayers() {
+    return JSON.parse(localStorage.getItem('wc26-players') || '[]');
+}
+
+function addPlayer(name) {
+    const players = getPlayers();
+    if (!players.includes(name)) {
+        players.push(name);
+        localStorage.setItem('wc26-players', JSON.stringify(players));
+    }
+}
+
+function removePlayer(name) {
+    const players = getPlayers();
+    localStorage.setItem('wc26-players', JSON.stringify(players.filter(p => p !== name)));
+}
+
+function renderPlayers(container) {
+    const players = getPlayers();
+
+    let html = `<div class="players-section">
+        <h2>Spelare</h2>
+        <div class="add-player-row">
+            <input type="text" id="adminNewPlayer" placeholder="Namn..." maxlength="20">
+            <button class="btn-add-player" id="adminAddPlayer">Lägg till</button>
+        </div>
+        <div class="player-list">`;
+
+    if (players.length === 0) {
+        html += `<div class="player-list-empty">Inga spelare tillagda.</div>`;
+    } else {
+        players.forEach(name => {
+            html += `<div class="player-item">
+                <span class="player-name">${name}</span>
+                <button class="btn-remove-player" data-player="${name}">Ta bort</button>
+            </div>`;
+        });
+    }
+
+    html += `</div></div>`;
+    container.innerHTML = html;
+
+    const input = document.getElementById('adminNewPlayer');
+    const addBtn = document.getElementById('adminAddPlayer');
+
+    function doAdd() {
+        const name = input.value.trim();
+        if (!name) return;
+        addPlayer(name);
+        renderPlayers(container);
+    }
+
+    addBtn.addEventListener('click', doAdd);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') doAdd(); });
+
+    container.querySelectorAll('.btn-remove-player').forEach(btn => {
+        btn.addEventListener('click', () => {
+            if (confirm(`Ta bort ${btn.dataset.player}?`)) {
+                removePlayer(btn.dataset.player);
+                renderPlayers(container);
+            }
+        });
+    });
+}
+
 function renderContent() {
     const main = document.getElementById('mainContent');
-    if (currentTab === 'results') {
-        renderResults(main);
-    } else {
-        renderMedals(main);
-    }
+    if (currentTab === 'results') renderResults(main);
+    else if (currentTab === 'medals') renderMedals(main);
+    else if (currentTab === 'players') renderPlayers(main);
 }
 
 function renderResultCard(match) {
