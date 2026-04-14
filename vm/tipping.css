@@ -485,23 +485,65 @@ body {
 }
 
 /* Others' tips */
-.others-tips-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px 10px;
+.others-tips-section {
     padding-top: 6px;
     border-top: 1px solid #f0f0f0;
 }
 
-.others-tips-row.medal-tips {
-    padding: 4px 12px 10px;
+.others-toggle {
+    font-size: 12px;
+    color: #888;
+    cursor: pointer;
+    padding: 4px 0;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.others-toggle:hover {
+    color: #555;
+}
+
+.others-arrow {
+    font-size: 10px;
+    transition: transform 0.15s;
+}
+
+.others-tips-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+    padding-top: 4px;
+}
+
+.medal-others-section {
+    margin-top: 16px;
+    padding: 12px;
+    background: #fafafa;
+    border-radius: 8px;
     border-top: none;
 }
 
-.others-label {
-    font-size: 11px;
-    color: #aaa;
-    white-space: nowrap;
+.medal-others-section .others-toggle {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.others-medal-list {
+    padding-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.others-medal-player {
+    font-size: 13px;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
 }
 
 .others-tip {

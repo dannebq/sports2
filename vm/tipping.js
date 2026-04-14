@@ -273,12 +273,6 @@ function renderMedals(container) {
     medals.forEach(m => {
         const selected = (data.medals && data.medals[m.key]) || '';
 
-        const otherTips = players.filter(name => name !== currentPlayer).map(name => {
-            const pick = (allData[name].medals && allData[name].medals[m.key]) || null;
-            if (!pick) return null;
-            return `<span class="others-tip">${name}: ${pick}</span>`;
-        }).filter(Boolean);
-
         html += `<div class="medal-row">
             <span class="medal-icon">${m.icon}</span>
             <div>
@@ -291,8 +285,7 @@ function renderMedals(container) {
                     ${allTeams.map(t => `<option value="${t}" ${t === selected ? 'selected' : ''}>${t}</option>`).join('')}
                 </select>
             </div>
-        </div>
-        ${otherTips.length > 0 ? `<div class="others-tips-row medal-tips">${otherTips.join('')}</div>` : ''}`;
+        </div>`;
     });
 
     const actualMedals = Storage.getMedals();
@@ -301,6 +294,35 @@ function renderMedals(container) {
         html += `<div class="match-result-row" style="margin-top:12px;padding:12px;background:#fafafa;border-radius:8px;">
             <span>Facit: 🥇 ${actualMedals.gold} 🥈 ${actualMedals.silver} 🥉 ${actualMedals.bronze}</span>
             <span class="match-points-badge">${pts}p</span>
+        </div>`;
+    }
+
+    const otherMedalTips = players.filter(name => name !== currentPlayer).map(name => {
+        const m = (allData[name].medals) || {};
+        if (!m.gold && !m.silver && !m.bronze) return null;
+        const parts = [];
+        if (m.gold) {
+            let cls = '';
+            if (actualMedals.gold) cls = m.gold === actualMedals.gold ? ' tip-exact' : ' tip-wrong';
+            parts.push(`<span class="others-tip${cls}">🥇 ${m.gold}</span>`);
+        }
+        if (m.silver) {
+            let cls = '';
+            if (actualMedals.silver) cls = m.silver === actualMedals.silver ? ' tip-exact' : ' tip-wrong';
+            parts.push(`<span class="others-tip${cls}">🥈 ${m.silver}</span>`);
+        }
+        if (m.bronze) {
+            let cls = '';
+            if (actualMedals.bronze) cls = m.bronze === actualMedals.bronze ? ' tip-exact' : ' tip-wrong';
+            parts.push(`<span class="others-tip${cls}">🥉 ${m.bronze}</span>`);
+        }
+        return `<div class="others-medal-player"><strong>${name}:</strong> ${parts.join(' ')}</div>`;
+    }).filter(Boolean);
+
+    if (otherMedalTips.length > 0) {
+        html += `<div class="others-tips-section medal-others-section">
+            <div class="others-toggle">Andra spelares tips <span class="others-arrow">▸</span></div>
+            <div class="others-medal-list hidden">${otherMedalTips.join('')}</div>
         </div>`;
     }
 
@@ -314,6 +336,15 @@ function renderMedals(container) {
             d.medals[sel.dataset.medal] = sel.value || null;
             Storage.save(currentPlayer, d);
             renderPlayerTabs();
+        });
+    });
+
+    container.querySelectorAll('.others-toggle').forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            const list = toggle.nextElementSibling;
+            const arrow = toggle.querySelector('.others-arrow');
+            list.classList.toggle('hidden');
+            arrow.textContent = list.classList.contains('hidden') ? '▸' : '▾';
         });
     });
 }
@@ -339,7 +370,10 @@ function renderOthersTips(match, allData, result) {
     }).filter(Boolean);
 
     if (tips.length === 0) return '';
-    return `<div class="others-tips-row"><span class="others-label">Andra spelares tips:</span>${tips.join('')}</div>`;
+    return `<div class="others-tips-section">
+        <div class="others-toggle">Andra spelares tips <span class="others-arrow">▸</span></div>
+        <div class="others-tips-row hidden">${tips.join('')}</div>
+    </div>`;
 }
 
 function renderMatchCard(match, pred, result, locked, allData) {
@@ -446,6 +480,15 @@ function renderMatches(container) {
             d.matches[matchId][input.dataset.side] = val;
             Storage.save(currentPlayer, d);
             renderPlayerTabs();
+        });
+    });
+
+    container.querySelectorAll('.others-toggle').forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            const row = toggle.nextElementSibling;
+            const arrow = toggle.querySelector('.others-arrow');
+            row.classList.toggle('hidden');
+            arrow.textContent = row.classList.contains('hidden') ? '▸' : '▾';
         });
     });
 }
