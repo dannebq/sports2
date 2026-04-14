@@ -102,10 +102,26 @@ function flagUrl(teamName) {
 let currentTab = 'results';
 let pendingResults = {};
 let pendingMedals = { gold: null, silver: null, bronze: null };
+let unlockedMatches = new Set();
 
 function loadSavedData() {
     pendingResults = JSON.parse(localStorage.getItem('wc26-results') || '{}');
     pendingMedals = JSON.parse(localStorage.getItem('wc26-medals') || '{"gold":null,"silver":null,"bronze":null}');
+}
+
+function saveResults() {
+    const cleanResults = {};
+    for (const [id, r] of Object.entries(pendingResults)) {
+        if (r.home != null && r.away != null) {
+            cleanResults[id] = { home: r.home, away: r.away };
+        }
+    }
+    localStorage.setItem('wc26-results', JSON.stringify(cleanResults));
+    pendingResults = cleanResults;
+}
+
+function saveMedals() {
+    localStorage.setItem('wc26-medals', JSON.stringify(pendingMedals));
 }
 
 // ── Login ──
@@ -180,8 +196,9 @@ function renderResults(container) {
         groups[groupKey].forEach(match => {
             const result = pendingResults[match.id];
             const hasResult = result && result.home != null && result.away != null;
+            const isLocked = hasResult && !unlockedMatches.has(match.id);
 
-            html += `<div class="result-card ${hasResult ? 'has-result' : ''}">
+            html += `<div class="result-card ${hasResult ? 'has-result' : ''} ${isLocked ? 'is-locked' : ''}">
                 <div class="result-meta">${match.date} ${match.time}</div>
                 <div class="result-row">
                     <div class="result-team home">
@@ -191,16 +208,19 @@ function renderResults(container) {
                     <div class="result-inputs">
                         <input type="number" class="result-input" min="0" max="20"
                             data-match="${match.id}" data-side="home"
-                            value="${hasResult ? result.home : ''}">
+                            value="${hasResult ? result.home : ''}"
+                            ${isLocked ? 'disabled' : ''}>
                         <span class="result-separator">–</span>
                         <input type="number" class="result-input" min="0" max="20"
                             data-match="${match.id}" data-side="away"
-                            value="${hasResult ? result.away : ''}">
+                            value="${hasResult ? result.away : ''}"
+                            ${isLocked ? 'disabled' : ''}>
                     </div>
                     <div class="result-team away">
                         <img class="team-flag" src="${flagUrl(match.away)}" alt="${match.away}">
                         <span class="team-name">${match.away}</span>
                     </div>
+                    ${isLocked ? `<button class="btn-unlock" data-match="${match.id}" title="Lås upp för att ändra">Ändra</button>` : ''}
                 </div>
             </div>`;
         });
@@ -216,6 +236,13 @@ function renderResults(container) {
             if (!pendingResults[matchId]) pendingResults[matchId] = {};
             const val = input.value === '' ? null : parseInt(input.value);
             pendingResults[matchId][input.dataset.side] = val;
+        });
+    });
+
+    container.querySelectorAll('.btn-unlock').forEach(btn => {
+        btn.addEventListener('click', () => {
+            unlockedMatches.add(parseInt(btn.dataset.match));
+            renderResults(container);
         });
     });
 }
@@ -258,18 +285,14 @@ function initSave() {
     const saveStatus = document.getElementById('saveStatus');
 
     saveBtn.addEventListener('click', () => {
-        const cleanResults = {};
-        for (const [id, r] of Object.entries(pendingResults)) {
-            if (r.home != null && r.away != null) {
-                cleanResults[id] = { home: r.home, away: r.away };
-            }
-        }
-
-        localStorage.setItem('wc26-results', JSON.stringify(cleanResults));
-        localStorage.setItem('wc26-medals', JSON.stringify(pendingMedals));
+        saveResults();
+        saveMedals();
+        unlockedMatches.clear();
 
         saveStatus.textContent = 'Sparat!';
         setTimeout(() => { saveStatus.textContent = ''; }, 2000);
+
+        renderContent();
     });
 }
 

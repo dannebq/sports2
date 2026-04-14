@@ -165,6 +165,35 @@ body {
     border-left: 3px solid #2e7d32;
 }
 
+.result-card.is-locked {
+    background: #f9f9f9;
+}
+
+.result-card.is-locked .result-input {
+    background: #f0f0f0;
+    color: #1a1a1a;
+    font-weight: 700;
+    border-color: transparent;
+}
+
+.btn-unlock {
+    padding: 4px 12px;
+    background: transparent;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #888;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.15s;
+}
+
+.btn-unlock:hover {
+    border-color: #999;
+    color: #333;
+    background: #fff;
+}
+
 .result-meta {
     font-size: 12px;
     color: #888;
