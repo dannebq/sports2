@@ -213,6 +213,22 @@ function removePlayer(name) {
     localStorage.setItem('wc26-players', JSON.stringify(players.filter(p => p !== name)));
 }
 
+function renamePlayer(oldName, newName) {
+    const players = getPlayers();
+    if (players.includes(newName)) return false;
+    const idx = players.indexOf(oldName);
+    if (idx === -1) return false;
+    players[idx] = newName;
+    localStorage.setItem('wc26-players', JSON.stringify(players));
+    const tipsKey = `wc26-tips-${oldName}`;
+    const data = localStorage.getItem(tipsKey);
+    if (data) {
+        localStorage.setItem(`wc26-tips-${newName}`, data);
+        localStorage.removeItem(tipsKey);
+    }
+    return true;
+}
+
 function renderPlayers(container) {
     const players = getPlayers();
 
@@ -228,9 +244,12 @@ function renderPlayers(container) {
         html += `<div class="player-list-empty">Inga spelare tillagda.</div>`;
     } else {
         players.forEach(name => {
-            html += `<div class="player-item">
+            html += `<div class="player-item" data-player="${name}">
                 <span class="player-name">${name}</span>
-                <button class="btn-remove-player" data-player="${name}">Ta bort</button>
+                <div class="player-actions">
+                    <button class="btn-rename-player" data-player="${name}" title="Byt namn">Byt namn</button>
+                    <button class="btn-remove-player" data-player="${name}" title="Ta bort">Ta bort</button>
+                </div>
             </div>`;
         });
     }
@@ -250,6 +269,40 @@ function renderPlayers(container) {
 
     addBtn.addEventListener('click', doAdd);
     input.addEventListener('keydown', e => { if (e.key === 'Enter') doAdd(); });
+
+    container.querySelectorAll('.btn-rename-player').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const oldName = btn.dataset.player;
+            const item = btn.closest('.player-item');
+            item.innerHTML = `<input type="text" class="rename-input" value="${oldName}" maxlength="20">
+                <div class="player-actions">
+                    <button class="btn-rename-save">Spara</button>
+                    <button class="btn-rename-cancel">Avbryt</button>
+                </div>`;
+
+            const renameInput = item.querySelector('.rename-input');
+            renameInput.focus();
+            renameInput.select();
+
+            function doRename() {
+                const newName = renameInput.value.trim();
+                if (!newName || newName === oldName) { renderPlayers(container); return; }
+                if (!renamePlayer(oldName, newName)) {
+                    alert('Namnet finns redan.');
+                    renameInput.focus();
+                    return;
+                }
+                renderPlayers(container);
+            }
+
+            item.querySelector('.btn-rename-save').addEventListener('click', doRename);
+            renameInput.addEventListener('keydown', e => {
+                if (e.key === 'Enter') doRename();
+                if (e.key === 'Escape') renderPlayers(container);
+            });
+            item.querySelector('.btn-rename-cancel').addEventListener('click', () => renderPlayers(container));
+        });
+    });
 
     container.querySelectorAll('.btn-remove-player').forEach(btn => {
         btn.addEventListener('click', () => {

@@ -414,14 +414,26 @@ body {
     background: #fafafa;
     border-radius: 8px;
     margin-bottom: 6px;
+    gap: 8px;
 }
 
 .player-name {
     font-weight: 500;
     font-size: 14px;
+    flex: 1;
+    min-width: 0;
 }
 
-.btn-remove-player {
+.player-actions {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.btn-rename-player,
+.btn-remove-player,
+.btn-rename-save,
+.btn-rename-cancel {
     padding: 4px 12px;
     background: transparent;
     border: 1px solid #ddd;
@@ -432,10 +444,46 @@ body {
     transition: all 0.15s;
 }
 
+.btn-rename-player:hover {
+    border-color: #999;
+    color: #333;
+    background: #fff;
+}
+
 .btn-remove-player:hover {
     border-color: #c0392b;
     color: #c0392b;
     background: #fff;
+}
+
+.btn-rename-save {
+    color: #2e7d32;
+    border-color: #2e7d32;
+}
+
+.btn-rename-save:hover {
+    background: #2e7d32;
+    color: #fff;
+}
+
+.btn-rename-cancel:hover {
+    border-color: #999;
+    color: #333;
+    background: #fff;
+}
+
+.rename-input {
+    flex: 1;
+    min-width: 0;
+    padding: 6px 10px;
+    border: 1px solid #888;
+    border-radius: 4px;
+    font-size: 14px;
+    outline: none;
+}
+
+.rename-input:focus {
+    border-color: #333;
 }
 
 /* Save bar */
