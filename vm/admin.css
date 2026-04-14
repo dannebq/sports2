@@ -1,0 +1,350 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background: #f5f5f5;
+    color: #1a1a1a;
+    min-height: 100vh;
+    line-height: 1.5;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Login */
+.login-screen {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.login-box {
+    background: #fff;
+    border-radius: 12px;
+    padding: 40px 32px;
+    width: 100%;
+    max-width: 360px;
+    text-align: center;
+}
+
+.login-box h1 {
+    font-size: 22px;
+    margin-bottom: 24px;
+}
+
+.login-box input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    margin-bottom: 12px;
+    outline: none;
+}
+
+.login-box input:focus {
+    border-color: #888;
+}
+
+.login-box button {
+    width: 100%;
+    padding: 10px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.login-box button:hover {
+    background: #333;
+}
+
+.login-error {
+    color: #c0392b;
+    font-size: 13px;
+    margin-top: 12px;
+}
+
+/* Admin layout */
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 16px;
+    padding-bottom: 80px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header h1 {
+    font-size: 22px;
+}
+
+.btn-logout {
+    padding: 6px 14px;
+    background: transparent;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #888;
+}
+
+.btn-logout:hover {
+    border-color: #999;
+    color: #333;
+}
+
+/* Tabs */
+.tab-nav {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 10px 16px;
+    border: none;
+    background: transparent;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    color: #888;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.15s;
+}
+
+.tab-btn:hover {
+    color: #444;
+}
+
+.tab-btn.active {
+    color: #1a1a1a;
+    border-bottom-color: #1a1a1a;
+}
+
+/* Match result entry */
+.group-section {
+    margin-bottom: 24px;
+}
+
+.group-header {
+    font-size: 15px;
+    font-weight: 700;
+    padding: 8px 0;
+    border-bottom: 2px solid #1a1a1a;
+    margin-bottom: 8px;
+}
+
+.result-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.result-card.has-result {
+    border-left: 3px solid #2e7d32;
+}
+
+.result-meta {
+    font-size: 12px;
+    color: #888;
+}
+
+.result-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.result-team {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+    min-width: 0;
+}
+
+.result-team.home {
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.result-team.away {
+    justify-content: flex-start;
+}
+
+.team-flag {
+    width: 24px;
+    height: 16px;
+    object-fit: cover;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.team-name {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.result-inputs {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.result-input {
+    width: 40px;
+    height: 36px;
+    text-align: center;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    outline: none;
+    -moz-appearance: textfield;
+}
+
+.result-input::-webkit-outer-spin-button,
+.result-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.result-input:focus {
+    border-color: #555;
+}
+
+.result-separator {
+    font-weight: 700;
+    font-size: 16px;
+    color: #ccc;
+    padding: 0 2px;
+}
+
+/* Medal admin */
+.medal-section {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.medal-section h2 {
+    font-size: 18px;
+    margin-bottom: 16px;
+}
+
+.medal-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding: 10px 12px;
+    background: #fafafa;
+    border-radius: 8px;
+}
+
+.medal-icon {
+    font-size: 28px;
+    width: 36px;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.medal-label {
+    font-weight: 600;
+    font-size: 14px;
+    min-width: 50px;
+}
+
+.medal-select {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    background: #fff;
+    outline: none;
+}
+
+.medal-select:focus {
+    border-color: #888;
+}
+
+/* Save bar */
+.save-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid #e0e0e0;
+    padding: 12px 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    z-index: 100;
+}
+
+.save-status {
+    font-size: 13px;
+    color: #2e7d32;
+}
+
+.btn-save {
+    padding: 10px 28px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.btn-save:hover {
+    background: #333;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .container {
+        padding: 12px;
+        padding-bottom: 80px;
+    }
+
+    .team-name {
+        font-size: 13px;
+    }
+
+    .result-input {
+        width: 36px;
+        height: 32px;
+        font-size: 14px;
+    }
+}

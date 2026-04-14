@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VM Admin</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+    <div id="loginScreen" class="login-screen">
+        <div class="login-box">
+            <h1>VM 2026 Admin</h1>
+            <input type="password" id="passwordInput" placeholder="Lösenord..." autofocus>
+            <button id="loginBtn">Logga in</button>
+            <p class="login-error hidden" id="loginError">Fel lösenord</p>
+        </div>
+    </div>
+
+    <div id="adminContent" class="container hidden">
+        <header class="header">
+            <h1>VM 2026 Admin</h1>
+            <button class="btn-logout" id="logoutBtn">Logga ut</button>
+        </header>
+
+        <nav class="tab-nav">
+            <button class="tab-btn active" data-tab="results">Matchresultat</button>
+            <button class="tab-btn" data-tab="medals">Medaljer</button>
+        </nav>
+
+        <main id="mainContent"></main>
+
+        <div class="save-bar">
+            <span class="save-status" id="saveStatus"></span>
+            <button class="btn-save" id="saveBtn">Spara</button>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+</html>

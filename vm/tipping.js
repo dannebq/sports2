@@ -94,12 +94,6 @@ const schedule = [
     { id: 72, date: "28 juni", time: "04:00", home: "Jordanien", away: "Argentina", group: "J" }
 ];
 
-// Actual results — fill in as matches are played: { matchId: { home: X, away: Y } }
-const actualResults = {};
-
-// Actual medal winners — fill in when tournament ends
-const actualMedals = { gold: null, silver: null, bronze: null };
-
 // ── Storage (localStorage placeholder, swap later) ──
 
 const Storage = {
@@ -123,6 +117,14 @@ const Storage = {
 
     save(player, data) {
         localStorage.setItem(this._key(player), JSON.stringify(data));
+    },
+
+    getResults() {
+        return JSON.parse(localStorage.getItem('wc26-results') || '{}');
+    },
+
+    getMedals() {
+        return JSON.parse(localStorage.getItem('wc26-medals') || '{"gold":null,"silver":null,"bronze":null}');
     }
 };
 
@@ -176,15 +178,17 @@ function calcMedalPoints(predicted, actual) {
 }
 
 function calcTotalPoints(playerData) {
+    const results = Storage.getResults();
+    const medals = Storage.getMedals();
     let matchPts = 0;
     for (const [matchId, pred] of Object.entries(playerData.matches || {})) {
-        const result = actualResults[matchId];
+        const result = results[matchId];
         if (result) {
             const pts = calcMatchPoints(pred.home, pred.away, result.home, result.away);
             if (pts !== null) matchPts += pts;
         }
     }
-    const medalPts = calcMedalPoints(playerData.medals || {}, actualMedals);
+    const medalPts = calcMedalPoints(playerData.medals || {}, medals);
     return { matchPts, medalPts, total: matchPts + medalPts };
 }
 
@@ -272,6 +276,7 @@ function renderMedals(container) {
         </div>`;
     });
 
+    const actualMedals = Storage.getMedals();
     if (actualMedals.gold) {
         const pts = calcMedalPoints(data.medals || {}, actualMedals);
         html += `<div class="match-result-row" style="margin-top:12px;padding:12px;background:#fafafa;border-radius:8px;">
@@ -298,6 +303,7 @@ function renderMedals(container) {
 
 function renderMatches(container) {
     const data = Storage.load(currentPlayer);
+    const allResults = Storage.getResults();
     const groups = {};
     schedule.forEach(m => {
         if (!groups[m.group]) groups[m.group] = [];
@@ -312,7 +318,7 @@ function renderMatches(container) {
         groups[groupKey].forEach(match => {
             const locked = isMatchLocked(match);
             const pred = (data.matches && data.matches[match.id]) || {};
-            const result = actualResults[match.id];
+            const result = allResults[match.id];
             const pts = result ? calcMatchPoints(pred.home, pred.away, result.home, result.away) : null;
 
             html += `<div class="match-card ${locked ? 'locked' : ''}">
