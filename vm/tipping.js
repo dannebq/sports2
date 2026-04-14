@@ -653,6 +653,18 @@ function init() {
         if (e.key === 'Enter') addPlayer();
     });
 
+    const rulesModal = document.getElementById('rulesModal');
+    document.getElementById('openRules').addEventListener('click', e => {
+        e.preventDefault();
+        rulesModal.classList.remove('hidden');
+    });
+    document.getElementById('closeRules').addEventListener('click', () => {
+        rulesModal.classList.add('hidden');
+    });
+    rulesModal.addEventListener('click', e => {
+        if (e.target === rulesModal) rulesModal.classList.add('hidden');
+    });
+
     // Then do initial render
     const players = Storage.getPlayers();
     if (players.length > 0) {
