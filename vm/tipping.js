@@ -125,6 +125,13 @@ const Storage = {
 
     getMedals() {
         return JSON.parse(localStorage.getItem('wc26-medals') || '{"gold":null,"silver":null,"bronze":null}');
+    },
+
+    loadAll() {
+        const players = this.getPlayers();
+        const all = {};
+        players.forEach(p => { all[p] = this.load(p); });
+        return all;
     }
 };
 
@@ -260,8 +267,19 @@ function renderMedals(container) {
             ${locked ? 'Tipset är låst sedan turneringen startade.' : 'Tippa vinnare, tvåa och trea. Låses när turneringen startar (11 juni 21:00).'}
         </p>`;
 
+    const allData = Storage.loadAll();
+    const players = Storage.getPlayers();
+
     medals.forEach(m => {
         const selected = (data.medals && data.medals[m.key]) || '';
+
+        const otherTips = players.map(name => {
+            const pick = (allData[name].medals && allData[name].medals[m.key]) || null;
+            if (!pick) return null;
+            const isCurrent = name === currentPlayer;
+            return `<span class="others-tip${isCurrent ? ' is-current' : ''}">${name}: ${pick}</span>`;
+        }).filter(Boolean);
+
         html += `<div class="medal-row">
             <span class="medal-icon">${m.icon}</span>
             <div>
@@ -274,7 +292,8 @@ function renderMedals(container) {
                     ${allTeams.map(t => `<option value="${t}" ${t === selected ? 'selected' : ''}>${t}</option>`).join('')}
                 </select>
             </div>
-        </div>`;
+        </div>
+        ${otherTips.length > 0 ? `<div class="others-tips-row medal-tips">${otherTips.join('')}</div>` : ''}`;
     });
 
     const actualMedals = Storage.getMedals();
@@ -302,7 +321,26 @@ function renderMedals(container) {
 
 // ── Matches tab ──
 
-function renderMatchCard(match, pred, result, locked) {
+function renderOthersTips(match, allData, result) {
+    const players = Storage.getPlayers();
+    const tips = players.map(name => {
+        const p = (allData[name].matches && allData[name].matches[match.id]) || {};
+        if (p.home == null && p.away == null) return null;
+        const tipStr = `${p.home ?? '?'}–${p.away ?? '?'}`;
+        let pts = '';
+        if (result) {
+            const score = calcMatchPoints(p.home, p.away, result.home, result.away);
+            if (score !== null) pts = ` (${score}p)`;
+        }
+        const isCurrent = name === currentPlayer;
+        return `<span class="others-tip${isCurrent ? ' is-current' : ''}">${name}: ${tipStr}${pts}</span>`;
+    }).filter(Boolean);
+
+    if (tips.length === 0) return '';
+    return `<div class="others-tips-row">${tips.join('')}</div>`;
+}
+
+function renderMatchCard(match, pred, result, locked, allData) {
     const pts = result ? calcMatchPoints(pred.home, pred.away, result.home, result.away) : null;
     return `<div class="match-card ${locked ? 'locked' : ''}">
         <div class="match-meta">
@@ -336,12 +374,14 @@ function renderMatchCard(match, pred, result, locked) {
         ${result ? `<div class="match-result-row">
             Slutresultat: <span class="actual-result">${result.home} – ${result.away}</span>
         </div>` : ''}
+        ${renderOthersTips(match, allData, result)}
     </div>`;
 }
 
 function renderMatches(container) {
     const data = Storage.load(currentPlayer);
     const allResults = Storage.getResults();
+    const allData = Storage.loadAll();
 
     let html = `<div class="sort-toggle">
         <button class="sort-btn ${matchSort === 'group' ? 'active' : ''}" data-sort="group">Grupper</button>
@@ -359,7 +399,7 @@ function renderMatches(container) {
             html += `<div class="group-section"><div class="group-header">Grupp ${groupKey}</div>`;
             groups[groupKey].forEach(match => {
                 const pred = (data.matches && data.matches[match.id]) || {};
-                html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match));
+                html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match), allData);
             });
             html += `</div>`;
         });
@@ -376,7 +416,7 @@ function renderMatches(container) {
                 html += `<div class="group-section"><div class="group-header">${match.date}</div>`;
             }
             const pred = (data.matches && data.matches[match.id]) || {};
-            html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match));
+            html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match), allData);
         });
         if (currentDate) html += `</div>`;
     }
