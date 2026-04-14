@@ -344,6 +344,10 @@ function renderOthersTips(match, allData, result) {
 
 function renderMatchCard(match, pred, result, locked, allData) {
     const pts = result ? calcMatchPoints(pred.home, pred.away, result.home, result.away) : null;
+    let scoreClass = '';
+    if (pts === 2) scoreClass = ' inputs-exact';
+    else if (pts === 1) scoreClass = ' inputs-correct';
+    else if (pts === 0) scoreClass = ' inputs-wrong';
     return `<div class="match-card ${locked ? 'locked' : ''}">
         <div class="match-meta">
             <span>${formatDateShort(match.date)} ${match.time}${matchSort === 'date' ? ` — Gr. ${match.group}` : ''}</span>
@@ -357,7 +361,7 @@ function renderMatchCard(match, pred, result, locked, allData) {
                 <span class="team-name">${match.home}</span>
                 <img class="team-flag" src="${flagUrl(match.home)}" alt="${match.home}">
             </div>
-            <div class="score-inputs">
+            <div class="score-inputs${scoreClass}">
                 <input type="number" class="score-input" min="0" max="20"
                     data-match="${match.id}" data-side="home"
                     value="${pred.home != null ? pred.home : ''}"
