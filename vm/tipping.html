@@ -17,32 +17,6 @@
             <h1>VM-tipset 2026 <a href="#" class="rules-link" id="openRules">Regler</a></h1>
         </header>
 
-        <div class="modal-overlay hidden" id="rulesModal">
-            <div class="modal">
-                <div class="modal-header">
-                    <h2>Regler &amp; poäng</h2>
-                    <button class="modal-close" id="closeRules">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <h3>Matchtips</h3>
-                    <ul>
-                        <li><strong>2 poäng</strong> &ndash; Rätt resultat (exakt antal mål)</li>
-                        <li><strong>1 poäng</strong> &ndash; Rätt utfall (rätt vinnare eller oavgjort) men fel resultat</li>
-                        <li><strong>0 poäng</strong> &ndash; Fel utfall</li>
-                    </ul>
-                    <p>Tips kan ändras fram tills matchen startar.</p>
-
-                    <h3>Medaljtips</h3>
-                    <ul>
-                        <li><strong>5 poäng</strong> &ndash; Rätt guldvinnare</li>
-                        <li><strong>3 poäng</strong> &ndash; Rätt silvervinnare</li>
-                        <li><strong>2 poäng</strong> &ndash; Rätt bronsvinnare</li>
-                    </ul>
-                    <p>Medaljtips låses när turneringen startar (11 juni 21:00).</p>
-                </div>
-            </div>
-        </div>
-
         <section class="player-section">
             <div class="player-bar">
                 <div class="player-tabs" id="playerTabs"></div>
@@ -62,6 +36,32 @@
         </nav>
 
         <main id="mainContent"></main>
+    </div>
+
+    <div class="modal-overlay hidden" id="rulesModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Regler &amp; poäng</h2>
+                <button class="modal-close" id="closeRules">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3>Matchtips</h3>
+                <ul>
+                    <li><strong>2 poäng</strong> &ndash; Rätt resultat (exakt antal mål)</li>
+                    <li><strong>1 poäng</strong> &ndash; Rätt utfall (rätt vinnare eller oavgjort) men fel resultat</li>
+                    <li><strong>0 poäng</strong> &ndash; Fel utfall</li>
+                </ul>
+                <p>Tips kan ändras fram tills matchen startar.</p>
+
+                <h3>Medaljtips</h3>
+                <ul>
+                    <li><strong>5 poäng</strong> &ndash; Rätt guldvinnare</li>
+                    <li><strong>3 poäng</strong> &ndash; Rätt silvervinnare</li>
+                    <li><strong>2 poäng</strong> &ndash; Rätt bronsvinnare</li>
+                </ul>
+                <p>Medaljtips låses när turneringen startar (11 juni 21:00).</p>
+            </div>
+        </div>
     </div>
 
     <script src="tipping.js"></script>
