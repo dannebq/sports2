@@ -326,12 +326,16 @@ function renderOthersTips(match, allData, result) {
         const p = (allData[name].matches && allData[name].matches[match.id]) || {};
         if (p.home == null && p.away == null) return null;
         const tipStr = `${p.home ?? '?'}–${p.away ?? '?'}`;
+        let scoreClass = '';
         let pts = '';
         if (result) {
             const score = calcMatchPoints(p.home, p.away, result.home, result.away);
+            if (score === 2) scoreClass = ' tip-exact';
+            else if (score === 1) scoreClass = ' tip-correct';
+            else if (score === 0) scoreClass = ' tip-wrong';
             if (score !== null) pts = ` (${score}p)`;
         }
-        return `<span class="others-tip">${name}: ${tipStr}${pts}</span>`;
+        return `<span class="others-tip${scoreClass}">${name}: ${tipStr}${pts}</span>`;
     }).filter(Boolean);
 
     if (tips.length === 0) return '';
