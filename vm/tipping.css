@@ -446,9 +446,9 @@ body {
 }
 
 .inputs-correct .score-input {
-    background: #e8f5e9;
-    border-color: #a5d6a7;
-    color: #388e3c;
+    background: #fff3e0;
+    border-color: #ffb74d;
+    color: #e65100;
 }
 
 .inputs-wrong .score-input {
@@ -508,8 +508,8 @@ body {
 }
 
 .others-tip.tip-correct {
-    background: #e8f5e9;
-    color: #388e3c;
+    background: #fff3e0;
+    color: #e65100;
 }
 
 .others-tip.tip-wrong {
