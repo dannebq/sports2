@@ -548,10 +548,11 @@ body {
     font-size: 14px;
     border-bottom: 1px solid #f0f0f0;
     align-items: center;
+    cursor: pointer;
 }
 
-.leaderboard-row:last-child {
-    border-bottom: none;
+.leaderboard-row:hover {
+    background: #fafafa;
 }
 
 .leaderboard-rank {
@@ -591,6 +592,80 @@ body {
     text-align: center;
     color: #888;
     font-size: 14px;
+}
+
+.expand-arrow {
+    font-size: 11px;
+    color: #bbb;
+    margin-left: 4px;
+}
+
+.leaderboard-details {
+    border-bottom: 1px solid #f0f0f0;
+    padding: 0 16px 12px;
+    background: #fafafa;
+}
+
+.detail-header-row {
+    display: grid;
+    grid-template-columns: 1fr 60px 60px 45px;
+    padding: 8px 0 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #aaa;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 2px;
+}
+
+.detail-row {
+    display: grid;
+    grid-template-columns: 1fr 60px 60px 45px;
+    padding: 5px 6px;
+    font-size: 12px;
+    border-radius: 4px;
+    margin-bottom: 1px;
+}
+
+.detail-match {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.detail-result {
+    text-align: center;
+    font-weight: 600;
+}
+
+.detail-tip {
+    text-align: center;
+}
+
+.detail-pts {
+    text-align: center;
+    font-weight: 600;
+}
+
+.detail-row.detail-exact {
+    background: #c8e6c9;
+    color: #1b5e20;
+}
+
+.detail-row.detail-correct {
+    background: #fff3e0;
+    color: #e65100;
+}
+
+.detail-row.detail-wrong {
+    background: #fce4ec;
+    color: #c62828;
+}
+
+.detail-empty {
+    padding: 12px 0;
+    font-size: 12px;
+    color: #aaa;
+    text-align: center;
 }
 
 /* Points breakdown */

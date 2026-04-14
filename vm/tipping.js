@@ -452,6 +452,69 @@ function renderMatches(container) {
 
 // ── Leaderboard tab ──
 
+function renderPlayerDetails(name) {
+    const data = Storage.load(name);
+    const results = Storage.getResults();
+    const medals = Storage.getMedals();
+
+    let html = '';
+
+    const matchesWithResults = schedule.filter(m => results[m.id]);
+    if (matchesWithResults.length > 0) {
+        const sorted = [...matchesWithResults].sort((a, b) =>
+            parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time)
+        );
+        sorted.forEach(match => {
+            const result = results[match.id];
+            const pred = (data.matches && data.matches[match.id]) || {};
+            const pts = calcMatchPoints(pred.home, pred.away, result.home, result.away);
+            let cls = '';
+            if (pts === 2) cls = 'detail-exact';
+            else if (pts === 1) cls = 'detail-correct';
+            else if (pts === 0) cls = 'detail-wrong';
+
+            const tipStr = (pred.home != null && pred.away != null)
+                ? `${pred.home}–${pred.away}`
+                : '–';
+
+            html += `<div class="detail-row ${cls}">
+                <span class="detail-match">${match.home} – ${match.away}</span>
+                <span class="detail-result">${result.home}–${result.away}</span>
+                <span class="detail-tip">${tipStr}</span>
+                <span class="detail-pts">${pts !== null ? pts + 'p' : '–'}</span>
+            </div>`;
+        });
+    }
+
+    if (medals.gold) {
+        const medalList = [
+            { key: 'gold', icon: '🥇', pts: 5 },
+            { key: 'silver', icon: '🥈', pts: 3 },
+            { key: 'bronze', icon: '🥉', pts: 2 }
+        ];
+        medalList.forEach(m => {
+            const pick = (data.medals && data.medals[m.key]) || '–';
+            const correct = pick === medals[m.key];
+            const cls = correct ? 'detail-exact' : 'detail-wrong';
+            html += `<div class="detail-row ${cls}">
+                <span class="detail-match">${m.icon} ${medals[m.key]}</span>
+                <span class="detail-result">Facit</span>
+                <span class="detail-tip">${pick}</span>
+                <span class="detail-pts">${correct ? m.pts + 'p' : '0p'}</span>
+            </div>`;
+        });
+    }
+
+    if (!html) html = '<div class="detail-empty">Inga resultat inlagda ännu.</div>';
+
+    return `<div class="detail-header-row">
+        <span class="detail-match">Match</span>
+        <span class="detail-result">Resultat</span>
+        <span class="detail-tip">Tips</span>
+        <span class="detail-pts">Poäng</span>
+    </div>` + html;
+}
+
 function renderLeaderboard(container) {
     const players = Storage.getPlayers();
     if (players.length === 0) {
@@ -475,17 +538,31 @@ function renderLeaderboard(container) {
         </div>`;
 
     rows.forEach((row, i) => {
-        html += `<div class="leaderboard-row">
+        html += `<div class="leaderboard-row" data-player="${row.name}">
             <span class="leaderboard-rank">${i + 1}</span>
-            <span class="leaderboard-name">${row.name}</span>
+            <span class="leaderboard-name">${row.name} <span class="expand-arrow">▸</span></span>
             <span class="leaderboard-pts">${row.matchPts}</span>
             <span class="leaderboard-pts">${row.medalPts}</span>
             <span class="leaderboard-total">${row.total}</span>
+        </div>
+        <div class="leaderboard-details hidden" id="details-${row.name}">
+            ${renderPlayerDetails(row.name)}
         </div>`;
     });
 
     html += `</div>`;
     container.innerHTML = html;
+
+    container.querySelectorAll('.leaderboard-row[data-player]').forEach(row => {
+        row.addEventListener('click', () => {
+            const name = row.dataset.player;
+            const details = document.getElementById(`details-${name}`);
+            const arrow = row.querySelector('.expand-arrow');
+            const isOpen = !details.classList.contains('hidden');
+            details.classList.toggle('hidden');
+            arrow.textContent = isOpen ? '▸' : '▾';
+        });
+    });
 }
 
 // ── Event wiring ──
