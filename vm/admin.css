@@ -254,9 +254,9 @@ body {
 
 .team-flag {
     width: 24px;
-    height: 16px;
-    object-fit: cover;
-    border-radius: 2px;
+    height: 24px;
+    object-fit: contain;
+    border-radius: 50%;
     flex-shrink: 0;
 }
 
