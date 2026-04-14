@@ -123,7 +123,7 @@ function formatDateShort(dateStr) {
 // ── State ──
 
 let currentTab = 'results';
-let matchSort = 'group';
+let matchSort = 'date';
 let pendingResults = {};
 let pendingMedals = { gold: null, silver: null, bronze: null };
 let unlockedMatches = new Set();

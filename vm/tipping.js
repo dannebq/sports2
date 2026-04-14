@@ -196,7 +196,7 @@ function calcTotalPoints(playerData) {
 
 let currentPlayer = null;
 let currentTab = 'medals';
-let matchSort = 'group';
+let matchSort = 'date';
 
 // ── Flag helper ──
 
