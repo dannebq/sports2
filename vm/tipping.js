@@ -196,6 +196,7 @@ function calcTotalPoints(playerData) {
 
 let currentPlayer = null;
 let currentTab = 'medals';
+let matchSort = 'group';
 
 // ── Flag helper ──
 
@@ -301,65 +302,93 @@ function renderMedals(container) {
 
 // ── Matches tab ──
 
+function renderMatchCard(match, pred, result, locked) {
+    const pts = result ? calcMatchPoints(pred.home, pred.away, result.home, result.away) : null;
+    return `<div class="match-card ${locked ? 'locked' : ''}">
+        <div class="match-meta">
+            <span>${formatDateShort(match.date)} ${match.time}${matchSort === 'date' ? ` — Gr. ${match.group}` : ''}</span>
+            <span>
+                ${pts !== null ? `<span class="match-points-badge">${pts}p</span>` : ''}
+                <span class="match-lock-badge ${locked ? 'is-locked' : ''}">${locked ? 'Låst' : 'Öppen'}</span>
+            </span>
+        </div>
+        <div class="match-row">
+            <div class="match-team home">
+                <span class="team-name">${match.home}</span>
+                <img class="team-flag" src="${flagUrl(match.home)}" alt="${match.home}">
+            </div>
+            <div class="score-inputs">
+                <input type="number" class="score-input" min="0" max="20"
+                    data-match="${match.id}" data-side="home"
+                    value="${pred.home != null ? pred.home : ''}"
+                    ${locked ? 'disabled' : ''}>
+                <span class="score-separator">–</span>
+                <input type="number" class="score-input" min="0" max="20"
+                    data-match="${match.id}" data-side="away"
+                    value="${pred.away != null ? pred.away : ''}"
+                    ${locked ? 'disabled' : ''}>
+            </div>
+            <div class="match-team away">
+                <img class="team-flag" src="${flagUrl(match.away)}" alt="${match.away}">
+                <span class="team-name">${match.away}</span>
+            </div>
+        </div>
+        ${result ? `<div class="match-result-row">
+            Slutresultat: <span class="actual-result">${result.home} – ${result.away}</span>
+        </div>` : ''}
+    </div>`;
+}
+
 function renderMatches(container) {
     const data = Storage.load(currentPlayer);
     const allResults = Storage.getResults();
-    const groups = {};
-    schedule.forEach(m => {
-        if (!groups[m.group]) groups[m.group] = [];
-        groups[m.group].push(m);
-    });
 
-    let html = '';
-    Object.keys(groups).sort().forEach(groupKey => {
-        html += `<div class="group-section">
-            <div class="group-header">Grupp ${groupKey}</div>`;
+    let html = `<div class="sort-toggle">
+        <button class="sort-btn ${matchSort === 'group' ? 'active' : ''}" data-sort="group">Grupper</button>
+        <button class="sort-btn ${matchSort === 'date' ? 'active' : ''}" data-sort="date">Datum</button>
+    </div>`;
 
-        groups[groupKey].forEach(match => {
-            const locked = isMatchLocked(match);
-            const pred = (data.matches && data.matches[match.id]) || {};
-            const result = allResults[match.id];
-            const pts = result ? calcMatchPoints(pred.home, pred.away, result.home, result.away) : null;
-
-            html += `<div class="match-card ${locked ? 'locked' : ''}">
-                <div class="match-meta">
-                    <span>${formatDateShort(match.date)} ${match.time}</span>
-                    <span>
-                        ${pts !== null ? `<span class="match-points-badge">${pts}p</span>` : ''}
-                        <span class="match-lock-badge ${locked ? 'is-locked' : ''}">${locked ? 'Låst' : 'Öppen'}</span>
-                    </span>
-                </div>
-                <div class="match-row">
-                    <div class="match-team home">
-                        <span class="team-name">${match.home}</span>
-                        <img class="team-flag" src="${flagUrl(match.home)}" alt="${match.home}">
-                    </div>
-                    <div class="score-inputs">
-                        <input type="number" class="score-input" min="0" max="20"
-                            data-match="${match.id}" data-side="home"
-                            value="${pred.home != null ? pred.home : ''}"
-                            ${locked ? 'disabled' : ''}>
-                        <span class="score-separator">–</span>
-                        <input type="number" class="score-input" min="0" max="20"
-                            data-match="${match.id}" data-side="away"
-                            value="${pred.away != null ? pred.away : ''}"
-                            ${locked ? 'disabled' : ''}>
-                    </div>
-                    <div class="match-team away">
-                        <img class="team-flag" src="${flagUrl(match.away)}" alt="${match.away}">
-                        <span class="team-name">${match.away}</span>
-                    </div>
-                </div>
-                ${result ? `<div class="match-result-row">
-                    Slutresultat: <span class="actual-result">${result.home} – ${result.away}</span>
-                </div>` : ''}
-            </div>`;
+    if (matchSort === 'group') {
+        const groups = {};
+        schedule.forEach(m => {
+            if (!groups[m.group]) groups[m.group] = [];
+            groups[m.group].push(m);
         });
 
-        html += `</div>`;
-    });
+        Object.keys(groups).sort().forEach(groupKey => {
+            html += `<div class="group-section"><div class="group-header">Grupp ${groupKey}</div>`;
+            groups[groupKey].forEach(match => {
+                const pred = (data.matches && data.matches[match.id]) || {};
+                html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match));
+            });
+            html += `</div>`;
+        });
+    } else {
+        const sorted = [...schedule].sort((a, b) =>
+            parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time)
+        );
+        let currentDate = '';
+        sorted.forEach(match => {
+            const dateLabel = formatDateShort(match.date);
+            if (dateLabel !== currentDate) {
+                if (currentDate) html += `</div>`;
+                currentDate = dateLabel;
+                html += `<div class="group-section"><div class="group-header">${match.date}</div>`;
+            }
+            const pred = (data.matches && data.matches[match.id]) || {};
+            html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match));
+        });
+        if (currentDate) html += `</div>`;
+    }
 
     container.innerHTML = html;
+
+    container.querySelectorAll('.sort-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            matchSort = btn.dataset.sort;
+            renderMatches(container);
+        });
+    });
 
     container.querySelectorAll('.score-input').forEach(input => {
         input.addEventListener('change', () => {

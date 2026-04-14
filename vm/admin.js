@@ -97,9 +97,33 @@ function flagUrl(teamName) {
     return code ? `flags/${code}.png` : '';
 }
 
+// ── Date helpers ──
+
+const monthMap = {
+    'januari': 0, 'februari': 1, 'mars': 2, 'april': 3, 'maj': 4, 'juni': 5,
+    'juli': 6, 'augusti': 7, 'september': 8, 'oktober': 9, 'november': 10, 'december': 11
+};
+
+function parseMatchDateTime(dateStr, timeStr) {
+    const parts = dateStr.trim().split(' ');
+    const day = parseInt(parts[0]);
+    const month = monthMap[parts[1].toLowerCase()];
+    const [hours, minutes] = timeStr.split(':').map(Number);
+    return new Date(2026, month, day, hours, minutes, 0);
+}
+
+function formatDateShort(dateStr) {
+    const parts = dateStr.trim().split(' ');
+    const day = parts[0];
+    const monthNames = ['jan', 'feb', 'mar', 'apr', 'maj', 'jun', 'jul', 'aug', 'sep', 'okt', 'nov', 'dec'];
+    const month = monthMap[parts[1].toLowerCase()];
+    return `${day} ${monthNames[month]}`;
+}
+
 // ── State ──
 
 let currentTab = 'results';
+let matchSort = 'group';
 let pendingResults = {};
 let pendingMedals = { gold: null, silver: null, bronze: null };
 let unlockedMatches = new Set();
@@ -181,54 +205,81 @@ function renderContent() {
     }
 }
 
+function renderResultCard(match) {
+    const result = pendingResults[match.id];
+    const hasResult = result && result.home != null && result.away != null;
+    const isLocked = hasResult && !unlockedMatches.has(match.id);
+
+    return `<div class="result-card ${hasResult ? 'has-result' : ''} ${isLocked ? 'is-locked' : ''}">
+        <div class="result-meta">${match.date} ${match.time}${matchSort === 'date' ? ` — Gr. ${match.group}` : ''}</div>
+        <div class="result-row">
+            <div class="result-team home">
+                <span class="team-name">${match.home}</span>
+                <img class="team-flag" src="${flagUrl(match.home)}" alt="${match.home}">
+            </div>
+            <div class="result-inputs">
+                <input type="number" class="result-input" min="0" max="20"
+                    data-match="${match.id}" data-side="home"
+                    value="${hasResult ? result.home : ''}"
+                    ${isLocked ? 'disabled' : ''}>
+                <span class="result-separator">–</span>
+                <input type="number" class="result-input" min="0" max="20"
+                    data-match="${match.id}" data-side="away"
+                    value="${hasResult ? result.away : ''}"
+                    ${isLocked ? 'disabled' : ''}>
+            </div>
+            <div class="result-team away">
+                <img class="team-flag" src="${flagUrl(match.away)}" alt="${match.away}">
+                <span class="team-name">${match.away}</span>
+            </div>
+            ${isLocked ? `<button class="btn-unlock" data-match="${match.id}" title="Lås upp för att ändra">Ändra</button>` : ''}
+        </div>
+    </div>`;
+}
+
 function renderResults(container) {
-    const groups = {};
-    schedule.forEach(m => {
-        if (!groups[m.group]) groups[m.group] = [];
-        groups[m.group].push(m);
-    });
+    let html = `<div class="sort-toggle">
+        <button class="sort-btn ${matchSort === 'group' ? 'active' : ''}" data-sort="group">Grupper</button>
+        <button class="sort-btn ${matchSort === 'date' ? 'active' : ''}" data-sort="date">Datum</button>
+    </div>`;
 
-    let html = '';
-    Object.keys(groups).sort().forEach(groupKey => {
-        html += `<div class="group-section">
-            <div class="group-header">Grupp ${groupKey}</div>`;
-
-        groups[groupKey].forEach(match => {
-            const result = pendingResults[match.id];
-            const hasResult = result && result.home != null && result.away != null;
-            const isLocked = hasResult && !unlockedMatches.has(match.id);
-
-            html += `<div class="result-card ${hasResult ? 'has-result' : ''} ${isLocked ? 'is-locked' : ''}">
-                <div class="result-meta">${match.date} ${match.time}</div>
-                <div class="result-row">
-                    <div class="result-team home">
-                        <span class="team-name">${match.home}</span>
-                        <img class="team-flag" src="${flagUrl(match.home)}" alt="${match.home}">
-                    </div>
-                    <div class="result-inputs">
-                        <input type="number" class="result-input" min="0" max="20"
-                            data-match="${match.id}" data-side="home"
-                            value="${hasResult ? result.home : ''}"
-                            ${isLocked ? 'disabled' : ''}>
-                        <span class="result-separator">–</span>
-                        <input type="number" class="result-input" min="0" max="20"
-                            data-match="${match.id}" data-side="away"
-                            value="${hasResult ? result.away : ''}"
-                            ${isLocked ? 'disabled' : ''}>
-                    </div>
-                    <div class="result-team away">
-                        <img class="team-flag" src="${flagUrl(match.away)}" alt="${match.away}">
-                        <span class="team-name">${match.away}</span>
-                    </div>
-                    ${isLocked ? `<button class="btn-unlock" data-match="${match.id}" title="Lås upp för att ändra">Ändra</button>` : ''}
-                </div>
-            </div>`;
+    if (matchSort === 'group') {
+        const groups = {};
+        schedule.forEach(m => {
+            if (!groups[m.group]) groups[m.group] = [];
+            groups[m.group].push(m);
         });
 
-        html += `</div>`;
-    });
+        Object.keys(groups).sort().forEach(groupKey => {
+            html += `<div class="group-section"><div class="group-header">Grupp ${groupKey}</div>`;
+            groups[groupKey].forEach(match => { html += renderResultCard(match); });
+            html += `</div>`;
+        });
+    } else {
+        const sorted = [...schedule].sort((a, b) =>
+            parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time)
+        );
+        let currentDate = '';
+        sorted.forEach(match => {
+            const dateLabel = formatDateShort(match.date);
+            if (dateLabel !== currentDate) {
+                if (currentDate) html += `</div>`;
+                currentDate = dateLabel;
+                html += `<div class="group-section"><div class="group-header">${match.date}</div>`;
+            }
+            html += renderResultCard(match);
+        });
+        if (currentDate) html += `</div>`;
+    }
 
     container.innerHTML = html;
+
+    container.querySelectorAll('.sort-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            matchSort = btn.dataset.sort;
+            renderResults(container);
+        });
+    });
 
     container.querySelectorAll('.result-input').forEach(input => {
         input.addEventListener('input', () => {
