@@ -202,7 +202,7 @@ function calcTotalPoints(playerData) {
 // ── UI State ──
 
 let currentPlayer = null;
-let currentTab = 'medals';
+let currentTab = 'matches';
 let matchSort = 'date';
 
 // ── Flag helper ──
@@ -262,7 +262,7 @@ function renderMedals(container) {
     ];
 
     let html = `<div class="medal-section">
-        <h2>Medaljerna</h2>
+        <h2>Medaljer</h2>
         <p class="medal-lock-info ${locked ? 'locked' : ''}">
             ${locked ? 'Tipset är låst sedan turneringen startade.' : 'Tippa vinnare, tvåa och trea. Låses när turneringen startar (11 juni 21:00).'}
         </p>`;
