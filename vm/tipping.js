@@ -224,16 +224,11 @@ function renderPlayerTabs() {
 
 function renderContent() {
     const main = document.getElementById('mainContent');
-    const noMsg = document.getElementById('noPlayerMessage');
 
     if (!currentPlayer) {
-        main.innerHTML = '';
-        main.appendChild(noMsg);
-        noMsg.style.display = '';
+        main.innerHTML = '<div class="no-player-message"><p>Lägg till en spelare för att börja tippa!</p></div>';
         return;
     }
-
-    noMsg.style.display = 'none';
 
     switch (currentTab) {
         case 'medals': renderMedals(main); break;
@@ -415,15 +410,7 @@ function renderLeaderboard(container) {
 // ── Event wiring ──
 
 function init() {
-    const players = Storage.getPlayers();
-    if (players.length > 0) {
-        currentPlayer = players[0];
-    }
-
-    renderPlayerTabs();
-    renderContent();
-
-    // Tab nav
+    // Wire up all event handlers first
     document.querySelectorAll('.tab-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -433,7 +420,6 @@ function init() {
         });
     });
 
-    // Add player
     const addBtn = document.getElementById('btnAddPlayer');
     const addForm = document.getElementById('addPlayerForm');
     const nameInput = document.getElementById('newPlayerName');
@@ -465,6 +451,15 @@ function init() {
     nameInput.addEventListener('keydown', e => {
         if (e.key === 'Enter') addPlayer();
     });
+
+    // Then do initial render
+    const players = Storage.getPlayers();
+    if (players.length > 0) {
+        currentPlayer = players[0];
+    }
+
+    renderPlayerTabs();
+    renderContent();
 }
 
 if (document.readyState === 'loading') {
