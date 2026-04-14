@@ -273,11 +273,10 @@ function renderMedals(container) {
     medals.forEach(m => {
         const selected = (data.medals && data.medals[m.key]) || '';
 
-        const otherTips = players.map(name => {
+        const otherTips = players.filter(name => name !== currentPlayer).map(name => {
             const pick = (allData[name].medals && allData[name].medals[m.key]) || null;
             if (!pick) return null;
-            const isCurrent = name === currentPlayer;
-            return `<span class="others-tip${isCurrent ? ' is-current' : ''}">${name}: ${pick}</span>`;
+            return `<span class="others-tip">${name}: ${pick}</span>`;
         }).filter(Boolean);
 
         html += `<div class="medal-row">
@@ -323,7 +322,7 @@ function renderMedals(container) {
 
 function renderOthersTips(match, allData, result) {
     const players = Storage.getPlayers();
-    const tips = players.map(name => {
+    const tips = players.filter(name => name !== currentPlayer).map(name => {
         const p = (allData[name].matches && allData[name].matches[match.id]) || {};
         if (p.home == null && p.away == null) return null;
         const tipStr = `${p.home ?? '?'}–${p.away ?? '?'}`;
@@ -332,8 +331,7 @@ function renderOthersTips(match, allData, result) {
             const score = calcMatchPoints(p.home, p.away, result.home, result.away);
             if (score !== null) pts = ` (${score}p)`;
         }
-        const isCurrent = name === currentPlayer;
-        return `<span class="others-tip${isCurrent ? ' is-current' : ''}">${name}: ${tipStr}${pts}</span>`;
+        return `<span class="others-tip">${name}: ${tipStr}${pts}</span>`;
     }).filter(Boolean);
 
     if (tips.length === 0) return '';
@@ -479,7 +477,6 @@ function renderLeaderboard(container) {
     });
 
     html += `</div>`;
-    html += `<div class="trophy-container"><img src="world-cup-trophy.png" alt="VM-pokalen" class="trophy-img"></div>`;
     container.innerHTML = html;
 }
 

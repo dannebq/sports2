@@ -482,11 +482,6 @@ body {
     white-space: nowrap;
 }
 
-.others-tip.is-current {
-    color: #1a1a1a;
-    font-weight: 600;
-}
-
 /* Leaderboard */
 .leaderboard {
     background: #fff;
@@ -562,18 +557,6 @@ body {
     font-size: 11px;
     color: #aaa;
     display: block;
-}
-
-/* Trophy */
-.trophy-container {
-    text-align: center;
-    padding: 24px 0 8px;
-}
-
-.trophy-img {
-    max-width: 120px;
-    height: auto;
-    opacity: 0.8;
 }
 
 /* Responsive */
