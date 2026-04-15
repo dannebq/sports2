@@ -141,7 +141,7 @@ async function loadSavedData() {
         pendingResults[r.match_id] = { home: r.home_score, away: r.away_score };
     });
 
-    const { data: medals } = await supabase
+    const { data: medals } = await sb
         .from('medal_results').select('gold, silver, bronze').eq('id', 1).single();
     pendingMedals = medals || { gold: null, silver: null, bronze: null };
 }
@@ -166,7 +166,7 @@ async function saveResults() {
 }
 
 async function saveMedals() {
-    const { data: existing } = await supabase
+    const { data: existing } = await sb
         .from('medal_results').select('id').eq('id', 1).single();
 
     if (existing) {
@@ -249,7 +249,7 @@ async function renamePlayer(oldName, newName) {
     if (players.includes(newName)) return false;
     if (!players.includes(oldName)) return false;
 
-    const { data: player } = await supabase
+    const { data: player } = await sb
         .from('players').select('id').eq('name', oldName).single();
     if (!player) return false;
 

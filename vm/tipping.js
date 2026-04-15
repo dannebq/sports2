@@ -107,14 +107,14 @@ const Storage = {
 
     async _getPlayerId(name) {
         if (this._playerIdCache[name]) return this._playerIdCache[name];
-        const { data } = await supabase
+        const { data } = await sb
             .from('players').select('id').eq('name', name).single();
         if (data) this._playerIdCache[name] = data.id;
         return data ? data.id : null;
     },
 
     async getPlayers() {
-        const { data } = await supabase
+        const { data } = await sb
             .from('players').select('name').order('id');
         return (data || []).map(p => p.name);
     },
@@ -152,7 +152,7 @@ const Storage = {
         const pid = await this._getPlayerId(player);
         if (!pid) return;
         const row = { player_id: pid, [medalKey]: value };
-        const { data: existing } = await supabase
+        const { data: existing } = await sb
             .from('medal_tips').select('id').eq('player_id', pid).single();
         if (existing) {
             await sb.from('medal_tips').update({ [medalKey]: value }).eq('player_id', pid);
@@ -171,7 +171,7 @@ const Storage = {
     },
 
     async getMedals() {
-        const { data } = await supabase
+        const { data } = await sb
             .from('medal_results').select('gold, silver, bronze').eq('id', 1).single();
         return data || { gold: null, silver: null, bronze: null };
     },
