@@ -1,6 +1,12 @@
+// ── Supabase ──
+
+const SUPABASE_URL = 'https://jnmbhzibjtnskpveciza.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpubWJoemlianRuc2twdmVjaXphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNDIzMDIsImV4cCI6MjA5MTgxODMwMn0.5etgrvlR_A-MTF8mw-bsU68e0V-U-FvTV22Ns0Tx7F4';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 // ── Data ──
 
-const TOURNAMENT_START = new Date(2026, 5, 11, 21, 0, 0); // June 11, 2026 21:00
+const TOURNAMENT_START = new Date(2026, 5, 11, 21, 0, 0);
 
 const teamToCode = {
     "Mexiko": "MEX", "Sydafrika": "RSA", "Sydkorea": "KOR", "Tjeckien": "CZE",
@@ -94,35 +100,87 @@ const schedule = [
     { id: 72, date: "28 juni", time: "04:00", home: "Jordanien", away: "Argentina", group: "J" }
 ];
 
-// ── Storage (localStorage placeholder, swap later) ──
+// ── Storage (Supabase) ──
 
 const Storage = {
-    _key(player) { return `wc26-tips-${player}`; },
+    _playerIdCache: {},
 
-    getPlayers() {
-        return JSON.parse(localStorage.getItem('wc26-players') || '[]');
+    async _getPlayerId(name) {
+        if (this._playerIdCache[name]) return this._playerIdCache[name];
+        const { data } = await supabase
+            .from('players').select('id').eq('name', name).single();
+        if (data) this._playerIdCache[name] = data.id;
+        return data ? data.id : null;
     },
 
-    load(player) {
-        return JSON.parse(localStorage.getItem(this._key(player)) || '{"medals":{},"matches":{}}');
+    async getPlayers() {
+        const { data } = await supabase
+            .from('players').select('name').order('id');
+        return (data || []).map(p => p.name);
     },
 
-    save(player, data) {
-        localStorage.setItem(this._key(player), JSON.stringify(data));
+    async load(player) {
+        const pid = await this._getPlayerId(player);
+        if (!pid) return { medals: {}, matches: {} };
+
+        const [{ data: tips }, { data: medalRow }] = await Promise.all([
+            supabase.from('match_tips').select('match_id, home_score, away_score').eq('player_id', pid),
+            supabase.from('medal_tips').select('gold, silver, bronze').eq('player_id', pid).single()
+        ]);
+
+        const matches = {};
+        (tips || []).forEach(t => {
+            matches[t.match_id] = { home: t.home_score, away: t.away_score };
+        });
+
+        return {
+            medals: medalRow ? { gold: medalRow.gold, silver: medalRow.silver, bronze: medalRow.bronze } : {},
+            matches
+        };
     },
 
-    getResults() {
-        return JSON.parse(localStorage.getItem('wc26-results') || '{}');
+    async saveMatch(player, matchId, home, away) {
+        const pid = await this._getPlayerId(player);
+        if (!pid) return;
+        await supabase.from('match_tips').upsert({
+            player_id: pid, match_id: parseInt(matchId),
+            home_score: home, away_score: away
+        }, { onConflict: 'player_id,match_id' });
     },
 
-    getMedals() {
-        return JSON.parse(localStorage.getItem('wc26-medals') || '{"gold":null,"silver":null,"bronze":null}');
+    async saveMedal(player, medalKey, value) {
+        const pid = await this._getPlayerId(player);
+        if (!pid) return;
+        const row = { player_id: pid, [medalKey]: value };
+        const { data: existing } = await supabase
+            .from('medal_tips').select('id').eq('player_id', pid).single();
+        if (existing) {
+            await supabase.from('medal_tips').update({ [medalKey]: value }).eq('player_id', pid);
+        } else {
+            await supabase.from('medal_tips').insert(row);
+        }
     },
 
-    loadAll() {
-        const players = this.getPlayers();
+    async getResults() {
+        const { data } = await supabase.from('match_results').select('*');
+        const results = {};
+        (data || []).forEach(r => {
+            results[r.match_id] = { home: r.home_score, away: r.away_score };
+        });
+        return results;
+    },
+
+    async getMedals() {
+        const { data } = await supabase
+            .from('medal_results').select('gold, silver, bronze').eq('id', 1).single();
+        return data || { gold: null, silver: null, bronze: null };
+    },
+
+    async loadAll() {
+        const players = await this.getPlayers();
+        const entries = await Promise.all(players.map(async p => [p, await this.load(p)]));
         const all = {};
-        players.forEach(p => { all[p] = this.load(p); });
+        entries.forEach(([name, data]) => { all[name] = data; });
         return all;
     }
 };
@@ -176,9 +234,7 @@ function calcMedalPoints(predicted, actual) {
     return pts;
 }
 
-function calcTotalPoints(playerData) {
-    const results = Storage.getResults();
-    const medals = Storage.getMedals();
+function calcTotalPoints(playerData, results, medals) {
     let matchPts = 0;
     for (const [matchId, pred] of Object.entries(playerData.matches || {})) {
         const result = results[matchId];
@@ -197,6 +253,24 @@ let currentPlayer = null;
 let currentTab = 'matches';
 let matchSort = 'date';
 
+// Shared data cache refreshed on each render cycle
+let _cache = { results: {}, medals: { gold: null, silver: null, bronze: null }, allData: {}, players: [] };
+
+async function refreshCache() {
+    const [players, results, medals] = await Promise.all([
+        Storage.getPlayers(),
+        Storage.getResults(),
+        Storage.getMedals()
+    ]);
+    _cache.players = players;
+    _cache.results = results;
+    _cache.medals = medals;
+
+    const entries = await Promise.all(players.map(async p => [p, await Storage.load(p)]));
+    _cache.allData = {};
+    entries.forEach(([name, data]) => { _cache.allData[name] = data; });
+}
+
 // ── Flag helper ──
 
 function flagUrl(teamName) {
@@ -208,17 +282,17 @@ function flagUrl(teamName) {
 
 function renderPlayerTabs() {
     const container = document.getElementById('playerTabs');
-    const players = Storage.getPlayers();
     container.innerHTML = '';
 
-    players.forEach(name => {
+    _cache.players.forEach(name => {
         const btn = document.createElement('button');
         btn.className = 'player-tab' + (name === currentPlayer ? ' active' : '');
-        const data = Storage.load(name);
-        const pts = calcTotalPoints(data);
+        const data = _cache.allData[name] || { medals: {}, matches: {} };
+        const pts = calcTotalPoints(data, _cache.results, _cache.medals);
         btn.innerHTML = `${name}<span class="points-badge">${pts.total}p</span>`;
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
             currentPlayer = name;
+            await refreshCache();
             renderPlayerTabs();
             renderContent();
         });
@@ -244,7 +318,7 @@ function renderContent() {
 // ── Medal tab ──
 
 function renderMedals(container) {
-    const data = Storage.load(currentPlayer);
+    const data = _cache.allData[currentPlayer] || { medals: {}, matches: {} };
     const locked = isTournamentStarted();
 
     const medals = [
@@ -259,8 +333,7 @@ function renderMedals(container) {
             ${locked ? 'Tipset är låst sedan turneringen startade.' : 'Tippa vinnare, tvåa och trea. Låses när turneringen startar (11 juni 21:00).'}
         </p>`;
 
-    const allData = Storage.loadAll();
-    const players = Storage.getPlayers();
+    const actualMedals = _cache.medals;
 
     medals.forEach(m => {
         const selected = (data.medals && data.medals[m.key]) || '';
@@ -280,7 +353,6 @@ function renderMedals(container) {
         </div>`;
     });
 
-    const actualMedals = Storage.getMedals();
     if (actualMedals.gold) {
         const pts = calcMedalPoints(data.medals || {}, actualMedals);
         html += `<div class="match-result-row" style="margin-top:12px;padding:12px;background:#fafafa;border-radius:8px;">
@@ -289,8 +361,8 @@ function renderMedals(container) {
         </div>`;
     }
 
-    const otherMedalTips = players.filter(name => name !== currentPlayer).map(name => {
-        const m = (allData[name].medals) || {};
+    const otherMedalTips = _cache.players.filter(name => name !== currentPlayer).map(name => {
+        const m = (_cache.allData[name].medals) || {};
         if (!m.gold && !m.silver && !m.bronze) return null;
         const parts = [];
         if (m.gold) {
@@ -322,11 +394,9 @@ function renderMedals(container) {
     container.innerHTML = html;
 
     container.querySelectorAll('.medal-select').forEach(sel => {
-        sel.addEventListener('change', () => {
-            const d = Storage.load(currentPlayer);
-            if (!d.medals) d.medals = {};
-            d.medals[sel.dataset.medal] = sel.value || null;
-            Storage.save(currentPlayer, d);
+        sel.addEventListener('change', async () => {
+            await Storage.saveMedal(currentPlayer, sel.dataset.medal, sel.value || null);
+            await refreshCache();
             renderPlayerTabs();
         });
     });
@@ -343,10 +413,9 @@ function renderMedals(container) {
 
 // ── Matches tab ──
 
-function renderOthersTips(match, allData, result) {
-    const players = Storage.getPlayers();
-    const tips = players.filter(name => name !== currentPlayer).map(name => {
-        const p = (allData[name].matches && allData[name].matches[match.id]) || {};
+function renderOthersTips(match, result) {
+    const tips = _cache.players.filter(name => name !== currentPlayer).map(name => {
+        const p = (_cache.allData[name].matches && _cache.allData[name].matches[match.id]) || {};
         if (p.home == null && p.away == null) return null;
         const tipStr = `${p.home ?? '?'}–${p.away ?? '?'}`;
         let scoreClass = '';
@@ -368,7 +437,7 @@ function renderOthersTips(match, allData, result) {
     </div>`;
 }
 
-function renderMatchCard(match, pred, result, locked, allData) {
+function renderMatchCard(match, pred, result, locked) {
     const pts = result ? calcMatchPoints(pred.home, pred.away, result.home, result.away) : null;
     let scoreClass = '';
     if (pts === 2) scoreClass = ' inputs-exact';
@@ -406,14 +475,13 @@ function renderMatchCard(match, pred, result, locked, allData) {
         ${result ? `<div class="match-result-row">
             Slutresultat: <span class="actual-result">${result.home} – ${result.away}</span>
         </div>` : ''}
-        ${renderOthersTips(match, allData, result)}
+        ${renderOthersTips(match, result)}
     </div>`;
 }
 
 function renderMatches(container) {
-    const data = Storage.load(currentPlayer);
-    const allResults = Storage.getResults();
-    const allData = Storage.loadAll();
+    const data = _cache.allData[currentPlayer] || { medals: {}, matches: {} };
+    const allResults = _cache.results;
 
     let html = `<div class="sort-toggle">
         <button class="sort-btn ${matchSort === 'group' ? 'active' : ''}" data-sort="group">Grupper</button>
@@ -431,7 +499,7 @@ function renderMatches(container) {
             html += `<div class="group-section"><div class="group-header">Grupp ${groupKey}</div>`;
             groups[groupKey].forEach(match => {
                 const pred = (data.matches && data.matches[match.id]) || {};
-                html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match), allData);
+                html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match));
             });
             html += `</div>`;
         });
@@ -448,7 +516,7 @@ function renderMatches(container) {
                 html += `<div class="group-section"><div class="group-header">${match.date}</div>`;
             }
             const pred = (data.matches && data.matches[match.id]) || {};
-            html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match), allData);
+            html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match));
         });
         if (currentDate) html += `</div>`;
     }
@@ -463,14 +531,17 @@ function renderMatches(container) {
     });
 
     container.querySelectorAll('.score-input').forEach(input => {
-        input.addEventListener('change', () => {
-            const d = Storage.load(currentPlayer);
-            if (!d.matches) d.matches = {};
+        let saveTimeout;
+        input.addEventListener('change', async () => {
+            const d = _cache.allData[currentPlayer] || { medals: {}, matches: {} };
             const matchId = input.dataset.match;
             if (!d.matches[matchId]) d.matches[matchId] = {};
             const val = input.value === '' ? null : parseInt(input.value);
             d.matches[matchId][input.dataset.side] = val;
-            Storage.save(currentPlayer, d);
+
+            const pred = d.matches[matchId];
+            await Storage.saveMatch(currentPlayer, matchId, pred.home, pred.away);
+            await refreshCache();
             renderPlayerTabs();
         });
     });
@@ -488,9 +559,9 @@ function renderMatches(container) {
 // ── Leaderboard tab ──
 
 function renderPlayerDetails(name) {
-    const data = Storage.load(name);
-    const results = Storage.getResults();
-    const medals = Storage.getMedals();
+    const data = _cache.allData[name] || { medals: {}, matches: {} };
+    const results = _cache.results;
+    const medals = _cache.medals;
 
     let html = '';
 
@@ -551,15 +622,14 @@ function renderPlayerDetails(name) {
 }
 
 function renderLeaderboard(container) {
-    const players = Storage.getPlayers();
-    if (players.length === 0) {
+    if (_cache.players.length === 0) {
         container.innerHTML = `<div class="leaderboard"><div class="leaderboard-empty">Inga spelare tillagda ännu.</div></div>`;
         return;
     }
 
-    const rows = players.map(name => {
-        const data = Storage.load(name);
-        const pts = calcTotalPoints(data);
+    const rows = _cache.players.map(name => {
+        const data = _cache.allData[name] || { medals: {}, matches: {} };
+        const pts = calcTotalPoints(data, _cache.results, _cache.medals);
         return { name, ...pts };
     }).sort((a, b) => b.total - a.total);
 
@@ -602,13 +672,13 @@ function renderLeaderboard(container) {
 
 // ── Event wiring ──
 
-function init() {
-    // Wire up all event handlers first
+async function init() {
     document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             currentTab = btn.dataset.tab;
+            await refreshCache();
             renderContent();
         });
     });
@@ -625,10 +695,9 @@ function init() {
         if (e.target === rulesModal) rulesModal.classList.add('hidden');
     });
 
-    // Then do initial render
-    const players = Storage.getPlayers();
-    if (players.length > 0) {
-        currentPlayer = players[0];
+    await refreshCache();
+    if (_cache.players.length > 0) {
+        currentPlayer = _cache.players[0];
     }
 
     renderPlayerTabs();

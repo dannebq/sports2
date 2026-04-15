@@ -1,3 +1,9 @@
+// ── Supabase ──
+
+const SUPABASE_URL = 'https://jnmbhzibjtnskpveciza.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpubWJoemlianRuc2twdmVjaXphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNDIzMDIsImV4cCI6MjA5MTgxODMwMn0.5etgrvlR_A-MTF8mw-bsU68e0V-U-FvTV22Ns0Tx7F4';
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
 const ADMIN_PASSWORD = 'vm2026admin';
 
 const teamToCode = {
@@ -128,24 +134,55 @@ let pendingResults = {};
 let pendingMedals = { gold: null, silver: null, bronze: null };
 let unlockedMatches = new Set();
 
-function loadSavedData() {
-    pendingResults = JSON.parse(localStorage.getItem('wc26-results') || '{}');
-    pendingMedals = JSON.parse(localStorage.getItem('wc26-medals') || '{"gold":null,"silver":null,"bronze":null}');
+async function loadSavedData() {
+    const { data: results } = await supabase.from('match_results').select('*');
+    pendingResults = {};
+    (results || []).forEach(r => {
+        pendingResults[r.match_id] = { home: r.home_score, away: r.away_score };
+    });
+
+    const { data: medals } = await supabase
+        .from('medal_results').select('gold, silver, bronze').eq('id', 1).single();
+    pendingMedals = medals || { gold: null, silver: null, bronze: null };
 }
 
-function saveResults() {
+async function saveResults() {
     const cleanResults = {};
     for (const [id, r] of Object.entries(pendingResults)) {
         if (r.home != null && r.away != null) {
             cleanResults[id] = { home: r.home, away: r.away };
         }
     }
-    localStorage.setItem('wc26-results', JSON.stringify(cleanResults));
+
+    for (const [matchId, r] of Object.entries(cleanResults)) {
+        await supabase.from('match_results').upsert({
+            match_id: parseInt(matchId),
+            home_score: r.home,
+            away_score: r.away
+        }, { onConflict: 'match_id' });
+    }
+
     pendingResults = cleanResults;
 }
 
-function saveMedals() {
-    localStorage.setItem('wc26-medals', JSON.stringify(pendingMedals));
+async function saveMedals() {
+    const { data: existing } = await supabase
+        .from('medal_results').select('id').eq('id', 1).single();
+
+    if (existing) {
+        await supabase.from('medal_results').update({
+            gold: pendingMedals.gold,
+            silver: pendingMedals.silver,
+            bronze: pendingMedals.bronze
+        }).eq('id', 1);
+    } else {
+        await supabase.from('medal_results').insert({
+            id: 1,
+            gold: pendingMedals.gold,
+            silver: pendingMedals.silver,
+            bronze: pendingMedals.bronze
+        });
+    }
 }
 
 // ── Login ──
@@ -161,8 +198,7 @@ function initLogin() {
     if (sessionStorage.getItem('wc26-admin-auth') === 'true') {
         loginScreen.classList.add('hidden');
         adminContent.classList.remove('hidden');
-        loadSavedData();
-        renderContent();
+        loadSavedData().then(() => renderContent());
     }
 
     function doLogin() {
@@ -171,8 +207,7 @@ function initLogin() {
             loginScreen.classList.add('hidden');
             adminContent.classList.remove('hidden');
             loginError.classList.add('hidden');
-            loadSavedData();
-            renderContent();
+            loadSavedData().then(() => renderContent());
         } else {
             loginError.classList.remove('hidden');
             passwordInput.value = '';
@@ -196,41 +231,34 @@ function initLogin() {
 
 // ── Rendering ──
 
-function getPlayers() {
-    return JSON.parse(localStorage.getItem('wc26-players') || '[]');
+async function getPlayers() {
+    const { data } = await supabase.from('players').select('name').order('id');
+    return (data || []).map(p => p.name);
 }
 
-function addPlayer(name) {
-    const players = getPlayers();
-    if (!players.includes(name)) {
-        players.push(name);
-        localStorage.setItem('wc26-players', JSON.stringify(players));
-    }
+async function addPlayer(name) {
+    await supabase.from('players').insert({ name });
 }
 
-function removePlayer(name) {
-    const players = getPlayers();
-    localStorage.setItem('wc26-players', JSON.stringify(players.filter(p => p !== name)));
+async function removePlayer(name) {
+    await supabase.from('players').delete().eq('name', name);
 }
 
-function renamePlayer(oldName, newName) {
-    const players = getPlayers();
+async function renamePlayer(oldName, newName) {
+    const players = await getPlayers();
     if (players.includes(newName)) return false;
-    const idx = players.indexOf(oldName);
-    if (idx === -1) return false;
-    players[idx] = newName;
-    localStorage.setItem('wc26-players', JSON.stringify(players));
-    const tipsKey = `wc26-tips-${oldName}`;
-    const data = localStorage.getItem(tipsKey);
-    if (data) {
-        localStorage.setItem(`wc26-tips-${newName}`, data);
-        localStorage.removeItem(tipsKey);
-    }
+    if (!players.includes(oldName)) return false;
+
+    const { data: player } = await supabase
+        .from('players').select('id').eq('name', oldName).single();
+    if (!player) return false;
+
+    await supabase.from('players').update({ name: newName }).eq('id', player.id);
     return true;
 }
 
-function renderPlayers(container) {
-    const players = getPlayers();
+async function renderPlayers(container) {
+    const players = await getPlayers();
 
     let html = `<div class="players-section">
         <h2>Spelare</h2>
@@ -260,11 +288,11 @@ function renderPlayers(container) {
     const input = document.getElementById('adminNewPlayer');
     const addBtn = document.getElementById('adminAddPlayer');
 
-    function doAdd() {
+    async function doAdd() {
         const name = input.value.trim();
         if (!name) return;
-        addPlayer(name);
-        renderPlayers(container);
+        await addPlayer(name);
+        await renderPlayers(container);
     }
 
     addBtn.addEventListener('click', doAdd);
@@ -284,41 +312,42 @@ function renderPlayers(container) {
             renameInput.focus();
             renameInput.select();
 
-            function doRename() {
+            async function doRename() {
                 const newName = renameInput.value.trim();
-                if (!newName || newName === oldName) { renderPlayers(container); return; }
-                if (!renamePlayer(oldName, newName)) {
+                if (!newName || newName === oldName) { await renderPlayers(container); return; }
+                const success = await renamePlayer(oldName, newName);
+                if (!success) {
                     alert('Namnet finns redan.');
                     renameInput.focus();
                     return;
                 }
-                renderPlayers(container);
+                await renderPlayers(container);
             }
 
             item.querySelector('.btn-rename-save').addEventListener('click', doRename);
-            renameInput.addEventListener('keydown', e => {
-                if (e.key === 'Enter') doRename();
-                if (e.key === 'Escape') renderPlayers(container);
+            renameInput.addEventListener('keydown', async e => {
+                if (e.key === 'Enter') await doRename();
+                if (e.key === 'Escape') await renderPlayers(container);
             });
-            item.querySelector('.btn-rename-cancel').addEventListener('click', () => renderPlayers(container));
+            item.querySelector('.btn-rename-cancel').addEventListener('click', async () => await renderPlayers(container));
         });
     });
 
     container.querySelectorAll('.btn-remove-player').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
             if (confirm(`Ta bort ${btn.dataset.player}?`)) {
-                removePlayer(btn.dataset.player);
-                renderPlayers(container);
+                await removePlayer(btn.dataset.player);
+                await renderPlayers(container);
             }
         });
     });
 }
 
-function renderContent() {
+async function renderContent() {
     const main = document.getElementById('mainContent');
     if (currentTab === 'results') renderResults(main);
     else if (currentTab === 'medals') renderMedals(main);
-    else if (currentTab === 'players') renderPlayers(main);
+    else if (currentTab === 'players') await renderPlayers(main);
 }
 
 function renderResultCard(match) {
@@ -451,15 +480,23 @@ function initSave() {
     const saveBtn = document.getElementById('saveBtn');
     const saveStatus = document.getElementById('saveStatus');
 
-    saveBtn.addEventListener('click', () => {
-        saveResults();
-        saveMedals();
-        unlockedMatches.clear();
+    saveBtn.addEventListener('click', async () => {
+        saveBtn.disabled = true;
+        saveStatus.textContent = 'Sparar...';
 
-        saveStatus.textContent = 'Sparat!';
-        setTimeout(() => { saveStatus.textContent = ''; }, 2000);
-
-        renderContent();
+        try {
+            await saveResults();
+            await saveMedals();
+            unlockedMatches.clear();
+            saveStatus.textContent = 'Sparat!';
+            setTimeout(() => { saveStatus.textContent = ''; }, 2000);
+            renderContent();
+        } catch (err) {
+            saveStatus.textContent = 'Fel vid sparning!';
+            console.error(err);
+        } finally {
+            saveBtn.disabled = false;
+        }
     });
 }
 
@@ -467,11 +504,11 @@ function initSave() {
 
 function init() {
     document.querySelectorAll('.tab-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             currentTab = btn.dataset.tab;
-            renderContent();
+            await renderContent();
         });
     });
 
