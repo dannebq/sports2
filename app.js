@@ -431,7 +431,7 @@ const handballLeagueSchedule = [
     { date: "2026-04-03", time: "19:00", home: "IFK Kristianstad", away: "HF Karlskrona", round: "Kvartsfinal" },
     { date: "2026-04-09", time: "19:00", home: "HF Karlskrona", away: "IFK Kristianstad", round: "Kvartsfinal" },
     { date: "2026-04-13", time: "19:00", home: "IFK Kristianstad", away: "HF Karlskrona", round: "Kvartsfinal" },
-    { date: "2026-04-16", time: "19:00", home: "HF Karlskrona", away: "IFK Kristianstad", round: "Kvartsfinal", ev: true },
+    { date: "2026-04-16", time: "19:00", home: "HF Karlskrona", away: "IFK Kristianstad", round: "Kvartsfinal" },
     { date: "2026-04-20", time: "19:00", home: "IFK Kristianstad", away: "HF Karlskrona", round: "Kvartsfinal", ev: true },
     // Ev. Semifinal
     { date: "2026-04-25", time: "TBD", home: "TBD", away: "TBD", round: "Semifinal", ev: true },
