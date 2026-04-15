@@ -2,7 +2,7 @@
 
 const SUPABASE_URL = 'https://jnmbhzibjtnskpveciza.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpubWJoemlianRuc2twdmVjaXphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNDIzMDIsImV4cCI6MjA5MTgxODMwMn0.5etgrvlR_A-MTF8mw-bsU68e0V-U-FvTV22Ns0Tx7F4';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const ADMIN_PASSWORD = 'vm2026admin';
 
@@ -135,7 +135,7 @@ let pendingMedals = { gold: null, silver: null, bronze: null };
 let unlockedMatches = new Set();
 
 async function loadSavedData() {
-    const { data: results } = await supabase.from('match_results').select('*');
+    const { data: results } = await sb.from('match_results').select('*');
     pendingResults = {};
     (results || []).forEach(r => {
         pendingResults[r.match_id] = { home: r.home_score, away: r.away_score };
@@ -155,7 +155,7 @@ async function saveResults() {
     }
 
     for (const [matchId, r] of Object.entries(cleanResults)) {
-        await supabase.from('match_results').upsert({
+        await sb.from('match_results').upsert({
             match_id: parseInt(matchId),
             home_score: r.home,
             away_score: r.away
@@ -170,13 +170,13 @@ async function saveMedals() {
         .from('medal_results').select('id').eq('id', 1).single();
 
     if (existing) {
-        await supabase.from('medal_results').update({
+        await sb.from('medal_results').update({
             gold: pendingMedals.gold,
             silver: pendingMedals.silver,
             bronze: pendingMedals.bronze
         }).eq('id', 1);
     } else {
-        await supabase.from('medal_results').insert({
+        await sb.from('medal_results').insert({
             id: 1,
             gold: pendingMedals.gold,
             silver: pendingMedals.silver,
@@ -232,16 +232,16 @@ function initLogin() {
 // ── Rendering ──
 
 async function getPlayers() {
-    const { data } = await supabase.from('players').select('name').order('id');
+    const { data } = await sb.from('players').select('name').order('id');
     return (data || []).map(p => p.name);
 }
 
 async function addPlayer(name) {
-    await supabase.from('players').insert({ name });
+    await sb.from('players').insert({ name });
 }
 
 async function removePlayer(name) {
-    await supabase.from('players').delete().eq('name', name);
+    await sb.from('players').delete().eq('name', name);
 }
 
 async function renamePlayer(oldName, newName) {
@@ -253,7 +253,7 @@ async function renamePlayer(oldName, newName) {
         .from('players').select('id').eq('name', oldName).single();
     if (!player) return false;
 
-    await supabase.from('players').update({ name: newName }).eq('id', player.id);
+    await sb.from('players').update({ name: newName }).eq('id', player.id);
     return true;
 }
 

@@ -2,7 +2,7 @@
 
 const SUPABASE_URL = 'https://jnmbhzibjtnskpveciza.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpubWJoemlianRuc2twdmVjaXphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNDIzMDIsImV4cCI6MjA5MTgxODMwMn0.5etgrvlR_A-MTF8mw-bsU68e0V-U-FvTV22Ns0Tx7F4';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ── Data ──
 
@@ -124,8 +124,8 @@ const Storage = {
         if (!pid) return { medals: {}, matches: {} };
 
         const [{ data: tips }, { data: medalRow }] = await Promise.all([
-            supabase.from('match_tips').select('match_id, home_score, away_score').eq('player_id', pid),
-            supabase.from('medal_tips').select('gold, silver, bronze').eq('player_id', pid).single()
+            sb.from('match_tips').select('match_id, home_score, away_score').eq('player_id', pid),
+            sb.from('medal_tips').select('gold, silver, bronze').eq('player_id', pid).single()
         ]);
 
         const matches = {};
@@ -142,7 +142,7 @@ const Storage = {
     async saveMatch(player, matchId, home, away) {
         const pid = await this._getPlayerId(player);
         if (!pid) return;
-        await supabase.from('match_tips').upsert({
+        await sb.from('match_tips').upsert({
             player_id: pid, match_id: parseInt(matchId),
             home_score: home, away_score: away
         }, { onConflict: 'player_id,match_id' });
@@ -155,14 +155,14 @@ const Storage = {
         const { data: existing } = await supabase
             .from('medal_tips').select('id').eq('player_id', pid).single();
         if (existing) {
-            await supabase.from('medal_tips').update({ [medalKey]: value }).eq('player_id', pid);
+            await sb.from('medal_tips').update({ [medalKey]: value }).eq('player_id', pid);
         } else {
-            await supabase.from('medal_tips').insert(row);
+            await sb.from('medal_tips').insert(row);
         }
     },
 
     async getResults() {
-        const { data } = await supabase.from('match_results').select('*');
+        const { data } = await sb.from('match_results').select('*');
         const results = {};
         (data || []).forEach(r => {
             results[r.match_id] = { home: r.home_score, away: r.away_score };
