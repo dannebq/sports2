@@ -108,7 +108,7 @@ const Storage = {
     async _getPlayerId(name) {
         if (this._playerIdCache[name]) return this._playerIdCache[name];
         const { data } = await sb
-            .from('players').select('id').eq('name', name).single();
+            .from('players').select('id').eq('name', name).maybeSingle();
         if (data) this._playerIdCache[name] = data.id;
         return data ? data.id : null;
     },
@@ -125,7 +125,7 @@ const Storage = {
 
         const [{ data: tips }, { data: medalRow }] = await Promise.all([
             sb.from('match_tips').select('match_id, home_score, away_score').eq('player_id', pid),
-            sb.from('medal_tips').select('gold, silver, bronze').eq('player_id', pid).single()
+            sb.from('medal_tips').select('gold, silver, bronze').eq('player_id', pid).maybeSingle()
         ]);
 
         const matches = {};
@@ -153,7 +153,7 @@ const Storage = {
         if (!pid) return;
         const row = { player_id: pid, [medalKey]: value };
         const { data: existing } = await sb
-            .from('medal_tips').select('id').eq('player_id', pid).single();
+            .from('medal_tips').select('id').eq('player_id', pid).maybeSingle();
         if (existing) {
             await sb.from('medal_tips').update({ [medalKey]: value }).eq('player_id', pid);
         } else {
@@ -172,7 +172,7 @@ const Storage = {
 
     async getMedals() {
         const { data } = await sb
-            .from('medal_results').select('gold, silver, bronze').eq('id', 1).single();
+            .from('medal_results').select('gold, silver, bronze').eq('id', 1).maybeSingle();
         return data || { gold: null, silver: null, bronze: null };
     },
 

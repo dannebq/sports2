@@ -142,7 +142,7 @@ async function loadSavedData() {
     });
 
     const { data: medals } = await sb
-        .from('medal_results').select('gold, silver, bronze').eq('id', 1).single();
+        .from('medal_results').select('gold, silver, bronze').eq('id', 1).maybeSingle();
     pendingMedals = medals || { gold: null, silver: null, bronze: null };
 }
 
@@ -167,7 +167,7 @@ async function saveResults() {
 
 async function saveMedals() {
     const { data: existing } = await sb
-        .from('medal_results').select('id').eq('id', 1).single();
+        .from('medal_results').select('id').eq('id', 1).maybeSingle();
 
     if (existing) {
         await sb.from('medal_results').update({
@@ -250,7 +250,7 @@ async function renamePlayer(oldName, newName) {
     if (!players.includes(oldName)) return false;
 
     const { data: player } = await sb
-        .from('players').select('id').eq('name', oldName).single();
+        .from('players').select('id').eq('name', oldName).maybeSingle();
     if (!player) return false;
 
     await sb.from('players').update({ name: newName }).eq('id', player.id);
