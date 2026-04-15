@@ -190,8 +190,8 @@ async function saveMedals() {
 function initLogin() {
     const loginScreen = document.getElementById('loginScreen');
     const adminContent = document.getElementById('adminContent');
+    const loginForm = document.getElementById('loginForm');
     const passwordInput = document.getElementById('passwordInput');
-    const loginBtn = document.getElementById('loginBtn');
     const loginError = document.getElementById('loginError');
     const logoutBtn = document.getElementById('logoutBtn');
 
@@ -201,7 +201,8 @@ function initLogin() {
         loadSavedData().then(() => renderContent());
     }
 
-    function doLogin() {
+    loginForm.addEventListener('submit', e => {
+        e.preventDefault();
         if (passwordInput.value === ADMIN_PASSWORD) {
             sessionStorage.setItem('wc26-admin-auth', 'true');
             loginScreen.classList.add('hidden');
@@ -213,11 +214,6 @@ function initLogin() {
             passwordInput.value = '';
             passwordInput.focus();
         }
-    }
-
-    loginBtn.addEventListener('click', doLogin);
-    passwordInput.addEventListener('keydown', e => {
-        if (e.key === 'Enter') doLogin();
     });
 
     logoutBtn.addEventListener('click', () => {
