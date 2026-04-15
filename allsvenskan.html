@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allsvenskan 2026</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { overflow-x: hidden; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #1a1a1a;
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+        .container { max-width: 860px; margin: 0 auto; padding: 16px; }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        .header h1 { font-size: 22px; font-weight: 700; }
+
+        .btn-refresh {
+            background: #1a1a1a;
+            color: #fff;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: opacity .15s;
+        }
+        .btn-refresh:hover { opacity: .85; }
+        .btn-refresh:disabled { opacity: .4; cursor: not-allowed; }
+
+        .meta {
+            font-size: 13px;
+            color: #888;
+            margin-bottom: 12px;
+        }
+
+        .table-wrap {
+            background: #fff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,.08);
+        }
+
+        table { width: 100%; border-collapse: collapse; font-size: 14px; }
+
+        th {
+            background: #fafafa;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #666;
+            letter-spacing: .3px;
+            position: sticky;
+            top: 0;
+        }
+        th, td {
+            padding: 10px 8px;
+            text-align: center;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        th:nth-child(2), td:nth-child(2) { text-align: left; }
+
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background: #fafafa; }
+
+        .team-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .team-logo {
+            width: 22px;
+            height: 22px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
+        .rank-cell { font-weight: 600; width: 32px; }
+        .pts-cell { font-weight: 700; }
+
+        .form-cell { display: flex; gap: 2px; justify-content: center; }
+        .form-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+        }
+        .form-W { background: #22c55e; }
+        .form-D { background: #a3a3a3; }
+        .form-L { background: #ef4444; }
+
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin .6s linear infinite;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+        .empty-state p { margin-bottom: 16px; }
+
+        .error-msg {
+            background: #fef2f2;
+            color: #dc2626;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 600px) {
+            table { font-size: 12px; }
+            th, td { padding: 8px 4px; }
+            .team-logo { width: 18px; height: 18px; }
+            .form-dot { width: 15px; height: 15px; font-size: 9px; }
+            .hide-mobile { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Allsvenskan 2026</h1>
+            <button class="btn-refresh" id="refreshBtn">Uppdatera</button>
+        </div>
+        <div class="meta" id="metaInfo"></div>
+        <div id="errorBox"></div>
+        <div id="content">
+            <div class="empty-state">
+                <p>Ingen data laddad.</p>
+                <button class="btn-refresh" id="emptyRefreshBtn">Hämta tabell</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://jnmbhzibjtnskpveciza.supabase.co';
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpubWJoemlianRuc2twdmVjaXphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNDIzMDIsImV4cCI6MjA5MTgxODMwMn0.5etgrvlR_A-MTF8mw-bsU68e0V-U-FvTV22Ns0Tx7F4';
+        const EDGE_FN_URL = `${SUPABASE_URL}/functions/v1/fetch-allsvenskan`;
+        const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        const contentEl = document.getElementById('content');
+        const metaEl = document.getElementById('metaInfo');
+        const errorBox = document.getElementById('errorBox');
+        const refreshBtn = document.getElementById('refreshBtn');
+
+        function formLabel(ch) {
+            if (ch === 'W') return 'V';
+            if (ch === 'D') return 'O';
+            if (ch === 'L') return 'F';
+            return ch;
+        }
+
+        function renderTable(rows) {
+            if (!rows || rows.length === 0) {
+                contentEl.innerHTML = `<div class="empty-state"><p>Ingen data laddad.</p><button class="btn-refresh" id="emptyRefreshBtn">Hämta tabell</button></div>`;
+                document.getElementById('emptyRefreshBtn')?.addEventListener('click', doRefresh);
+                return;
+            }
+
+            rows.sort((a, b) => a.rank - b.rank);
+
+            const formHtml = (form) => {
+                if (!form) return '';
+                return form.split('').map(ch =>
+                    `<span class="form-dot form-${ch}">${formLabel(ch)}</span>`
+                ).join('');
+            };
+
+            const tbody = rows.map(r => `
+                <tr>
+                    <td class="rank-cell">${r.rank}</td>
+                    <td><div class="team-cell">${r.team_logo ? `<img class="team-logo" src="${r.team_logo}" alt="">` : ''}${r.team_name}</div></td>
+                    <td>${r.played}</td>
+                    <td>${r.win}</td>
+                    <td>${r.draw}</td>
+                    <td>${r.lose}</td>
+                    <td class="hide-mobile">${r.goals_for}</td>
+                    <td class="hide-mobile">${r.goals_against}</td>
+                    <td>${r.goal_diff > 0 ? '+' : ''}${r.goal_diff}</td>
+                    <td class="pts-cell">${r.points}</td>
+                    <td class="hide-mobile"><div class="form-cell">${formHtml(r.form)}</div></td>
+                </tr>`).join('');
+
+            contentEl.innerHTML = `
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr>
+                            <th>#</th><th>Lag</th><th>S</th><th>V</th><th>O</th><th>F</th>
+                            <th class="hide-mobile">GM</th><th class="hide-mobile">IM</th>
+                            <th>+/-</th><th>P</th><th class="hide-mobile">Form</th>
+                        </tr></thead>
+                        <tbody>${tbody}</tbody>
+                    </table>
+                </div>`;
+        }
+
+        function showError(msg) {
+            errorBox.innerHTML = `<div class="error-msg">${msg}</div>`;
+            setTimeout(() => { errorBox.innerHTML = ''; }, 8000);
+        }
+
+        function setLoading(on) {
+            refreshBtn.disabled = on;
+            refreshBtn.innerHTML = on
+                ? '<span class="spinner"></span>Hämtar...'
+                : 'Uppdatera';
+        }
+
+        async function loadCached() {
+            const { data, error } = await sb
+                .from('allsvenskan_standings')
+                .select('*')
+                .order('rank');
+
+            if (error) {
+                showError('Kunde inte läsa cachad data.');
+                return;
+            }
+
+            if (data && data.length > 0) {
+                renderTable(data);
+                const ts = data[0]?.updated_at;
+                if (ts) {
+                    metaEl.textContent = `Senast uppdaterad: ${new Date(ts).toLocaleString('sv-SE')}`;
+                }
+            }
+        }
+
+        async function doRefresh() {
+            setLoading(true);
+            errorBox.innerHTML = '';
+            try {
+                const res = await fetch(EDGE_FN_URL);
+                const json = await res.json();
+
+                if (!res.ok || json.error) {
+                    showError(json.error || `Fel ${res.status}`);
+                    return;
+                }
+
+                renderTable(json.standings);
+                metaEl.textContent = `Senast uppdaterad: ${new Date().toLocaleString('sv-SE')}`;
+            } catch (err) {
+                showError('Nätverksfel vid hämtning.');
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        refreshBtn.addEventListener('click', doRefresh);
+        document.getElementById('emptyRefreshBtn')?.addEventListener('click', doRefresh);
+        loadCached();
+    </script>
+</body>
+</html>
