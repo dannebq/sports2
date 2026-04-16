@@ -271,6 +271,26 @@ async function refreshCache() {
     entries.forEach(([name, data]) => { _cache.allData[name] = data; });
 }
 
+// ── Player avatar helper ──
+
+const PLAYER_COLORS = [
+    '#e53935', '#8e24aa', '#3949ab', '#039be5',
+    '#00897b', '#43a047', '#f4511e', '#6d4c41',
+    '#d81b60', '#1e88e5', '#00acc1', '#7cb342'
+];
+
+function playerColor(name) {
+    let hash = 0;
+    for (const ch of name) hash = ((hash << 5) - hash + ch.charCodeAt(0)) | 0;
+    return PLAYER_COLORS[Math.abs(hash) % PLAYER_COLORS.length];
+}
+
+function playerAvatar(name, cls) {
+    const color = playerColor(name);
+    const initial = name.charAt(0).toUpperCase();
+    return `<span class="player-avatar${cls ? ' ' + cls : ''}" style="background:${color}">${initial}</span>`;
+}
+
 // ── Flag helper ──
 
 function flagUrl(teamName) {
@@ -289,7 +309,7 @@ function renderPlayerTabs() {
         btn.className = 'player-tab' + (name === currentPlayer ? ' active' : '');
         const data = _cache.allData[name] || { medals: {}, matches: {} };
         const pts = calcTotalPoints(data, _cache.results, _cache.medals);
-        btn.innerHTML = `${name}<span class="points-badge">${pts.total}p</span>`;
+        btn.innerHTML = `${playerAvatar(name)}${name}<span class="points-badge">${pts.total}p</span>`;
         btn.addEventListener('click', async () => {
             currentPlayer = name;
             await refreshCache();
@@ -380,7 +400,7 @@ function renderMedals(container) {
             if (actualMedals.bronze) cls = m.bronze === actualMedals.bronze ? ' tip-exact' : ' tip-wrong';
             parts.push(`<span class="others-tip${cls}">🥉 ${m.bronze}</span>`);
         }
-        return `<div class="others-medal-player"><strong>${name}:</strong> ${parts.join(' ')}</div>`;
+        return `<div class="others-medal-player">${playerAvatar(name, 'avatar-sm')}<strong>${name}:</strong> ${parts.join(' ')}</div>`;
     }).filter(Boolean);
 
     if (otherMedalTips.length > 0) {
@@ -427,7 +447,7 @@ function renderOthersTips(match, result) {
             else if (score === 0) scoreClass = ' tip-wrong';
             if (score !== null) pts = ` (${score}p)`;
         }
-        return `<span class="others-tip${scoreClass}">${name}: ${tipStr}${pts}</span>`;
+        return `<span class="others-tip${scoreClass}">${playerAvatar(name, 'avatar-sm')}${name}: ${tipStr}${pts}</span>`;
     }).filter(Boolean);
 
     if (tips.length === 0) return '';
@@ -645,7 +665,7 @@ function renderLeaderboard(container) {
     rows.forEach((row, i) => {
         html += `<div class="leaderboard-row" data-player="${row.name}">
             <span class="leaderboard-rank">${i + 1}</span>
-            <span class="leaderboard-name">${row.name} <span class="expand-arrow">▸</span></span>
+            <span class="leaderboard-name">${playerAvatar(row.name)} ${row.name} <span class="expand-arrow">▸</span></span>
             <span class="leaderboard-pts">${row.matchPts}</span>
             <span class="leaderboard-pts">${row.medalPts}</span>
             <span class="leaderboard-total">${row.total}</span>
