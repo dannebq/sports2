@@ -2091,7 +2091,21 @@ function createAllsvenskanTable(schedule) {
         if (nextMalmoMatchDate) break;
     }
     
+    const now = new Date();
+
     schedule.forEach(round => {
+        const upcomingMatches = round.matches.filter(match => {
+            if (!match.date || !match.time || match.time === '–') return true;
+            const matchDate = parseDate(match.date);
+            if (!matchDate) return true;
+            const [hours, minutes] = match.time.split(':').map(Number);
+            const matchEnd = new Date(matchDate);
+            matchEnd.setHours(hours + 2, minutes, 0, 0);
+            return now < matchEnd;
+        });
+
+        if (upcomingMatches.length === 0) return;
+
         const section = document.createElement('div');
         section.className = 'competition-section';
         
@@ -2117,7 +2131,7 @@ function createAllsvenskanTable(schedule) {
             <tbody>
         `;
         
-        round.matches.forEach(match => {
+        upcomingMatches.forEach(match => {
             const isMalmoMatch = match.malmoff;
             const matchDate = match.date ? parseDate(match.date) : null;
             const isNextMalmoMatch = nextMalmoMatchDate && matchDate && 
