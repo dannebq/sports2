@@ -432,13 +432,12 @@ const handballLeagueSchedule = [
     { date: "2026-04-09", time: "19:00", home: "HF Karlskrona", away: "IFK Kristianstad", round: "Kvartsfinal" },
     { date: "2026-04-13", time: "19:00", home: "IFK Kristianstad", away: "HF Karlskrona", round: "Kvartsfinal" },
     { date: "2026-04-16", time: "19:00", home: "HF Karlskrona", away: "IFK Kristianstad", round: "Kvartsfinal" },
-    { date: "2026-04-20", time: "19:00", home: "IFK Kristianstad", away: "HF Karlskrona", round: "Kvartsfinal", ev: true },
-    // Ev. Semifinal
-    { date: "2026-04-25", time: "TBD", home: "TBD", away: "TBD", round: "Semifinal", ev: true },
-    { date: "2026-04-28", time: "TBD", home: "TBD", away: "TBD", round: "Semifinal", ev: true },
-    { date: "2026-05-02", time: "TBD", home: "TBD", away: "TBD", round: "Semifinal", ev: true },
-    { date: "2026-05-05", time: "TBD", home: "TBD", away: "TBD", round: "Semifinal", ev: true },
-    { date: "2026-05-08", time: "TBD", home: "TBD", away: "TBD", round: "Semifinal", ev: true },
+    // Semifinal: IFK Kristianstad–Alingsås (bäst av 5)
+    { date: "2026-04-23", time: "19:00", home: "IFK Kristianstad", away: "Alingsås", round: "Semifinal" },
+    { date: "2026-04-29", time: "19:00", home: "Alingsås", away: "IFK Kristianstad", round: "Semifinal" },
+    { date: "2026-05-08", time: "19:00", home: "IFK Kristianstad", away: "Alingsås", round: "Semifinal" },
+    { date: "2026-05-11", time: "TBD", home: "Alingsås", away: "IFK Kristianstad", round: "Semifinal", ev: true },
+    { date: "2026-05-14", time: "TBD", home: "IFK Kristianstad", away: "Alingsås", round: "Semifinal", ev: true },
     // Sverige
     { date: "2026-05-13", time: "18:10", home: "Sverige", away: "Kroatien (herrar)" },
     { date: "2026-05-16", time: "TBD", home: "Kroatien", away: "Sverige (herrar)" },
