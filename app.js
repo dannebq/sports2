@@ -1289,6 +1289,176 @@ const worldCupSchedule = [
     { date: "28 juni", time: "04:00", home: "Jordanien", away: "Argentina", group: "J", tv: "TV4", city: "Dallas" }
 ];
 
+const diamondLeagueSchedule = [
+    {
+        date: "16 maj",
+        location: "Shanghai, Kina",
+        time: "13.00-15.00",
+        tv: "SVT1/Play",
+        events: {
+            herrar: "100 m, 800 m, 3 000 m, 110 m häck, 300 m häck, stavhopp, diskus",
+            damer: "200 m, 400 m, 1 500 m, 100 m häck, 3 000 m hinder, längdhopp, kula"
+        },
+        note: "300 m häck, ovanlig distans. Duell mellan Karsten Warholm och Alison dos Santos."
+    },
+    {
+        date: "23 maj",
+        location: "Xiamen, Kina",
+        time: "13.00-15.00",
+        tv: "SVT1/Play",
+        events: {
+            herrar: "100 m, 400 m, 5 000 m, 110 m häck, 400 m häck, längdhopp, kula",
+            damer: "200 m, 1 500 m, 100 m häck, 3 000 m hinder, höjdhopp, diskus, spjut"
+        }
+    },
+    {
+        date: "31 maj",
+        location: "Rabat, Marocko",
+        time: "20.00-22.00",
+        tv: "SVT1/Play",
+        events: {
+            herrar: "200 m, 400 m, 800 m, 1 500 m, 3 000 m hinder, kula, spjut",
+            damer: "100 m, 200 m, 800 m, 400 m häck, höjdhopp, stavhopp, diskus"
+        }
+    },
+    {
+        date: "4 juni",
+        location: "Rom, Italien",
+        time: "21.00-23.00",
+        tv: "SVT1/Play 22.00-23.00 SVT2/Play",
+        events: {
+            herrar: "100 m, 110 m häck, höjdhopp, längdhopp, tresteg, kula, spjut",
+            damer: "200 m, 400 m, 1 500 m, 5 000 m, 100 m häck, 400 m häck, stavhopp"
+        }
+    },
+    {
+        date: "7 juni",
+        location: "Stockholm, Sverige",
+        time: "16.00-19.00",
+        tv: "SVT1/Play 17.55-19.00 SVT2/Play",
+        highlight: true,
+        events: {
+            herrar: "200 m, 400 m, 800 m, 1 500 m, 3 000 m hinder, stavhopp, diskus",
+            damer: "100 m, 800 m, 3 000 m hinder, längdhopp, kula, diskus"
+        }
+    },
+    {
+        date: "10 juni",
+        location: "Oslo, Norge",
+        time: "20.00-22.00",
+        tv: "SVT1/Play",
+        events: {
+            herrar: "200 m, 800 m, 1 500 m, 5 000 m, 400 m häck, stavhopp, tresteg",
+            damer: "100 m, 400 m, 3 000 m, 400 m häck, tresteg, kula, spjut"
+        }
+    },
+    {
+        date: "19 juni",
+        location: "Doha, Qatar",
+        time: "18.00-20.00",
+        tv: "SVT2/Play",
+        note: "Uppskjuten från 8 maj pga kriget i närområdet",
+        events: {
+            herrar: "200 m, 110 m häck, 3 000 m hinder, höjdhopp, stavhopp, tresteg, spjut",
+            damer: "100 m, 400 m, 800 m, 1 500 m, 5 000 m, 400 m häck, tresteg"
+        }
+    },
+    {
+        date: "28 juni",
+        location: "Paris, Frankrike",
+        time: "18.00-20.00",
+        tv: "SVT2/Play",
+        events: {
+            herrar: "100 m, 400 m, 800 m, 5 000 m, 110 m häck, 3 000 m hinder, stavhopp",
+            damer: "400 m, 800 m, 1 500 m, 100 m häck, stavhopp, kula, spjut"
+        }
+    },
+    {
+        date: "4 juli",
+        location: "Eugene, USA",
+        time: "22.00-00.00",
+        tv: "SVT1/Play",
+        events: {
+            herrar: "200 m, 400 m, Bowerman mile, 110 m häck, kula, diskus",
+            damer: "100 m, en mile, 800 m, 100 m häck, 3 000 hinder, längdhopp, kula, två miles"
+        }
+    },
+    {
+        date: "10 juli",
+        location: "Monaco",
+        time: "20.00-22.00",
+        tv: "SVT1/Play",
+        events: {
+            herrar: "100 m, 400 m, 800 m, 3 000 m, 5 000 m, 3 000 m hinder, höjdhopp, längdhopp",
+            damer: "200 m, 400 m, 3 000 m, 100 m häck, stavhopp, tresteg, spjut"
+        }
+    },
+    {
+        date: "18 juli",
+        location: "London, England",
+        time: "15.00-17.00",
+        tv: "SVT1/Play",
+        events: {
+            herrar: "100 m, 400 m, 800 m, 1 500 m/Mile, 110 m häck, 400 m häck, stavhopp",
+            damer: "200 m, 400 m, 800 m, 3 000 m, höjdhopp, längdhopp, diskus"
+        }
+    },
+    {
+        date: "21 augusti",
+        location: "Lausanne, Schweiz",
+        time: "20.00-22.00",
+        tv: "SVT1/Play",
+        events: {
+            herrar: "200 m, 800 m, 5 000 m, stavhopp, längdhopp, tresteg, spjut",
+            damer: "200 m, 800 m, 100 m häck, 400 m häck, 3 000 m hinder, stavhopp, spjut"
+        }
+    },
+    {
+        date: "23 augusti",
+        location: "Chorzów, Polen",
+        time: "16.00-18.00",
+        tv: "SVT1/Play",
+        events: {
+            herrar: "100 m, 400 m, 1 500 m, 110 m häck, 400 m häck, 3 000 m hinder, höjdhopp, diskus",
+            damer: "100 m, 400 m, 1 500 m, 5 000 m, höjdhopp, längdhopp, tresteg"
+        }
+    },
+    {
+        date: "27 augusti",
+        location: "Zürich, Schweiz",
+        time: "20.00-22.00",
+        tv: "SVT1/Play",
+        events: {
+            herrar: "200 m, 1 500 m, 3 000 m, 400 m häck, längdhopp, kula, spjut",
+            damer: "100 m, 800 m, 100 m häck, 400 m häck, 3 000 m hinder, höjdhopp, stavhopp"
+        }
+    },
+    {
+        date: "4 september",
+        location: "Bryssel, Belgien",
+        time: "20.00-22.00",
+        tv: "SVT1/Play",
+        note: "Final",
+        events: {
+            herrar: "110 m häck + gemensamma grenar",
+            damer: "100 m häck + gemensamma grenar",
+            gemensamt: "100 m, 200 m, 400 m, 800 m, 1 500 m, 5 000 m, 400 m häck, 3 000 m hinder, höjdhopp, stavhopp, längdhopp, tresteg, kula, diskus, spjut"
+        }
+    },
+    {
+        date: "5 september",
+        location: "Bryssel, Belgien",
+        time: "20.00-22.00",
+        tv: "SVT1/Play",
+        note: "Final",
+        events: {
+            herrar: "110 m häck + gemensamma grenar",
+            damer: "100 m häck + gemensamma grenar",
+            gemensamt: "100 m, 200 m, 400 m, 800 m, 1 500 m, 5 000 m, 400 m häck, 3 000 m hinder, höjdhopp, stavhopp, längdhopp, tresteg, kula, diskus, spjut"
+        }
+    }
+];
+
 // DOM Elements
 const scheduleContainer = document.getElementById('schedule-container');
 
@@ -1550,6 +1720,25 @@ function getAllEvents() {
                 time: game.time,
                 tv: game.tv,
                 isHighlightedTeam: game.sweden === true
+            });
+        }
+    });
+
+    // Add Diamond League events
+    diamondLeagueSchedule.forEach(event => {
+        const date = parseDate(event.date);
+        if (date) {
+            const startTime = event.time.split('-')[0];
+            events.push({
+                date: date,
+                dateString: formatDateSwedish(date),
+                sport: 'Diamond League',
+                team: event.location,
+                description: event.location,
+                location: event.location,
+                time: startTime,
+                tv: event.tv,
+                isHighlightedTeam: event.highlight === true
             });
         }
     });
@@ -2357,6 +2546,107 @@ function displaySkiClassicsSchedule(schedule) {
     scheduleContainer.appendChild(table);
 }
 
+// Function to create Diamond League table
+function createDiamondLeagueTable(schedule) {
+    const container = document.createElement('div');
+
+    const title = document.createElement('h2');
+    title.style.marginBottom = '20px';
+    title.style.fontSize = '24px';
+    title.style.fontWeight = 'bold';
+    title.textContent = 'Diamond League 2026';
+    container.appendChild(title);
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    let nextEventFound = false;
+
+    schedule.forEach(event => {
+        const eventDate = parseDate(event.date);
+        const isPast = eventDate && eventDate < today;
+        const isNext = !isPast && !nextEventFound;
+        if (isNext) nextEventFound = true;
+
+        const card = document.createElement('div');
+        card.style.marginBottom = '16px';
+        card.style.borderRadius = '10px';
+        card.style.overflow = 'hidden';
+        card.style.border = '1px solid #e0e0e0';
+        if (isPast) card.style.opacity = '0.5';
+        if (isNext) card.style.border = '2px solid #1a73e8';
+        if (event.highlight) card.style.background = 'linear-gradient(135deg, #fffbe6 0%, #fff9c4 100%)';
+
+        const header = document.createElement('div');
+        header.style.padding = '12px 16px';
+        header.style.display = 'flex';
+        header.style.justifyContent = 'space-between';
+        header.style.alignItems = 'center';
+        header.style.flexWrap = 'wrap';
+        header.style.gap = '8px';
+        if (event.highlight) {
+            header.style.background = 'linear-gradient(135deg, #fdd835 0%, #fbc02d 100%)';
+            header.style.color = '#333';
+        } else {
+            header.style.background = 'linear-gradient(135deg, #1a237e 0%, #283593 100%)';
+            header.style.color = '#fff';
+        }
+
+        const locationText = document.createElement('div');
+        locationText.style.fontWeight = 'bold';
+        locationText.style.fontSize = '16px';
+        const noteLabel = event.note ? ` — ${event.note}` : '';
+        locationText.textContent = `${event.location}${noteLabel}`;
+        header.appendChild(locationText);
+
+        const dateText = document.createElement('div');
+        dateText.style.fontSize = '14px';
+        dateText.style.opacity = '0.9';
+        dateText.textContent = eventDate ? formatDateSwedish(eventDate) : event.date;
+        header.appendChild(dateText);
+
+        card.appendChild(header);
+
+        const body = document.createElement('div');
+        body.style.padding = '12px 16px';
+
+        const timeRow = document.createElement('div');
+        timeRow.style.marginBottom = '10px';
+        timeRow.style.fontSize = '14px';
+        timeRow.style.color = '#555';
+        timeRow.innerHTML = `<strong>Tid:</strong> ${event.time} &nbsp;|&nbsp; <strong>TV:</strong> ${event.tv}`;
+        body.appendChild(timeRow);
+
+        if (event.events) {
+            const eventsDiv = document.createElement('div');
+            eventsDiv.style.fontSize = '13px';
+            eventsDiv.style.lineHeight = '1.6';
+
+            if (event.events.herrar) {
+                eventsDiv.innerHTML += `<div style="margin-bottom:4px"><strong>Herrar:</strong> ${event.events.herrar}</div>`;
+            }
+            if (event.events.damer) {
+                eventsDiv.innerHTML += `<div style="margin-bottom:4px"><strong>Damer:</strong> ${event.events.damer}</div>`;
+            }
+            if (event.events.gemensamt) {
+                eventsDiv.innerHTML += `<div style="margin-bottom:4px"><strong>Herrar &amp; damer:</strong> ${event.events.gemensamt}</div>`;
+            }
+            body.appendChild(eventsDiv);
+        }
+
+        card.appendChild(body);
+        container.appendChild(card);
+    });
+
+    return container;
+}
+
+function displayDiamondLeagueSchedule(schedule) {
+    scheduleContainer.innerHTML = '';
+    const table = createDiamondLeagueTable(schedule);
+    scheduleContainer.appendChild(table);
+}
+
 // Function to create overview table
 function createOverviewTable(events, title) {
     const container = document.createElement('div');
@@ -2665,6 +2955,8 @@ document.querySelectorAll('.team-btn').forEach(btn => {
                 displaySvenskaCupenSchedule(svenskaCupenSchedule);
             } else if (sport === 'world-cup') {
                 displayWorldCupSchedule(worldCupSchedule);
+            } else if (sport === 'diamond-league') {
+                displayDiamondLeagueSchedule(diamondLeagueSchedule);
             }
         }, 500);
     });
