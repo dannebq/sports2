@@ -147,14 +147,13 @@
     <div class="container">
         <div class="header">
             <h1>Allsvenskan 2024</h1>
-            <button class="btn-refresh" id="refreshBtn">Uppdatera</button>
+            <button class="btn-refresh" id="refreshBtn" disabled>Uppdatera</button>
         </div>
         <div class="meta" id="metaInfo"></div>
         <div id="errorBox"></div>
         <div id="content">
             <div class="empty-state">
                 <p>Ingen data laddad.</p>
-                <button class="btn-refresh" id="emptyRefreshBtn">Hämta tabell</button>
             </div>
         </div>
     </div>
@@ -163,13 +162,11 @@
     <script>
         const SUPABASE_URL = 'https://jnmbhzibjtnskpveciza.supabase.co';
         const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpubWJoemlianRuc2twdmVjaXphIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzYyNDIzMDIsImV4cCI6MjA5MTgxODMwMn0.5etgrvlR_A-MTF8mw-bsU68e0V-U-FvTV22Ns0Tx7F4';
-        const EDGE_FN_URL = `${SUPABASE_URL}/functions/v1/fetch-allsvenskan`;
         const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
         const contentEl = document.getElementById('content');
         const metaEl = document.getElementById('metaInfo');
         const errorBox = document.getElementById('errorBox');
-        const refreshBtn = document.getElementById('refreshBtn');
 
         function formLabel(ch) {
             if (ch === 'W') return 'V';
@@ -180,8 +177,7 @@
 
         function renderTable(rows) {
             if (!rows || rows.length === 0) {
-                contentEl.innerHTML = `<div class="empty-state"><p>Ingen data laddad.</p><button class="btn-refresh" id="emptyRefreshBtn">Hämta tabell</button></div>`;
-                document.getElementById('emptyRefreshBtn')?.addEventListener('click', doRefresh);
+                contentEl.innerHTML = `<div class="empty-state"><p>Ingen data laddad.</p></div>`;
                 return;
             }
 
@@ -227,13 +223,6 @@
             setTimeout(() => { errorBox.innerHTML = ''; }, 8000);
         }
 
-        function setLoading(on) {
-            refreshBtn.disabled = on;
-            refreshBtn.innerHTML = on
-                ? '<span class="spinner"></span>Hämtar...'
-                : 'Uppdatera';
-        }
-
         async function loadCached() {
             const { data, error } = await sb
                 .from('allsvenskan_standings')
@@ -254,29 +243,6 @@
             }
         }
 
-        async function doRefresh() {
-            setLoading(true);
-            errorBox.innerHTML = '';
-            try {
-                const res = await fetch(EDGE_FN_URL);
-                const json = await res.json();
-
-                if (!res.ok || json.error) {
-                    showError(json.error || `Fel ${res.status}`);
-                    return;
-                }
-
-                renderTable(json.standings);
-                metaEl.textContent = `Senast uppdaterad: ${new Date().toLocaleString('sv-SE')}`;
-            } catch (err) {
-                showError('Nätverksfel vid hämtning.');
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        refreshBtn.addEventListener('click', doRefresh);
-        document.getElementById('emptyRefreshBtn')?.addEventListener('click', doRefresh);
         loadCached();
     </script>
 </body>
