@@ -256,19 +256,39 @@ let matchSort = 'date';
 // Shared data cache refreshed on each render cycle
 let _cache = { results: {}, medals: { gold: null, silver: null, bronze: null }, allData: {}, players: [] };
 
-async function refreshCache() {
-    const [players, results, medals] = await Promise.all([
-        Storage.getPlayers(),
-        Storage.getResults(),
-        Storage.getMedals()
-    ]);
-    _cache.players = players;
-    _cache.results = results;
-    _cache.medals = medals;
+// Loading spinner with reference counter so overlapping calls behave correctly
+let _loadingCount = 0;
+function showSpinner() {
+    _loadingCount++;
+    const el = document.getElementById('loadingSpinner');
+    if (el) el.classList.remove('hidden');
+}
+function hideSpinner() {
+    _loadingCount = Math.max(0, _loadingCount - 1);
+    if (_loadingCount === 0) {
+        const el = document.getElementById('loadingSpinner');
+        if (el) el.classList.add('hidden');
+    }
+}
 
-    const entries = await Promise.all(players.map(async p => [p, await Storage.load(p)]));
-    _cache.allData = {};
-    entries.forEach(([name, data]) => { _cache.allData[name] = data; });
+async function refreshCache() {
+    showSpinner();
+    try {
+        const [players, results, medals] = await Promise.all([
+            Storage.getPlayers(),
+            Storage.getResults(),
+            Storage.getMedals()
+        ]);
+        _cache.players = players;
+        _cache.results = results;
+        _cache.medals = medals;
+
+        const entries = await Promise.all(players.map(async p => [p, await Storage.load(p)]));
+        _cache.allData = {};
+        entries.forEach(([name, data]) => { _cache.allData[name] = data; });
+    } finally {
+        hideSpinner();
+    }
 }
 
 // ── Player avatar helper ──
