@@ -6,7 +6,7 @@ const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // ── Data ──
 
-const TOURNAMENT_START = new Date(2026, 5, 11, 21, 0, 0);
+const TOURNAMENT_START = new Date(2026, 5, 28, 21, 0, 0);
 
 const teamToCode = {
     "Mexiko": "MEX", "Sydafrika": "RSA", "Sydkorea": "KOR", "Tjeckien": "CZE",
@@ -413,7 +413,7 @@ function renderMedals(container) {
     let html = `<div class="medal-section">
         <h2>Medaljer</h2>
         <p class="medal-lock-info ${locked ? 'locked' : ''}">
-            ${locked ? 'Tipset är låst sedan turneringen startade.' : 'Tippa vinnare, tvåa och trea. Låses när turneringen startar (11 juni 21:00).'}
+            ${locked ? 'Tipset är låst sedan slutspelet startade.' : 'Tippa vinnare, tvåa och trea. Låses när slutspelet startar (28 juni 21:00).'}
         </p>`;
 
     const actualMedals = _cache.medals;
