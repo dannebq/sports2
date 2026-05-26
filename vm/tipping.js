@@ -346,13 +346,15 @@ function renderPlayerSelect() {
 
 async function selectPlayer(name) {
     currentPlayer = name;
-    try {
-        localStorage.setItem('wc26-player', name);
-    } catch (_) {}
+    currentTab = 'matches';
+    document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.tab === 'matches');
+    });
+
+    try { localStorage.setItem('wc26-player', name); } catch (_) {}
 
     document.getElementById('playerSelect').classList.add('hidden');
-    const screen = document.getElementById('tippingScreen');
-    screen.classList.remove('hidden');
+    document.getElementById('tippingScreen').classList.remove('hidden');
 
     const bar = document.getElementById('activePlayerBar');
     const color = playerColor(name);
@@ -364,14 +366,20 @@ async function selectPlayer(name) {
         </span>
         <button class="btn-change-player" id="changePlayer">← Byt spelare</button>
     `;
-    document.getElementById('changePlayer').addEventListener('click', () => {
+    document.getElementById('changePlayer').addEventListener('click', async () => {
         currentPlayer = null;
+        currentTab = 'matches';
         try { localStorage.removeItem('wc26-player'); } catch (_) {}
         document.getElementById('tippingScreen').classList.add('hidden');
         document.getElementById('playerSelect').classList.remove('hidden');
+        await refreshCache();
+        renderPlayerSelect();
     });
 
-    await refreshCache();
+    // Ensure we have this player's data; refresh if missing
+    if (!_cache.allData[name]) {
+        await refreshCache();
+    }
     renderContent();
 }
 

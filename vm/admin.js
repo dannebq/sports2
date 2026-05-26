@@ -147,22 +147,28 @@ async function loadSavedData() {
 }
 
 async function saveResults() {
-    const cleanResults = {};
+    const toUpsert = [];
+    const toDelete = [];
+
     for (const [id, r] of Object.entries(pendingResults)) {
         if (r.home != null && r.away != null) {
-            cleanResults[id] = { home: r.home, away: r.away };
+            toUpsert.push({ match_id: parseInt(id), home_score: r.home, away_score: r.away });
+        } else {
+            toDelete.push(parseInt(id));
         }
     }
 
-    for (const [matchId, r] of Object.entries(cleanResults)) {
-        await sb.from('match_results').upsert({
-            match_id: parseInt(matchId),
-            home_score: r.home,
-            away_score: r.away
-        }, { onConflict: 'match_id' });
+    if (toUpsert.length > 0) {
+        await sb.from('match_results').upsert(toUpsert, { onConflict: 'match_id' });
+    }
+    if (toDelete.length > 0) {
+        await sb.from('match_results').delete().in('match_id', toDelete);
     }
 
-    pendingResults = cleanResults;
+    pendingResults = {};
+    toUpsert.forEach(r => {
+        pendingResults[r.match_id] = { home: r.home_score, away: r.away_score };
+    });
 }
 
 async function saveMedals() {
