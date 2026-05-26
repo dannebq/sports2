@@ -17,19 +17,30 @@
             <h1>VM-tipset 2026 <a href="#" class="rules-link" id="openRules">Regler</a></h1>
         </header>
 
-        <section class="player-section">
-            <div class="player-bar">
-                <div class="player-tabs" id="playerTabs"></div>
-            </div>
-        </section>
+        <!-- Player selection screen -->
+        <div id="playerSelect">
+            <p class="player-select-subtitle">Vem är du?</p>
+            <div class="player-select-grid" id="playerSelectGrid"></div>
+        </div>
 
-        <nav class="tab-nav">
-            <button class="tab-btn active" data-tab="matches">Matcher</button>
-            <button class="tab-btn" data-tab="medals">Medaljer</button>
-            <button class="tab-btn" data-tab="leaderboard">Ställning</button>
-        </nav>
+        <!-- Tipping screen (hidden until a player is chosen) -->
+        <div id="tippingScreen" class="hidden">
+            <div class="active-player-bar" id="activePlayerBar"></div>
 
-        <main id="mainContent"></main>
+            <section class="player-section">
+                <div class="player-bar">
+                    <div class="player-tabs" id="playerTabs"></div>
+                </div>
+            </section>
+
+            <nav class="tab-nav">
+                <button class="tab-btn active" data-tab="matches">Matcher</button>
+                <button class="tab-btn" data-tab="medals">Medaljer</button>
+                <button class="tab-btn" data-tab="leaderboard">Ställning</button>
+            </nav>
+
+            <main id="mainContent"></main>
+        </div>
     </div>
 
     <div class="loading-overlay hidden" id="loadingSpinner" aria-live="polite" aria-busy="true">

@@ -340,6 +340,61 @@ function renderPlayerTabs() {
     });
 }
 
+function renderPlayerSelect() {
+    const grid = document.getElementById('playerSelectGrid');
+    grid.innerHTML = '';
+
+    if (_cache.players.length === 0) {
+        grid.innerHTML = '<p class="no-player-message">Inga spelare tillagda ännu. Spelare läggs till via admin.</p>';
+        return;
+    }
+
+    _cache.players.forEach(name => {
+        const color = playerColor(name);
+        const initial = name.charAt(0).toUpperCase();
+        const card = document.createElement('button');
+        card.className = 'player-select-card';
+        card.innerHTML = `
+            <span class="player-select-avatar" style="background:${color}">${initial}</span>
+            <span class="player-select-name">${name}</span>
+        `;
+        card.addEventListener('click', () => selectPlayer(name));
+        grid.appendChild(card);
+    });
+}
+
+async function selectPlayer(name) {
+    currentPlayer = name;
+    try {
+        localStorage.setItem('wc26-player', name);
+    } catch (_) {}
+
+    document.getElementById('playerSelect').classList.add('hidden');
+    const screen = document.getElementById('tippingScreen');
+    screen.classList.remove('hidden');
+
+    const bar = document.getElementById('activePlayerBar');
+    const color = playerColor(name);
+    const initial = name.charAt(0).toUpperCase();
+    bar.innerHTML = `
+        <span class="active-player-identity">
+            <span class="active-player-avatar" style="background:${color}">${initial}</span>
+            <span class="active-player-name">${name}</span>
+        </span>
+        <button class="btn-change-player" id="changePlayer">← Byt spelare</button>
+    `;
+    document.getElementById('changePlayer').addEventListener('click', () => {
+        currentPlayer = null;
+        try { localStorage.removeItem('wc26-player'); } catch (_) {}
+        document.getElementById('tippingScreen').classList.add('hidden');
+        document.getElementById('playerSelect').classList.remove('hidden');
+    });
+
+    await refreshCache();
+    renderPlayerTabs();
+    renderContent();
+}
+
 function renderContent() {
     const main = document.getElementById('mainContent');
 
@@ -736,12 +791,16 @@ async function init() {
     });
 
     await refreshCache();
-    if (_cache.players.length > 0) {
-        currentPlayer = _cache.players[0];
-    }
 
-    renderPlayerTabs();
-    renderContent();
+    // Check if a player was previously selected this session
+    let remembered = null;
+    try { remembered = localStorage.getItem('wc26-player'); } catch (_) {}
+
+    if (remembered && _cache.players.includes(remembered)) {
+        await selectPlayer(remembered);
+    } else {
+        renderPlayerSelect();
+    }
 }
 
 if (document.readyState === 'loading') {
