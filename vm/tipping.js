@@ -320,25 +320,6 @@ function flagUrl(teamName) {
 
 // ── Rendering ──
 
-function renderPlayerTabs() {
-    const container = document.getElementById('playerTabs');
-    container.innerHTML = '';
-
-    _cache.players.forEach(name => {
-        const btn = document.createElement('button');
-        btn.className = 'player-tab' + (name === currentPlayer ? ' active' : '');
-        const data = _cache.allData[name] || { medals: {}, matches: {} };
-        const pts = calcTotalPoints(data, _cache.results, _cache.medals);
-        btn.innerHTML = `${playerAvatar(name)}${name}<span class="points-badge">${pts.total}p</span>`;
-        btn.addEventListener('click', async () => {
-            currentPlayer = name;
-            await refreshCache();
-            renderPlayerTabs();
-            renderContent();
-        });
-        container.appendChild(btn);
-    });
-}
 
 function renderPlayerSelect() {
     const grid = document.getElementById('playerSelectGrid');
@@ -391,7 +372,6 @@ async function selectPlayer(name) {
     });
 
     await refreshCache();
-    renderPlayerTabs();
     renderContent();
 }
 
@@ -492,7 +472,6 @@ function renderMedals(container) {
         sel.addEventListener('change', async () => {
             await Storage.saveMedal(currentPlayer, sel.dataset.medal, sel.value || null);
             await refreshCache();
-            renderPlayerTabs();
         });
     });
 
@@ -637,7 +616,6 @@ function renderMatches(container) {
             const pred = d.matches[matchId];
             await Storage.saveMatch(currentPlayer, matchId, pred.home, pred.away);
             await refreshCache();
-            renderPlayerTabs();
         });
     });
 
