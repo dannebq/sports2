@@ -538,16 +538,18 @@ function renderMatchCard(match, pred, result, locked) {
                 <span class="team-name">${match.home}</span>
                 <img class="team-flag" src="${flagUrl(match.home)}" alt="${match.home}">
             </div>
-            <div class="score-inputs${scoreClass}">
-                <input type="number" class="score-input" min="0" max="20"
-                    data-match="${match.id}" data-side="home"
-                    value="${pred.home != null ? pred.home : ''}"
-                    ${locked ? 'disabled' : ''}>
+            <div class="score-stepper${scoreClass}">
+                <div class="stepper-col">
+                    <button type="button" class="stepper-btn up" data-match="${match.id}" data-side="home" aria-label="Öka hemmamål" ${locked ? 'disabled' : ''}>▲</button>
+                    <span class="stepper-value" data-match="${match.id}" data-side="home">${pred.home != null ? pred.home : '–'}</span>
+                    <button type="button" class="stepper-btn down" data-match="${match.id}" data-side="home" aria-label="Minska hemmamål" ${locked ? 'disabled' : ''}>▼</button>
+                </div>
                 <span class="score-separator">–</span>
-                <input type="number" class="score-input" min="0" max="20"
-                    data-match="${match.id}" data-side="away"
-                    value="${pred.away != null ? pred.away : ''}"
-                    ${locked ? 'disabled' : ''}>
+                <div class="stepper-col">
+                    <button type="button" class="stepper-btn up" data-match="${match.id}" data-side="away" aria-label="Öka bortamål" ${locked ? 'disabled' : ''}>▲</button>
+                    <span class="stepper-value" data-match="${match.id}" data-side="away">${pred.away != null ? pred.away : '–'}</span>
+                    <button type="button" class="stepper-btn down" data-match="${match.id}" data-side="away" aria-label="Minska bortamål" ${locked ? 'disabled' : ''}>▼</button>
+                </div>
             </div>
             <div class="match-team away">
                 <img class="team-flag" src="${flagUrl(match.away)}" alt="${match.away}">
@@ -612,19 +614,68 @@ function renderMatches(container) {
         });
     });
 
-    container.querySelectorAll('.score-input').forEach(input => {
-        let saveTimeout;
-        input.addEventListener('change', async () => {
-            const d = _cache.allData[currentPlayer] || { medals: {}, matches: {} };
-            const matchId = input.dataset.match;
-            if (!d.matches[matchId]) d.matches[matchId] = {};
-            const val = input.value === '' ? null : parseInt(input.value);
-            d.matches[matchId][input.dataset.side] = val;
+    const pendingSaves = new Map();
 
-            const pred = d.matches[matchId];
-            await Storage.saveMatch(currentPlayer, matchId, pred.home, pred.away);
-            await refreshCache();
-        });
+    container.querySelectorAll('.stepper-btn').forEach(btn => {
+        if (btn.disabled) return;
+        const delta = btn.classList.contains('up') ? 1 : -1;
+        const matchId = btn.dataset.match;
+        const side = btn.dataset.side;
+
+        const apply = () => {
+            const d = _cache.allData[currentPlayer]
+                || (_cache.allData[currentPlayer] = { medals: {}, matches: {} });
+            if (!d.matches[matchId]) d.matches[matchId] = {};
+            const current = d.matches[matchId][side];
+            let next;
+            if (delta > 0) {
+                next = current == null ? 0 : Math.min(20, current + 1);
+            } else {
+                next = current == null ? null : (current === 0 ? null : current - 1);
+            }
+            if (next === current) return false;
+            d.matches[matchId][side] = next;
+
+            const valueEl = container.querySelector(
+                `.stepper-value[data-match="${matchId}"][data-side="${side}"]`
+            );
+            if (valueEl) valueEl.textContent = next == null ? '–' : next;
+
+            clearTimeout(pendingSaves.get(matchId));
+            pendingSaves.set(matchId, setTimeout(async () => {
+                pendingSaves.delete(matchId);
+                const pred = d.matches[matchId];
+                await Storage.saveMatch(currentPlayer, matchId, pred.home, pred.away);
+                await refreshCache();
+            }, 350));
+            return true;
+        };
+
+        let holdTimer = null;
+        let repeatInterval = null;
+        const stopRepeat = () => {
+            clearTimeout(holdTimer);
+            clearInterval(repeatInterval);
+            holdTimer = null;
+            repeatInterval = null;
+        };
+        const startRepeat = e => {
+            if (e.button != null && e.button !== 0) return;
+            e.preventDefault();
+            apply();
+            holdTimer = setTimeout(() => {
+                repeatInterval = setInterval(() => {
+                    const stillChanged = apply();
+                    if (!stillChanged) stopRepeat();
+                }, 120);
+            }, 400);
+        };
+
+        btn.addEventListener('pointerdown', startRepeat);
+        btn.addEventListener('pointerup', stopRepeat);
+        btn.addEventListener('pointerleave', stopRepeat);
+        btn.addEventListener('pointercancel', stopRepeat);
+        btn.addEventListener('contextmenu', e => e.preventDefault());
     });
 
     container.querySelectorAll('.others-toggle').forEach(toggle => {
