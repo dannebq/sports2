@@ -234,8 +234,8 @@ function initLogin() {
 // ── Rendering ──
 
 async function getPlayers() {
-    const { data } = await sb.from('players').select('name').order('id');
-    return (data || []).map(p => p.name);
+    const { data } = await sb.from('players').select('name, group_tipping_enabled').order('id');
+    return (data || []).map(p => ({ name: p.name, groupTippingEnabled: !!p.group_tipping_enabled }));
 }
 
 async function addPlayer(name) {
@@ -248,8 +248,9 @@ async function removePlayer(name) {
 
 async function renamePlayer(oldName, newName) {
     const players = await getPlayers();
-    if (players.includes(newName)) return false;
-    if (!players.includes(oldName)) return false;
+    const names = players.map(p => p.name);
+    if (names.includes(newName)) return false;
+    if (!names.includes(oldName)) return false;
 
     const { data: player } = await sb
         .from('players').select('id').eq('name', oldName).maybeSingle();
@@ -257,6 +258,16 @@ async function renamePlayer(oldName, newName) {
 
     await sb.from('players').update({ name: newName }).eq('id', player.id);
     return true;
+}
+
+async function setGroupTippingEnabled(name, enabled) {
+    const { data: player } = await sb
+        .from('players').select('id').eq('name', name).maybeSingle();
+    if (!player) return;
+    await sb.from('players').update({ group_tipping_enabled: enabled }).eq('id', player.id);
+    if (!enabled) {
+        await sb.from('group_tips').delete().eq('player_id', player.id);
+    }
 }
 
 async function renderPlayers(container) {
@@ -273,9 +284,14 @@ async function renderPlayers(container) {
     if (players.length === 0) {
         html += `<div class="player-list-empty">Inga spelare tillagda.</div>`;
     } else {
-        players.forEach(name => {
+        players.forEach(p => {
+            const name = p.name;
             html += `<div class="player-item" data-player="${name}">
                 <span class="player-name">${name}</span>
+                <label class="player-group-toggle" title="Bjud in till gruppspelstipset">
+                    <input type="checkbox" class="chk-group-enabled" data-player="${name}" ${p.groupTippingEnabled ? 'checked' : ''}>
+                    <span>Gruppspel</span>
+                </label>
                 <div class="player-actions">
                     <button class="btn-rename-player" data-player="${name}" title="Byt namn">Byt namn</button>
                     <button class="btn-remove-player" data-player="${name}" title="Ta bort">Ta bort</button>
@@ -340,6 +356,23 @@ async function renderPlayers(container) {
             if (confirm(`Ta bort ${btn.dataset.player}?`)) {
                 await removePlayer(btn.dataset.player);
                 await renderPlayers(container);
+            }
+        });
+    });
+
+    container.querySelectorAll('.chk-group-enabled').forEach(chk => {
+        chk.addEventListener('change', async () => {
+            const name = chk.dataset.player;
+            const enabled = chk.checked;
+            if (!enabled && !confirm(`Avbjud ${name} från gruppspelstipset? Deras gruppspelstips raderas.`)) {
+                chk.checked = true;
+                return;
+            }
+            chk.disabled = true;
+            try {
+                await setGroupTippingEnabled(name, enabled);
+            } finally {
+                chk.disabled = false;
             }
         });
     });

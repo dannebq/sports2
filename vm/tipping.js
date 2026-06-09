@@ -115,8 +115,11 @@ const Storage = {
 
     async getPlayers() {
         const { data } = await sb
-            .from('players').select('name').order('id');
-        return (data || []).map(p => p.name);
+            .from('players').select('name, group_tipping_enabled').order('id');
+        return (data || []).map(p => ({
+            name: p.name,
+            groupTippingEnabled: !!p.group_tipping_enabled
+        }));
     },
 
     async load(player) {
@@ -199,7 +202,7 @@ const Storage = {
 
     async loadAll() {
         const players = await this.getPlayers();
-        const entries = await Promise.all(players.map(async p => [p, await this.load(p)]));
+        const entries = await Promise.all(players.map(async p => [p.name, await this.load(p.name)]));
         const all = {};
         entries.forEach(([name, data]) => { all[name] = data; });
         return all;
@@ -297,7 +300,13 @@ let currentTab = 'matches';
 let matchSort = 'date';
 
 // Shared data cache refreshed on each render cycle
-let _cache = { results: {}, medals: { gold: null, silver: null, bronze: null }, allData: {}, players: [] };
+let _cache = {
+    results: {},
+    medals: { gold: null, silver: null, bronze: null },
+    allData: {},
+    players: [],
+    groupTippers: []
+};
 
 // Loading spinner with reference counter so overlapping calls behave correctly
 let _loadingCount = 0;
@@ -317,16 +326,19 @@ function hideSpinner() {
 async function refreshCache() {
     showSpinner();
     try {
-        const [players, results, medals] = await Promise.all([
+        const [playerRows, results, medals] = await Promise.all([
             Storage.getPlayers(),
             Storage.getResults(),
             Storage.getMedals()
         ]);
-        _cache.players = players;
+        _cache.players = playerRows.map(p => p.name);
+        _cache.groupTippers = playerRows
+            .filter(p => p.groupTippingEnabled)
+            .map(p => p.name);
         _cache.results = results;
         _cache.medals = medals;
 
-        const entries = await Promise.all(players.map(async p => [p, await Storage.load(p)]));
+        const entries = await Promise.all(_cache.players.map(async p => [p, await Storage.load(p)]));
         _cache.allData = {};
         entries.forEach(([name, data]) => { _cache.allData[name] = data; });
     } finally {
@@ -395,7 +407,10 @@ async function selectPlayer(name) {
     });
 
     const groupsTab = document.getElementById('tabGroups');
-    if (groupsTab) groupsTab.classList.toggle('hidden', name !== 'Daniel');
+    if (groupsTab) {
+        const invited = _cache.groupTippers.includes(name);
+        groupsTab.classList.toggle('hidden', !invited);
+    }
 
     try { localStorage.setItem('wc26-player', name); } catch (_) {}
 
@@ -816,11 +831,18 @@ function getGroupFacit(groupKey) {
     return computeGroupStandings(groupKey, _cache.results);
 }
 
+function effectiveGroupTip(name, groupKey) {
+    const map = (_cache.allData[name] && _cache.allData[name].groupTips) || {};
+    const saved = map[groupKey];
+    if (saved && saved.filter(Boolean).length === 4) return saved;
+    return getGroupTeams()[groupKey] || [];
+}
+
 function buildGroupConsensus(groupKey) {
     const buckets = [{}, {}, {}, {}];
-    _cache.players.forEach(name => {
-        const tip = (_cache.allData[name] && _cache.allData[name].groupTips || {})[groupKey];
-        if (!tip || tip.filter(Boolean).length !== 4) return;
+    _cache.groupTippers.forEach(name => {
+        const tip = effectiveGroupTip(name, groupKey);
+        if (tip.length !== 4) return;
         tip.forEach((team, i) => {
             const b = buckets[i][team] || (buckets[i][team] = { team, count: 0, players: [] });
             b.count++;
@@ -835,14 +857,10 @@ function buildGroupConsensus(groupKey) {
 }
 
 function buildGroupOthersList(groupKey) {
-    return _cache.players
+    return _cache.groupTippers
         .filter(n => n !== currentPlayer)
-        .map(name => {
-            const tip = (_cache.allData[name] && _cache.allData[name].groupTips || {})[groupKey];
-            if (!tip || tip.filter(Boolean).length !== 4) return null;
-            return { name, tip };
-        })
-        .filter(Boolean);
+        .map(name => ({ name, tip: effectiveGroupTip(name, groupKey) }))
+        .filter(o => o.tip.length === 4);
 }
 
 function renderGroups(container) {
@@ -861,53 +879,42 @@ function renderGroups(container) {
         const locked = isGroupLocked(g);
         const saved = tips[g] && tips[g].filter(Boolean).length === 4 ? tips[g] : null;
         const order = saved || teams[g];
-        const hasTipped = !!saved;
 
         const facit = getGroupFacit(g);
         const facitTeams = facit ? facit.map(s => s.team) : null;
 
         let userCorrect = 0;
-        if (facitTeams && saved) {
-            saved.forEach((t, i) => { if (t === facitTeams[i]) userCorrect++; });
+        if (facitTeams) {
+            order.forEach((t, i) => { if (t === facitTeams[i]) userCorrect++; });
         }
 
-        const showRankList = !facit || hasTipped;
-
-        html += `<div class="group-block ${locked ? 'locked' : ''} ${hasTipped ? '' : 'untipped'} ${facit ? 'has-facit' : ''}" data-group="${g}">
+        html += `<div class="group-block ${locked ? 'locked' : ''} ${facit ? 'has-facit' : ''}" data-group="${g}">
             <div class="group-block-header">
                 <span class="group-block-title">Grupp ${g}</span>
                 <span class="match-lock-badge ${locked ? 'is-locked' : ''}">${locked ? 'Låst' : 'Öppen'}</span>
             </div>
-            ${hasTipped || locked ? '' : `<div class="untipped-hint">
-                <span>Inte tippad ännu &mdash; dra för att tippa</span>
-                <button type="button" class="btn-keep-order" data-group="${g}">eller behåll nuvarande ordning</button>
-            </div>`}
-            ${facit && !hasTipped ? '<div class="untipped-hint">Du tippade inte denna grupp.</div>' : ''}
-            ${facit && saved ? `<div class="facit-summary-inline">Du fick <strong>${userCorrect} av 4</strong> platser rätt</div>` : ''}`;
-
-        if (showRankList) {
-            html += `<ul class="group-rank-list" data-group="${g}"${locked ? ' data-locked="1"' : ''}>`;
-            order.forEach((team, i) => {
-                let cls = '';
-                if (facitTeams && hasTipped) {
-                    cls = team === facitTeams[i] ? ' rank-correct' : ' rank-wrong';
-                }
-                html += `<li class="group-rank-row${cls}" data-team="${team}">
-                    <span class="rank-pos">${i + 1}</span>
-                    <img class="team-flag" src="${flagUrl(team)}" alt="${team}">
-                    <span class="team-name">${team}</span>
-                    <span class="drag-handle" aria-hidden="true">≡</span>
-                </li>`;
-            });
-            html += `</ul>`;
-        }
+            ${facit ? `<div class="facit-summary-inline">Du fick <strong>${userCorrect} av 4</strong> platser rätt</div>` : ''}
+            <ul class="group-rank-list" data-group="${g}"${locked ? ' data-locked="1"' : ''}>`;
+        order.forEach((team, i) => {
+            let cls = '';
+            if (facitTeams) {
+                cls = team === facitTeams[i] ? ' rank-correct' : ' rank-wrong';
+            }
+            html += `<li class="group-rank-row${cls}" data-team="${team}">
+                <span class="rank-pos">${i + 1}</span>
+                <img class="team-flag" src="${flagUrl(team)}" alt="${team}">
+                <span class="team-name">${team}</span>
+                <span class="drag-handle" aria-hidden="true">≡</span>
+            </li>`;
+        });
+        html += `</ul>`;
 
         if (facit) {
             html += `<div class="group-facit">
                 <div class="group-facit-header">Facit</div>
                 <ol class="group-facit-list">`;
             facit.forEach((s, i) => {
-                const isUserPick = saved && saved[i] === s.team;
+                const isUserPick = order[i] === s.team;
                 html += `<li class="group-facit-row ${isUserPick ? 'pick-correct' : 'pick-wrong'}">
                     <span class="rank-pos">${i + 1}</span>
                     <img class="team-flag" src="${flagUrl(s.team)}" alt="${s.team}">
@@ -998,16 +1005,6 @@ function renderGroups(container) {
         });
     });
 
-    container.querySelectorAll('.btn-keep-order').forEach(btn => {
-        btn.addEventListener('click', async () => {
-            const g = btn.dataset.group;
-            const ul = container.querySelector(`.group-rank-list[data-group="${g}"]`);
-            if (!ul || ul.dataset.locked) return;
-            btn.disabled = true;
-            await saveGroupOrder(ul, { flash: true });
-        });
-    });
-
     container.querySelectorAll('.others-toggle').forEach(toggle => {
         toggle.addEventListener('click', () => {
             const body = toggle.nextElementSibling;
@@ -1018,25 +1015,14 @@ function renderGroups(container) {
     });
 }
 
-async function saveGroupOrder(ul, opts) {
+async function saveGroupOrder(ul) {
     const groupKey = ul.dataset.group;
     if (isGroupLocked(groupKey)) return;
+    if (!_cache.groupTippers.includes(currentPlayer)) return;
     const ranking = [...ul.querySelectorAll('.group-rank-row')].map(li => li.dataset.team);
     if (ranking.length !== 4) return;
 
     ul.querySelectorAll('.rank-pos').forEach((el, i) => { el.textContent = i + 1; });
-
-    const block = ul.closest('.group-block');
-    if (block) {
-        block.classList.remove('untipped');
-        const hint = block.querySelector('.untipped-hint');
-        if (hint) hint.remove();
-    }
-
-    if (opts && opts.flash) {
-        ul.classList.add('flash-saved');
-        setTimeout(() => ul.classList.remove('flash-saved'), 700);
-    }
 
     const d = _cache.allData[currentPlayer]
         || (_cache.allData[currentPlayer] = { medals: {}, matches: {}, groupTips: {} });
