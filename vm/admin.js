@@ -256,18 +256,33 @@ async function renamePlayer(oldName, newName) {
         .from('players').select('id').eq('name', oldName).maybeSingle();
     if (!player) return false;
 
-    await sb.from('players').update({ name: newName }).eq('id', player.id);
+    const { error } = await sb.from('players').update({ name: newName }).eq('id', player.id);
+    if (error) {
+        alert('Kunde inte byta namn: ' + error.message);
+        return false;
+    }
     return true;
 }
 
 async function setGroupTippingEnabled(name, enabled) {
     const { data: player } = await sb
         .from('players').select('id').eq('name', name).maybeSingle();
-    if (!player) return;
-    await sb.from('players').update({ group_tipping_enabled: enabled }).eq('id', player.id);
-    if (!enabled) {
-        await sb.from('group_tips').delete().eq('player_id', player.id);
+    if (!player) return false;
+    const { error } = await sb.from('players')
+        .update({ group_tipping_enabled: enabled })
+        .eq('id', player.id);
+    if (error) {
+        alert('Kunde inte uppdatera gruppspelsstatus: ' + error.message);
+        return false;
     }
+    if (!enabled) {
+        const { error: delErr } = await sb.from('group_tips').delete().eq('player_id', player.id);
+        if (delErr) {
+            alert('Status ändrad men kunde inte radera gamla tips: ' + delErr.message);
+            return false;
+        }
+    }
+    return true;
 }
 
 async function renderPlayers(container) {
@@ -370,7 +385,8 @@ async function renderPlayers(container) {
             }
             chk.disabled = true;
             try {
-                await setGroupTippingEnabled(name, enabled);
+                const ok = await setGroupTippingEnabled(name, enabled);
+                if (!ok) chk.checked = !enabled;
             } finally {
                 chk.disabled = false;
             }
