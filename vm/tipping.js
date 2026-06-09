@@ -737,6 +737,85 @@ function renderMatches(container) {
 
 // ── Groups tab ──
 
+// Compute standings for a group from a results-like map: { matchId: {home, away} }.
+// Applies FIFA tiebreakers: points → goal difference → goals scored → head-to-head
+// (mini-league between tied teams using the same cascade) → alphabetical fallback.
+function computeGroupStandings(groupKey, matchData) {
+    const teams = getGroupTeams()[groupKey] || [];
+    const groupMatches = schedule.filter(m => m.group === groupKey);
+
+    function statsFor(teamSet, matches) {
+        const stats = {};
+        teamSet.forEach(t => {
+            stats[t] = { team: t, played: 0, w: 0, d: 0, l: 0, gf: 0, ga: 0, gd: 0, points: 0 };
+        });
+        matches.forEach(m => {
+            if (!teamSet.has(m.home) || !teamSet.has(m.away)) return;
+            const r = matchData[m.id];
+            if (!r || r.home == null || r.away == null) return;
+            const h = stats[m.home], a = stats[m.away];
+            h.played++; a.played++;
+            h.gf += r.home; h.ga += r.away;
+            a.gf += r.away; a.ga += r.home;
+            if (r.home > r.away) { h.points += 3; h.w++; a.l++; }
+            else if (r.home < r.away) { a.points += 3; a.w++; h.l++; }
+            else { h.points++; a.points++; h.d++; a.d++; }
+        });
+        Object.values(stats).forEach(s => { s.gd = s.gf - s.ga; });
+        return stats;
+    }
+
+    const allStats = statsFor(new Set(teams), groupMatches);
+
+    const ordered = [...teams].sort((a, b) => {
+        const sa = allStats[a], sb = allStats[b];
+        if (sb.points !== sa.points) return sb.points - sa.points;
+        if (sb.gd !== sa.gd) return sb.gd - sa.gd;
+        if (sb.gf !== sa.gf) return sb.gf - sa.gf;
+        return 0;
+    });
+
+    // Resolve ties using head-to-head among tied teams
+    const result = [];
+    let i = 0;
+    while (i < ordered.length) {
+        const tied = [ordered[i]];
+        let j = i + 1;
+        while (j < ordered.length) {
+            const sx = allStats[ordered[i]], sy = allStats[ordered[j]];
+            if (sx.points === sy.points && sx.gd === sy.gd && sx.gf === sy.gf) {
+                tied.push(ordered[j]);
+                j++;
+            } else break;
+        }
+        if (tied.length === 1) {
+            result.push(allStats[tied[0]]);
+        } else {
+            const tiedSet = new Set(tied);
+            const h2h = statsFor(tiedSet, groupMatches);
+            tied.sort((x, y) => {
+                const hx = h2h[x], hy = h2h[y];
+                if (hy.points !== hx.points) return hy.points - hx.points;
+                if (hy.gd !== hx.gd) return hy.gd - hx.gd;
+                if (hy.gf !== hx.gf) return hy.gf - hx.gf;
+                return x.localeCompare(y, 'sv');
+            });
+            tied.forEach(t => result.push(allStats[t]));
+        }
+        i = j;
+    }
+
+    return result;
+}
+
+function getGroupFacit(groupKey) {
+    const groupMatches = schedule.filter(m => m.group === groupKey);
+    if (groupMatches.length === 0) return null;
+    const allDone = groupMatches.every(m => _cache.results[m.id]);
+    if (!allDone) return null;
+    return computeGroupStandings(groupKey, _cache.results);
+}
+
 function buildGroupConsensus(groupKey) {
     const buckets = [{}, {}, {}, {}];
     _cache.players.forEach(name => {
@@ -784,22 +863,63 @@ function renderGroups(container) {
         const order = saved || teams[g];
         const hasTipped = !!saved;
 
-        html += `<div class="group-block ${locked ? 'locked' : ''} ${hasTipped ? '' : 'untipped'}" data-group="${g}">
+        const facit = getGroupFacit(g);
+        const facitTeams = facit ? facit.map(s => s.team) : null;
+
+        let userCorrect = 0;
+        if (facitTeams && saved) {
+            saved.forEach((t, i) => { if (t === facitTeams[i]) userCorrect++; });
+        }
+
+        const showRankList = !facit || hasTipped;
+
+        html += `<div class="group-block ${locked ? 'locked' : ''} ${hasTipped ? '' : 'untipped'} ${facit ? 'has-facit' : ''}" data-group="${g}">
             <div class="group-block-header">
                 <span class="group-block-title">Grupp ${g}</span>
                 <span class="match-lock-badge ${locked ? 'is-locked' : ''}">${locked ? 'Låst' : 'Öppen'}</span>
             </div>
-            ${hasTipped || locked ? '' : '<div class="untipped-hint">Inte tippad ännu &mdash; dra för att tippa</div>'}
-            <ul class="group-rank-list" data-group="${g}"${locked ? ' data-locked="1"' : ''}>`;
-        order.forEach((team, i) => {
-            html += `<li class="group-rank-row" data-team="${team}">
-                <span class="rank-pos">${i + 1}</span>
-                <img class="team-flag" src="${flagUrl(team)}" alt="${team}">
-                <span class="team-name">${team}</span>
-                <span class="drag-handle" aria-hidden="true">≡</span>
-            </li>`;
-        });
-        html += `</ul>`;
+            ${hasTipped || locked ? '' : `<div class="untipped-hint">
+                <span>Inte tippad ännu &mdash; dra för att tippa</span>
+                <button type="button" class="btn-keep-order" data-group="${g}">eller behåll nuvarande ordning</button>
+            </div>`}
+            ${facit && !hasTipped ? '<div class="untipped-hint">Du tippade inte denna grupp.</div>' : ''}
+            ${facit && saved ? `<div class="facit-summary-inline">Du fick <strong>${userCorrect} av 4</strong> platser rätt</div>` : ''}`;
+
+        if (showRankList) {
+            html += `<ul class="group-rank-list" data-group="${g}"${locked ? ' data-locked="1"' : ''}>`;
+            order.forEach((team, i) => {
+                let cls = '';
+                if (facitTeams && hasTipped) {
+                    cls = team === facitTeams[i] ? ' rank-correct' : ' rank-wrong';
+                }
+                html += `<li class="group-rank-row${cls}" data-team="${team}">
+                    <span class="rank-pos">${i + 1}</span>
+                    <img class="team-flag" src="${flagUrl(team)}" alt="${team}">
+                    <span class="team-name">${team}</span>
+                    <span class="drag-handle" aria-hidden="true">≡</span>
+                </li>`;
+            });
+            html += `</ul>`;
+        }
+
+        if (facit) {
+            html += `<div class="group-facit">
+                <div class="group-facit-header">Facit</div>
+                <ol class="group-facit-list">`;
+            facit.forEach((s, i) => {
+                const isUserPick = saved && saved[i] === s.team;
+                html += `<li class="group-facit-row ${isUserPick ? 'pick-correct' : 'pick-wrong'}">
+                    <span class="rank-pos">${i + 1}</span>
+                    <img class="team-flag" src="${flagUrl(s.team)}" alt="${s.team}">
+                    <span class="team-name">${s.team}</span>
+                    <span class="facit-stats">
+                        <span class="facit-stat-pts">${s.points}p</span>
+                        <span class="facit-stat-gd">${s.gd > 0 ? '+' : ''}${s.gd}</span>
+                    </span>
+                </li>`;
+            });
+            html += `</ol></div>`;
+        }
 
         if (locked) {
             const others = buildGroupOthersList(g);
@@ -814,16 +934,19 @@ function renderGroups(container) {
                     html += `<div class="group-consensus">`;
                     consensus.forEach(row => {
                         if (row.total === 0) return;
+                        const correctTeam = facitTeams ? facitTeams[row.rank - 1] : null;
                         html += `<div class="consensus-row">
                             <span class="consensus-rank">${row.rank}:a</span>
                             <div class="consensus-bar">`;
                         row.votes.forEach(v => {
                             const playersAttr = v.players.join(', ');
-                            html += `<div class="consensus-seg" style="flex-grow:${v.count}"
+                            const isCorrect = correctTeam && v.team === correctTeam;
+                            html += `<div class="consensus-seg${isCorrect ? ' seg-correct' : ''}" style="flex-grow:${v.count}"
                                          title="${playersAttr}"
                                          data-team="${v.team}">
                                 <img class="team-flag-tiny" src="${flagUrl(v.team)}" alt="${v.team}">
                                 <span class="consensus-count">${v.count}</span>
+                                ${isCorrect ? '<span class="consensus-check" aria-hidden="true">✓</span>' : ''}
                             </div>`;
                         });
                         html += `</div></div>`;
@@ -834,11 +957,18 @@ function renderGroups(container) {
                 if (others.length > 0) {
                     html += `<div class="group-others-list">`;
                     others.forEach(({ name, tip }) => {
-                        const teamsHtml = tip.map(t =>
-                            `<span class="mini-team"><img class="team-flag-tiny" src="${flagUrl(t)}" alt="${t}">${t}</span>`
-                        ).join('<span class="mini-sep">·</span>');
+                        let othersCorrect = 0;
+                        const teamsHtml = tip.map((t, i) => {
+                            let teamCls = '';
+                            if (facitTeams) {
+                                if (t === facitTeams[i]) { teamCls = ' mini-correct'; othersCorrect++; }
+                                else { teamCls = ' mini-wrong'; }
+                            }
+                            return `<span class="mini-team${teamCls}"><img class="team-flag-tiny" src="${flagUrl(t)}" alt="${t}">${t}</span>`;
+                        }).join('<span class="mini-sep">·</span>');
+                        const scoreSpan = facitTeams ? ` <span class="mini-score">(${othersCorrect}/4)</span>` : '';
                         html += `<div class="others-medal-player">
-                            ${playerAvatar(name, 'avatar-sm')}<strong>${name}:</strong>
+                            ${playerAvatar(name, 'avatar-sm')}<strong>${name}:</strong>${scoreSpan}
                             <span class="mini-team-row">${teamsHtml}</span>
                         </div>`;
                     });
@@ -868,6 +998,16 @@ function renderGroups(container) {
         });
     });
 
+    container.querySelectorAll('.btn-keep-order').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const g = btn.dataset.group;
+            const ul = container.querySelector(`.group-rank-list[data-group="${g}"]`);
+            if (!ul || ul.dataset.locked) return;
+            btn.disabled = true;
+            await saveGroupOrder(ul, { flash: true });
+        });
+    });
+
     container.querySelectorAll('.others-toggle').forEach(toggle => {
         toggle.addEventListener('click', () => {
             const body = toggle.nextElementSibling;
@@ -878,7 +1018,7 @@ function renderGroups(container) {
     });
 }
 
-async function saveGroupOrder(ul) {
+async function saveGroupOrder(ul, opts) {
     const groupKey = ul.dataset.group;
     if (isGroupLocked(groupKey)) return;
     const ranking = [...ul.querySelectorAll('.group-rank-row')].map(li => li.dataset.team);
@@ -891,6 +1031,11 @@ async function saveGroupOrder(ul) {
         block.classList.remove('untipped');
         const hint = block.querySelector('.untipped-hint');
         if (hint) hint.remove();
+    }
+
+    if (opts && opts.flash) {
+        ul.classList.add('flash-saved');
+        setTimeout(() => ul.classList.remove('flash-saved'), 700);
     }
 
     const d = _cache.allData[currentPlayer]
