@@ -1084,3 +1084,232 @@ body {
         font-size: 15px;
     }
 }
+
+/* ── Groups tab ── */
+
+.group-tip-section h2 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.group-lock-info {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 18px;
+}
+
+.group-block {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 14px;
+}
+
+.group-block-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.group-block-title {
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.untipped-hint {
+    font-size: 12px;
+    color: #999;
+    font-style: italic;
+    margin-bottom: 8px;
+}
+
+.group-rank-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.group-rank-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    margin: 6px 0;
+    background: #fafafa;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+}
+
+.group-rank-row:active {
+    cursor: grabbing;
+}
+
+.group-rank-row .rank-pos {
+    font-weight: 700;
+    width: 18px;
+    color: #1a1a1a;
+    text-align: center;
+}
+
+.group-rank-row .team-flag {
+    width: 28px;
+    height: 20px;
+    object-fit: cover;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.group-rank-row .team-name {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.group-rank-row .drag-handle {
+    color: #bbb;
+    font-size: 20px;
+    line-height: 1;
+    margin-left: auto;
+    padding: 0 4px;
+}
+
+.group-rank-ghost {
+    opacity: 0.4;
+    background: #eef3ff;
+}
+
+.group-rank-chosen {
+    background: #f0f4ff;
+    border-color: #c7d4ff;
+}
+
+.group-rank-dragging {
+    opacity: 0.95;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+}
+
+.group-block.untipped .group-rank-row .rank-pos {
+    color: #bbb;
+}
+
+.group-block.locked .group-rank-row {
+    cursor: default;
+    background: #f4f4f4;
+    color: #555;
+}
+
+.group-block.locked .group-rank-row .drag-handle {
+    display: none;
+}
+
+/* Consensus bars (B) */
+.group-others .group-others-body {
+    padding-top: 10px;
+}
+
+.group-consensus {
+    margin-bottom: 12px;
+}
+
+.consensus-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.consensus-rank {
+    width: 32px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #666;
+    flex-shrink: 0;
+}
+
+.consensus-bar {
+    display: flex;
+    flex: 1;
+    height: 28px;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #f0f0f0;
+}
+
+.consensus-seg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    background: linear-gradient(180deg, #4a90e2, #357ab8);
+    border-right: 1px solid rgba(255, 255, 255, 0.4);
+    min-width: 0;
+    overflow: hidden;
+    padding: 0 4px;
+}
+
+.consensus-seg:last-child {
+    border-right: none;
+}
+
+.consensus-seg .team-flag-tiny {
+    width: 16px;
+    height: 12px;
+    object-fit: cover;
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.consensus-count {
+    font-variant-numeric: tabular-nums;
+}
+
+/* Per-player list (A) */
+.group-others-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.group-others-list .others-medal-player {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+}
+
+.mini-team-row {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+}
+
+.mini-team {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.mini-team .team-flag-tiny {
+    width: 14px;
+    height: 10px;
+    object-fit: cover;
+    border-radius: 2px;
+}
+
+.mini-sep {
+    color: #bbb;
+    margin: 0 2px;
+}

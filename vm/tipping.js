@@ -121,11 +121,12 @@ const Storage = {
 
     async load(player) {
         const pid = await this._getPlayerId(player);
-        if (!pid) return { medals: {}, matches: {} };
+        if (!pid) return { medals: {}, matches: {}, groupTips: {} };
 
-        const [{ data: tips }, { data: medalRow }] = await Promise.all([
+        const [{ data: tips }, { data: medalRow }, { data: groupRows }] = await Promise.all([
             sb.from('match_tips').select('match_id, home_score, away_score').eq('player_id', pid),
-            sb.from('medal_tips').select('gold, silver, bronze').eq('player_id', pid).maybeSingle()
+            sb.from('medal_tips').select('gold, silver, bronze').eq('player_id', pid).maybeSingle(),
+            sb.from('group_tips').select('group_key, rank_1, rank_2, rank_3, rank_4').eq('player_id', pid)
         ]);
 
         const matches = {};
@@ -133,9 +134,15 @@ const Storage = {
             matches[t.match_id] = { home: t.home_score, away: t.away_score };
         });
 
+        const groupTips = {};
+        (groupRows || []).forEach(r => {
+            groupTips[r.group_key] = [r.rank_1, r.rank_2, r.rank_3, r.rank_4];
+        });
+
         return {
             medals: medalRow ? { gold: medalRow.gold, silver: medalRow.silver, bronze: medalRow.bronze } : {},
-            matches
+            matches,
+            groupTips
         };
     },
 
@@ -159,6 +166,20 @@ const Storage = {
         } else {
             await sb.from('medal_tips').insert(row);
         }
+    },
+
+    async saveGroupTip(player, groupKey, ranking) {
+        const pid = await this._getPlayerId(player);
+        if (!pid) return;
+        await sb.from('group_tips').upsert({
+            player_id: pid,
+            group_key: groupKey,
+            rank_1: ranking[0] || null,
+            rank_2: ranking[1] || null,
+            rank_3: ranking[2] || null,
+            rank_4: ranking[3] || null,
+            updated_at: new Date().toISOString()
+        }, { onConflict: 'player_id,group_key' });
     },
 
     async getResults() {
@@ -206,6 +227,28 @@ function isMatchLocked(match) {
 
 function isTournamentStarted() {
     return new Date() >= TOURNAMENT_START;
+}
+
+function isGroupLocked(groupKey) {
+    const first = schedule
+        .filter(m => m.group === groupKey)
+        .map(m => parseMatchDateTime(m.date, m.time))
+        .sort((a, b) => a - b)[0];
+    return first ? new Date() >= first : false;
+}
+
+function getGroupTeams() {
+    const groups = {};
+    schedule.forEach(m => {
+        if (!groups[m.group]) groups[m.group] = new Set();
+        groups[m.group].add(m.home);
+        groups[m.group].add(m.away);
+    });
+    const result = {};
+    Object.keys(groups).sort().forEach(k => {
+        result[k] = [...groups[k]].sort((a, b) => a.localeCompare(b, 'sv'));
+    });
+    return result;
 }
 
 function formatDateShort(dateStr) {
@@ -351,6 +394,9 @@ async function selectPlayer(name) {
         b.classList.toggle('active', b.dataset.tab === 'matches');
     });
 
+    const groupsTab = document.getElementById('tabGroups');
+    if (groupsTab) groupsTab.classList.toggle('hidden', name !== 'Daniel');
+
     try { localStorage.setItem('wc26-player', name); } catch (_) {}
 
     document.getElementById('playerSelect').classList.add('hidden');
@@ -394,6 +440,7 @@ function renderContent() {
     switch (currentTab) {
         case 'medals': renderMedals(main); break;
         case 'matches': renderMatches(main); break;
+        case 'groups': renderGroups(main); break;
         case 'leaderboard': renderLeaderboard(main); break;
     }
 }
@@ -686,6 +733,173 @@ function renderMatches(container) {
             arrow.textContent = row.classList.contains('hidden') ? '▸' : '▾';
         });
     });
+}
+
+// ── Groups tab ──
+
+function buildGroupConsensus(groupKey) {
+    const buckets = [{}, {}, {}, {}];
+    _cache.players.forEach(name => {
+        const tip = (_cache.allData[name] && _cache.allData[name].groupTips || {})[groupKey];
+        if (!tip || tip.filter(Boolean).length !== 4) return;
+        tip.forEach((team, i) => {
+            const b = buckets[i][team] || (buckets[i][team] = { team, count: 0, players: [] });
+            b.count++;
+            b.players.push(name);
+        });
+    });
+    return buckets.map((b, i) => {
+        const votes = Object.values(b).sort((a, b) => b.count - a.count);
+        const total = votes.reduce((s, v) => s + v.count, 0);
+        return { rank: i + 1, total, votes };
+    });
+}
+
+function buildGroupOthersList(groupKey) {
+    return _cache.players
+        .filter(n => n !== currentPlayer)
+        .map(name => {
+            const tip = (_cache.allData[name] && _cache.allData[name].groupTips || {})[groupKey];
+            if (!tip || tip.filter(Boolean).length !== 4) return null;
+            return { name, tip };
+        })
+        .filter(Boolean);
+}
+
+function renderGroups(container) {
+    const teams = getGroupTeams();
+    const data = _cache.allData[currentPlayer] || { groupTips: {} };
+    const tips = data.groupTips || {};
+
+    let html = `<div class="group-tip-section">
+        <h2>Gruppspelstips</h2>
+        <p class="group-lock-info">
+            Drag och släpp för att placera lagen i den ordning du tror de slutar i gruppspelet.
+            Tipset låses när gruppens första match startar. Inga poäng &mdash; bara på kul!
+        </p>`;
+
+    Object.keys(teams).forEach(g => {
+        const locked = isGroupLocked(g);
+        const saved = tips[g] && tips[g].filter(Boolean).length === 4 ? tips[g] : null;
+        const order = saved || teams[g];
+        const hasTipped = !!saved;
+
+        html += `<div class="group-block ${locked ? 'locked' : ''} ${hasTipped ? '' : 'untipped'}" data-group="${g}">
+            <div class="group-block-header">
+                <span class="group-block-title">Grupp ${g}</span>
+                <span class="match-lock-badge ${locked ? 'is-locked' : ''}">${locked ? 'Låst' : 'Öppen'}</span>
+            </div>
+            ${hasTipped || locked ? '' : '<div class="untipped-hint">Inte tippad ännu &mdash; dra för att tippa</div>'}
+            <ul class="group-rank-list" data-group="${g}"${locked ? ' data-locked="1"' : ''}>`;
+        order.forEach((team, i) => {
+            html += `<li class="group-rank-row" data-team="${team}">
+                <span class="rank-pos">${i + 1}</span>
+                <img class="team-flag" src="${flagUrl(team)}" alt="${team}">
+                <span class="team-name">${team}</span>
+                <span class="drag-handle" aria-hidden="true">≡</span>
+            </li>`;
+        });
+        html += `</ul>`;
+
+        if (locked) {
+            const others = buildGroupOthersList(g);
+            const consensus = buildGroupConsensus(g);
+            const consensusHasData = consensus.some(r => r.total > 0);
+            if (others.length > 0 || consensusHasData) {
+                html += `<div class="others-tips-section group-others">
+                    <div class="others-toggle">Andra spelares tips <span class="others-arrow">▸</span></div>
+                    <div class="group-others-body hidden">`;
+
+                if (consensusHasData) {
+                    html += `<div class="group-consensus">`;
+                    consensus.forEach(row => {
+                        if (row.total === 0) return;
+                        html += `<div class="consensus-row">
+                            <span class="consensus-rank">${row.rank}:a</span>
+                            <div class="consensus-bar">`;
+                        row.votes.forEach(v => {
+                            const playersAttr = v.players.join(', ');
+                            html += `<div class="consensus-seg" style="flex-grow:${v.count}"
+                                         title="${playersAttr}"
+                                         data-team="${v.team}">
+                                <img class="team-flag-tiny" src="${flagUrl(v.team)}" alt="${v.team}">
+                                <span class="consensus-count">${v.count}</span>
+                            </div>`;
+                        });
+                        html += `</div></div>`;
+                    });
+                    html += `</div>`;
+                }
+
+                if (others.length > 0) {
+                    html += `<div class="group-others-list">`;
+                    others.forEach(({ name, tip }) => {
+                        const teamsHtml = tip.map(t =>
+                            `<span class="mini-team"><img class="team-flag-tiny" src="${flagUrl(t)}" alt="${t}">${t}</span>`
+                        ).join('<span class="mini-sep">·</span>');
+                        html += `<div class="others-medal-player">
+                            ${playerAvatar(name, 'avatar-sm')}<strong>${name}:</strong>
+                            <span class="mini-team-row">${teamsHtml}</span>
+                        </div>`;
+                    });
+                    html += `</div>`;
+                }
+
+                html += `</div></div>`;
+            }
+        }
+
+        html += `</div>`;
+    });
+
+    html += `</div>`;
+    container.innerHTML = html;
+
+    container.querySelectorAll('.group-rank-list').forEach(ul => {
+        if (ul.dataset.locked) return;
+        if (typeof Sortable === 'undefined') return;
+        new Sortable(ul, {
+            animation: 150,
+            handle: '.group-rank-row',
+            ghostClass: 'group-rank-ghost',
+            chosenClass: 'group-rank-chosen',
+            dragClass: 'group-rank-dragging',
+            onEnd: () => saveGroupOrder(ul)
+        });
+    });
+
+    container.querySelectorAll('.others-toggle').forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            const body = toggle.nextElementSibling;
+            const arrow = toggle.querySelector('.others-arrow');
+            body.classList.toggle('hidden');
+            arrow.textContent = body.classList.contains('hidden') ? '▸' : '▾';
+        });
+    });
+}
+
+async function saveGroupOrder(ul) {
+    const groupKey = ul.dataset.group;
+    if (isGroupLocked(groupKey)) return;
+    const ranking = [...ul.querySelectorAll('.group-rank-row')].map(li => li.dataset.team);
+    if (ranking.length !== 4) return;
+
+    ul.querySelectorAll('.rank-pos').forEach((el, i) => { el.textContent = i + 1; });
+
+    const block = ul.closest('.group-block');
+    if (block) {
+        block.classList.remove('untipped');
+        const hint = block.querySelector('.untipped-hint');
+        if (hint) hint.remove();
+    }
+
+    const d = _cache.allData[currentPlayer]
+        || (_cache.allData[currentPlayer] = { medals: {}, matches: {}, groupTips: {} });
+    if (!d.groupTips) d.groupTips = {};
+    d.groupTips[groupKey] = ranking;
+
+    await Storage.saveGroupTip(currentPlayer, groupKey, ranking);
+    await refreshCache();
 }
 
 // ── Leaderboard tab ──
