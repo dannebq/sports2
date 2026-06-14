@@ -298,6 +298,7 @@ function calcTotalPoints(playerData, results, medals) {
 let currentPlayer = null;
 let currentTab = 'matches';
 let matchSort = 'date';
+let hideScored = false;
 
 // Shared data cache refreshed on each render cycle
 let _cache = {
@@ -629,14 +630,23 @@ function renderMatches(container) {
     const data = _cache.allData[currentPlayer] || { medals: {}, matches: {} };
     const allResults = _cache.results;
 
-    let html = `<div class="sort-toggle">
-        <button class="sort-btn ${matchSort === 'group' ? 'active' : ''}" data-sort="group">Grupper</button>
-        <button class="sort-btn ${matchSort === 'date' ? 'active' : ''}" data-sort="date">Datum</button>
+    let html = `<div class="match-controls">
+        <div class="sort-toggle">
+            <button class="sort-btn ${matchSort === 'group' ? 'active' : ''}" data-sort="group">Grupper</button>
+            <button class="sort-btn ${matchSort === 'date' ? 'active' : ''}" data-sort="date">Datum</button>
+        </div>
+        <button class="hide-scored-btn ${hideScored ? 'active' : ''}" id="hideScoredBtn">
+            ${hideScored ? 'Visa avgjorda' : 'Dölj avgjorda'}
+        </button>
     </div>`;
+
+    const visibleSchedule = hideScored
+        ? schedule.filter(m => !allResults[m.id])
+        : schedule;
 
     if (matchSort === 'group') {
         const groups = {};
-        schedule.forEach(m => {
+        visibleSchedule.forEach(m => {
             if (!groups[m.group]) groups[m.group] = [];
             groups[m.group].push(m);
         });
@@ -650,7 +660,7 @@ function renderMatches(container) {
             html += `</div>`;
         });
     } else {
-        const sorted = [...schedule].sort((a, b) =>
+        const sorted = [...visibleSchedule].sort((a, b) =>
             parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time)
         );
         let currentDate = '';
@@ -675,6 +685,14 @@ function renderMatches(container) {
             renderMatches(container);
         });
     });
+
+    const hideBtn = container.querySelector('#hideScoredBtn');
+    if (hideBtn) {
+        hideBtn.addEventListener('click', () => {
+            hideScored = !hideScored;
+            renderMatches(container);
+        });
+    }
 
     const pendingSaves = new Map();
 

@@ -468,6 +468,37 @@ body {
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
+.match-controls {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.match-controls .sort-toggle {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.hide-scored-btn {
+    padding: 8px 12px;
+    border: 1px solid #d0d0d0;
+    background: #fff;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #444;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.15s;
+}
+
+.hide-scored-btn.active {
+    background: #1a1a1a;
+    color: #fff;
+    border-color: #1a1a1a;
+}
+
 /* Matches section */
 .group-section {
     margin-bottom: 24px;
