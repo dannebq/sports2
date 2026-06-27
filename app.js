@@ -1286,7 +1286,51 @@ const worldCupSchedule = [
     { date: "28 juni", time: "01:30", home: "DR Kongo", away: "Uzbekistan", group: "K", tv: "TV4", city: "Atlanta" },
     { date: "28 juni", time: "01:30", home: "Colombia", away: "Portugal", group: "K", tv: "TV4", city: "Miami" },
     { date: "28 juni", time: "04:00", home: "Algeriet", away: "Österrike", group: "J", tv: "TV4", city: "Kansas City" },
-    { date: "28 juni", time: "04:00", home: "Jordanien", away: "Argentina", group: "J", tv: "TV4", city: "Dallas" }
+    { date: "28 juni", time: "04:00", home: "Jordanien", away: "Argentina", group: "J", tv: "TV4", city: "Dallas" },
+
+    // Sextondelsfinaler (R32) – 28 juni – 4 juli. Tider omräknade till svensk tid (CEST = ET + 6h).
+    { date: "28 juni", time: "21:00", home: "Tvåa A", away: "Tvåa B", round: "Sextondelsfinal", matchNo: 73, tv: "TBD", city: "Los Angeles" },
+    { date: "29 juni", time: "19:00", home: "Etta C", away: "Tvåa F", round: "Sextondelsfinal", matchNo: 76, tv: "TBD", city: "Houston" },
+    { date: "29 juni", time: "22:30", home: "Etta E", away: "3:a A/B/C/D/F", round: "Sextondelsfinal", matchNo: 74, tv: "TBD", city: "Boston" },
+    { date: "30 juni", time: "03:00", home: "Etta F", away: "Tvåa C", round: "Sextondelsfinal", matchNo: 75, tv: "TBD", city: "Monterrey" },
+    { date: "30 juni", time: "19:00", home: "Tvåa E", away: "Tvåa I", round: "Sextondelsfinal", matchNo: 78, tv: "TBD", city: "Dallas" },
+    { date: "30 juni", time: "23:00", home: "Etta I", away: "3:a C/D/F/G/H", round: "Sextondelsfinal", matchNo: 77, tv: "TBD", city: "New Jersey" },
+    { date: "1 juli", time: "03:00", home: "Etta A", away: "3:a C/E/F/H/I", round: "Sextondelsfinal", matchNo: 79, tv: "TBD", city: "Mexico City" },
+    { date: "1 juli", time: "18:00", home: "Etta L", away: "3:a E/H/I/J/K", round: "Sextondelsfinal", matchNo: 80, tv: "TBD", city: "Atlanta" },
+    { date: "1 juli", time: "22:00", home: "Etta G", away: "3:a A/E/H/I/J", round: "Sextondelsfinal", matchNo: 82, tv: "TBD", city: "Seattle" },
+    { date: "2 juli", time: "02:00", home: "Etta D", away: "3:a B/E/F/I/J", round: "Sextondelsfinal", matchNo: 81, tv: "TBD", city: "San Francisco" },
+    { date: "2 juli", time: "21:00", home: "Etta H", away: "Tvåa J", round: "Sextondelsfinal", matchNo: 84, tv: "TBD", city: "Los Angeles" },
+    { date: "3 juli", time: "01:00", home: "Tvåa K", away: "Tvåa L", round: "Sextondelsfinal", matchNo: 83, tv: "TBD", city: "Toronto" },
+    { date: "3 juli", time: "05:00", home: "Etta B", away: "3:a E/F/G/I/J", round: "Sextondelsfinal", matchNo: 85, tv: "TBD", city: "Vancouver" },
+    { date: "3 juli", time: "20:00", home: "Tvåa D", away: "Tvåa G", round: "Sextondelsfinal", matchNo: 88, tv: "TBD", city: "Dallas" },
+    { date: "4 juli", time: "00:00", home: "Etta J", away: "Tvåa H", round: "Sextondelsfinal", matchNo: 86, tv: "TBD", city: "Miami" },
+    { date: "4 juli", time: "03:30", home: "Etta K", away: "3:a D/E/I/J/L", round: "Sextondelsfinal", matchNo: 87, tv: "TBD", city: "Kansas City" },
+
+    // Åttondelsfinaler (R16) – 4–7 juli
+    { date: "4 juli", time: "19:00", home: "Vinnare M73", away: "Vinnare M75", round: "Åttondelsfinal", matchNo: 90, tv: "TBD", city: "Houston" },
+    { date: "4 juli", time: "23:00", home: "Vinnare M74", away: "Vinnare M77", round: "Åttondelsfinal", matchNo: 89, tv: "TBD", city: "Philadelphia" },
+    { date: "5 juli", time: "22:00", home: "Vinnare M76", away: "Vinnare M78", round: "Åttondelsfinal", matchNo: 91, tv: "TBD", city: "New Jersey" },
+    { date: "6 juli", time: "02:00", home: "Vinnare M79", away: "Vinnare M80", round: "Åttondelsfinal", matchNo: 92, tv: "TBD", city: "Mexico City" },
+    { date: "6 juli", time: "21:00", home: "Vinnare M83", away: "Vinnare M84", round: "Åttondelsfinal", matchNo: 93, tv: "TBD", city: "Dallas" },
+    { date: "7 juli", time: "02:00", home: "Vinnare M81", away: "Vinnare M82", round: "Åttondelsfinal", matchNo: 94, tv: "TBD", city: "Seattle" },
+    { date: "7 juli", time: "18:00", home: "Vinnare M86", away: "Vinnare M88", round: "Åttondelsfinal", matchNo: 95, tv: "TBD", city: "Atlanta" },
+    { date: "7 juli", time: "22:00", home: "Vinnare M85", away: "Vinnare M87", round: "Åttondelsfinal", matchNo: 96, tv: "TBD", city: "Vancouver" },
+
+    // Kvartsfinaler – 9–11 juli
+    { date: "9 juli", time: "22:00", home: "Vinnare M89", away: "Vinnare M90", round: "Kvartsfinal", matchNo: 97, tv: "TBD", city: "Boston" },
+    { date: "10 juli", time: "21:00", home: "Vinnare M93", away: "Vinnare M94", round: "Kvartsfinal", matchNo: 98, tv: "TBD", city: "Los Angeles" },
+    { date: "11 juli", time: "23:00", home: "Vinnare M91", away: "Vinnare M92", round: "Kvartsfinal", matchNo: 99, tv: "TBD", city: "Miami" },
+    { date: "12 juli", time: "03:00", home: "Vinnare M95", away: "Vinnare M96", round: "Kvartsfinal", matchNo: 100, tv: "TBD", city: "Kansas City" },
+
+    // Semifinaler – 14–15 juli
+    { date: "14 juli", time: "21:00", home: "Vinnare M97", away: "Vinnare M98", round: "Semifinal", matchNo: 101, tv: "TBD", city: "Dallas" },
+    { date: "15 juli", time: "21:00", home: "Vinnare M99", away: "Vinnare M100", round: "Semifinal", matchNo: 102, tv: "TBD", city: "Atlanta" },
+
+    // Bronsmatch – 18 juli
+    { date: "18 juli", time: "23:00", home: "Förlorare M101", away: "Förlorare M102", round: "Bronsmatch", matchNo: 103, tv: "TBD", city: "Miami" },
+
+    // Final – 19 juli
+    { date: "19 juli", time: "21:00", home: "Vinnare M101", away: "Vinnare M102", round: "Final", matchNo: 104, tv: "TBD", city: "New Jersey" }
 ];
 
 const diamondLeagueSchedule = [
@@ -1710,11 +1754,14 @@ function getAllEvents() {
     worldCupSchedule.forEach(game => {
         const date = parseDate(game.date);
         if (date) {
+            const sportLabel = game.group
+                ? `VM Fotboll (Gr. ${game.group})`
+                : `VM Fotboll (${game.round})`;
             events.push({
                 date: date,
                 dateString: formatDateSwedish(date),
-                sport: `VM Fotboll (Gr. ${game.group})`,
-                team: game.sweden ? 'Sverige' : game.group,
+                sport: sportLabel,
+                team: game.sweden ? 'Sverige' : (game.group || game.round || ''),
                 description: `${game.home} – ${game.away}`,
                 location: game.city || '-',
                 time: game.time,
@@ -2189,22 +2236,13 @@ function createWorldCupTable(schedule) {
         }
     }
 
-    const groups = {};
-    schedule.forEach(game => {
-        if (!groups[game.group]) groups[game.group] = [];
-        groups[game.group].push(game);
-    });
-
-    const sortedGroupKeys = Object.keys(groups).sort();
-
-    sortedGroupKeys.forEach(groupKey => {
-        const matches = groups[groupKey];
+    const renderMatchesTable = (matches, titleText) => {
         const section = document.createElement('div');
         section.className = 'competition-section';
 
         const title = document.createElement('div');
         title.className = 'competition-title';
-        title.textContent = `Grupp ${groupKey}`;
+        title.textContent = titleText;
 
         const table = document.createElement('table');
         table.className = 'schedule-table';
@@ -2233,13 +2271,14 @@ function createWorldCupTable(schedule) {
             else if (isSweden) rowClass = 'sweden-match';
 
             const formattedDate = matchDate ? formatDateSwedish(matchDate) : '–';
+            const matchLabel = game.matchNo ? `M${game.matchNo}: ${game.home} – ${game.away}` : `${game.home} – ${game.away}`;
 
             html += `
                 <tr${rowClass ? ` class="${rowClass}"` : ''}>
                     <td>${formattedDate}</td>
                     <td>${game.time}</td>
-                    <td>${game.home} – ${game.away}</td>
-                    <td>${game.tv}</td>
+                    <td>${matchLabel}</td>
+                    <td>${game.tv || '–'}</td>
                     <td>${game.city || '–'}</td>
                 </tr>
             `;
@@ -2251,7 +2290,48 @@ function createWorldCupTable(schedule) {
         section.appendChild(title);
         section.appendChild(table);
         container.appendChild(section);
+    };
+
+    const groupGames = schedule.filter(g => g.group);
+    const knockoutGames = schedule.filter(g => g.round);
+
+    const groups = {};
+    groupGames.forEach(game => {
+        if (!groups[game.group]) groups[game.group] = [];
+        groups[game.group].push(game);
     });
+
+    Object.keys(groups).sort().forEach(groupKey => {
+        renderMatchesTable(groups[groupKey], `Grupp ${groupKey}`);
+    });
+
+    if (knockoutGames.length) {
+        const knockoutSections = [
+            { key: 'Sextondelsfinal', title: 'Slutspel: Sextondelsfinaler' },
+            { key: 'Åttondelsfinal', title: 'Slutspel: Åttondelsfinaler' },
+            { key: 'Kvartsfinal', title: 'Slutspel: Kvartsfinaler' },
+            { key: 'Semifinal', title: 'Slutspel: Semifinaler' },
+            { key: 'Bronsmatch', title: 'Slutspel: Bronsmatch' },
+            { key: 'Final', title: 'Slutspel: Final' }
+        ];
+        const rounds = {};
+        knockoutGames.forEach(game => {
+            if (!rounds[game.round]) rounds[game.round] = [];
+            rounds[game.round].push(game);
+        });
+
+        knockoutSections.forEach(({ key, title }) => {
+            const matches = rounds[key];
+            if (!matches || !matches.length) return;
+            matches.sort((a, b) => {
+                const da = parseDate(a.date);
+                const db = parseDate(b.date);
+                if (da && db && da.getTime() !== db.getTime()) return da - db;
+                return (a.time || '').localeCompare(b.time || '');
+            });
+            renderMatchesTable(matches, title);
+        });
+    }
 
     return container;
 }
