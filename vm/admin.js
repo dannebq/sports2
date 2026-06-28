@@ -95,7 +95,25 @@ const schedule = [
     { id: 69, date: "28 juni", time: "01:30", home: "DR Kongo", away: "Uzbekistan", group: "K" },
     { id: 70, date: "28 juni", time: "01:30", home: "Colombia", away: "Portugal", group: "K" },
     { id: 71, date: "28 juni", time: "04:00", home: "Algeriet", away: "Österrike", group: "J" },
-    { id: 72, date: "28 juni", time: "04:00", home: "Jordanien", away: "Argentina", group: "J" }
+    { id: 72, date: "28 juni", time: "04:00", home: "Jordanien", away: "Argentina", group: "J" },
+
+    // Sextondelsfinaler (R32) – tider i svensk tid
+    { id: 73, date: "28 juni", time: "21:00", home: "Sydafrika", away: "Kanada", round: "Sextondelsfinal" },
+    { id: 76, date: "29 juni", time: "19:00", home: "Brasilien", away: "Japan", round: "Sextondelsfinal" },
+    { id: 74, date: "29 juni", time: "22:30", home: "Tyskland", away: "Paraguay", round: "Sextondelsfinal" },
+    { id: 75, date: "30 juni", time: "03:00", home: "Nederländerna", away: "Marocko", round: "Sextondelsfinal" },
+    { id: 78, date: "30 juni", time: "19:00", home: "Elfenbenskusten", away: "Norge", round: "Sextondelsfinal" },
+    { id: 77, date: "30 juni", time: "23:00", home: "Frankrike", away: "Sverige", round: "Sextondelsfinal" },
+    { id: 79, date: "1 juli", time: "03:00", home: "Mexiko", away: "Ecuador", round: "Sextondelsfinal" },
+    { id: 80, date: "1 juli", time: "18:00", home: "England", away: "DR Kongo", round: "Sextondelsfinal" },
+    { id: 82, date: "1 juli", time: "22:00", home: "Belgien", away: "Senegal", round: "Sextondelsfinal" },
+    { id: 81, date: "2 juli", time: "02:00", home: "USA", away: "Bosnien & Hercegovina", round: "Sextondelsfinal" },
+    { id: 84, date: "2 juli", time: "21:00", home: "Spanien", away: "Österrike", round: "Sextondelsfinal" },
+    { id: 83, date: "3 juli", time: "01:00", home: "Portugal", away: "Kroatien", round: "Sextondelsfinal" },
+    { id: 85, date: "3 juli", time: "05:00", home: "Schweiz", away: "Algeriet", round: "Sextondelsfinal" },
+    { id: 88, date: "3 juli", time: "20:00", home: "Australien", away: "Egypten", round: "Sextondelsfinal" },
+    { id: 86, date: "4 juli", time: "00:00", home: "Argentina", away: "Kap Verde", round: "Sextondelsfinal" },
+    { id: 87, date: "4 juli", time: "03:30", home: "Colombia", away: "Ghana", round: "Sextondelsfinal" }
 ];
 
 function flagUrl(teamName) {
@@ -138,7 +156,14 @@ async function loadSavedData() {
     const { data: results } = await sb.from('match_results').select('*');
     pendingResults = {};
     (results || []).forEach(r => {
-        pendingResults[r.match_id] = { home: r.home_score, away: r.away_score };
+        pendingResults[r.match_id] = {
+            home: r.home_score,
+            away: r.away_score,
+            homeEt: r.home_score_et,
+            awayEt: r.away_score_et,
+            homePens: r.home_score_pens,
+            awayPens: r.away_score_pens
+        };
     });
 
     const { data: medals } = await sb
@@ -152,14 +177,36 @@ async function saveResults() {
 
     for (const [id, r] of Object.entries(pendingResults)) {
         if (r.home != null && r.away != null) {
-            toUpsert.push({ match_id: parseInt(id), home_score: r.home, away_score: r.away });
+            const row = {
+                match_id: parseInt(id),
+                home_score: r.home,
+                away_score: r.away,
+                home_score_et: null,
+                away_score_et: null,
+                home_score_pens: null,
+                away_score_pens: null
+            };
+            // Endast ifyllt om 90 min är oavgjort (annars meningslöst)
+            if (r.home === r.away && r.homeEt != null && r.awayEt != null) {
+                row.home_score_et = r.homeEt;
+                row.away_score_et = r.awayEt;
+                if (r.homeEt === r.awayEt && r.homePens != null && r.awayPens != null) {
+                    row.home_score_pens = r.homePens;
+                    row.away_score_pens = r.awayPens;
+                }
+            }
+            toUpsert.push(row);
         } else {
             toDelete.push(parseInt(id));
         }
     }
 
     if (toUpsert.length > 0) {
-        await sb.from('match_results').upsert(toUpsert, { onConflict: 'match_id' });
+        const { error } = await sb.from('match_results').upsert(toUpsert, { onConflict: 'match_id' });
+        if (error) {
+            alert('Kunde inte spara resultat: ' + error.message);
+            throw error;
+        }
     }
     if (toDelete.length > 0) {
         await sb.from('match_results').delete().in('match_id', toDelete);
@@ -167,7 +214,14 @@ async function saveResults() {
 
     pendingResults = {};
     toUpsert.forEach(r => {
-        pendingResults[r.match_id] = { home: r.home_score, away: r.away_score };
+        pendingResults[r.match_id] = {
+            home: r.home_score,
+            away: r.away_score,
+            homeEt: r.home_score_et,
+            awayEt: r.away_score_et,
+            homePens: r.home_score_pens,
+            awayPens: r.away_score_pens
+        };
     });
 }
 
@@ -405,9 +459,22 @@ function renderResultCard(match) {
     const result = pendingResults[match.id];
     const hasResult = result && result.home != null && result.away != null;
     const isLocked = hasResult && !unlockedMatches.has(match.id);
+    const isKnockout = !!match.round;
+    const stageLabel = match.group ? `Gr. ${match.group}` : (match.round || '');
 
-    return `<div class="result-card ${hasResult ? 'has-result' : ''} ${isLocked ? 'is-locked' : ''}">
-        <div class="result-meta">${match.date} ${match.time}${matchSort === 'date' ? ` — Gr. ${match.group}` : ''}</div>
+    // Visa förlängningsrad om 90 min är oavgjort
+    const showEt = isKnockout && hasResult && result.home === result.away;
+    const etHome = result && result.homeEt != null ? result.homeEt : '';
+    const etAway = result && result.awayEt != null ? result.awayEt : '';
+    const hasEtValues = etHome !== '' && etAway !== '';
+
+    // Visa straffrad om förlängningen är oavgjord (eller saknas men 90 min var lika)
+    const showPens = showEt && hasEtValues && parseInt(etHome) === parseInt(etAway);
+    const pensHome = result && result.homePens != null ? result.homePens : '';
+    const pensAway = result && result.awayPens != null ? result.awayPens : '';
+
+    return `<div class="result-card ${hasResult ? 'has-result' : ''} ${isLocked ? 'is-locked' : ''} ${isKnockout ? 'is-knockout' : ''}">
+        <div class="result-meta">${match.date} ${match.time}${matchSort === 'date' && stageLabel ? ` — ${stageLabel}` : ''}</div>
         <div class="result-row">
             <div class="result-team home">
                 <span class="team-name">${match.home}</span>
@@ -430,6 +497,36 @@ function renderResultCard(match) {
             </div>
             ${isLocked ? `<button class="btn-unlock" data-match="${match.id}" title="Lås upp för att ändra">Ändra</button>` : ''}
         </div>
+        ${showEt ? `
+        <div class="result-extra-row">
+            <span class="result-extra-label">Efter förlängning</span>
+            <div class="result-inputs">
+                <input type="number" class="result-input result-input-et" min="0" max="20"
+                    data-match="${match.id}" data-side="homeEt"
+                    value="${etHome}"
+                    ${isLocked ? 'disabled' : ''}>
+                <span class="result-separator">–</span>
+                <input type="number" class="result-input result-input-et" min="0" max="20"
+                    data-match="${match.id}" data-side="awayEt"
+                    value="${etAway}"
+                    ${isLocked ? 'disabled' : ''}>
+            </div>
+        </div>` : ''}
+        ${showPens ? `
+        <div class="result-extra-row">
+            <span class="result-extra-label">Efter straffar</span>
+            <div class="result-inputs">
+                <input type="number" class="result-input result-input-pens" min="0" max="30"
+                    data-match="${match.id}" data-side="homePens"
+                    value="${pensHome}"
+                    ${isLocked ? 'disabled' : ''}>
+                <span class="result-separator">–</span>
+                <input type="number" class="result-input result-input-pens" min="0" max="30"
+                    data-match="${match.id}" data-side="awayPens"
+                    value="${pensAway}"
+                    ${isLocked ? 'disabled' : ''}>
+            </div>
+        </div>` : ''}
     </div>`;
 }
 
@@ -440,8 +537,11 @@ function renderResults(container) {
     </div>`;
 
     if (matchSort === 'group') {
+        const groupGames = schedule.filter(m => m.group);
+        const knockoutGames = schedule.filter(m => m.round);
+
         const groups = {};
-        schedule.forEach(m => {
+        groupGames.forEach(m => {
             if (!groups[m.group]) groups[m.group] = [];
             groups[m.group].push(m);
         });
@@ -451,6 +551,30 @@ function renderResults(container) {
             groups[groupKey].forEach(match => { html += renderResultCard(match); });
             html += `</div>`;
         });
+
+        if (knockoutGames.length) {
+            const knockoutSections = [
+                { key: 'Sextondelsfinal', title: 'Sextondelsfinaler' },
+                { key: 'Åttondelsfinal', title: 'Åttondelsfinaler' },
+                { key: 'Kvartsfinal', title: 'Kvartsfinaler' },
+                { key: 'Semifinal', title: 'Semifinaler' },
+                { key: 'Bronsmatch', title: 'Bronsmatch' },
+                { key: 'Final', title: 'Final' }
+            ];
+            const rounds = {};
+            knockoutGames.forEach(m => {
+                if (!rounds[m.round]) rounds[m.round] = [];
+                rounds[m.round].push(m);
+            });
+            knockoutSections.forEach(({ key, title }) => {
+                const matches = rounds[key];
+                if (!matches || !matches.length) return;
+                matches.sort((a, b) => parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time));
+                html += `<div class="group-section"><div class="group-header">${title}</div>`;
+                matches.forEach(match => { html += renderResultCard(match); });
+                html += `</div>`;
+            });
+        }
     } else {
         const sorted = [...schedule].sort((a, b) =>
             parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time)
@@ -482,7 +606,24 @@ function renderResults(container) {
             const matchId = input.dataset.match;
             if (!pendingResults[matchId]) pendingResults[matchId] = {};
             const val = input.value === '' ? null : parseInt(input.value);
-            pendingResults[matchId][input.dataset.side] = val;
+            const side = input.dataset.side;
+            pendingResults[matchId][side] = val;
+
+            // Re-render om vi ändrat 90-min eller ET för en slutspelsmatch
+            // så ET/straff-rader kan dyka upp eller försvinna progressivt.
+            const match = schedule.find(m => m.id === parseInt(matchId));
+            if (match && match.round && (side === 'home' || side === 'away' || side === 'homeEt' || side === 'awayEt')) {
+                // Behåll fokus-position via setTimeout för att låta input-värdet sätta sig först
+                renderResults(container);
+                const focusInput = container.querySelector(
+                    `.result-input[data-match="${matchId}"][data-side="${side}"]`
+                );
+                if (focusInput) {
+                    focusInput.focus();
+                    const len = focusInput.value.length;
+                    try { focusInput.setSelectionRange(len, len); } catch (e) {}
+                }
+            }
         });
     });
 

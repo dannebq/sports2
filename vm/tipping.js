@@ -97,7 +97,25 @@ const schedule = [
     { id: 69, date: "28 juni", time: "01:30", home: "DR Kongo", away: "Uzbekistan", group: "K" },
     { id: 70, date: "28 juni", time: "01:30", home: "Colombia", away: "Portugal", group: "K" },
     { id: 71, date: "28 juni", time: "04:00", home: "Algeriet", away: "Österrike", group: "J" },
-    { id: 72, date: "28 juni", time: "04:00", home: "Jordanien", away: "Argentina", group: "J" }
+    { id: 72, date: "28 juni", time: "04:00", home: "Jordanien", away: "Argentina", group: "J" },
+
+    // Sextondelsfinaler (R32) – tider i svensk tid
+    { id: 73, date: "28 juni", time: "21:00", home: "Sydafrika", away: "Kanada", round: "Sextondelsfinal" },
+    { id: 76, date: "29 juni", time: "19:00", home: "Brasilien", away: "Japan", round: "Sextondelsfinal" },
+    { id: 74, date: "29 juni", time: "22:30", home: "Tyskland", away: "Paraguay", round: "Sextondelsfinal" },
+    { id: 75, date: "30 juni", time: "03:00", home: "Nederländerna", away: "Marocko", round: "Sextondelsfinal" },
+    { id: 78, date: "30 juni", time: "19:00", home: "Elfenbenskusten", away: "Norge", round: "Sextondelsfinal" },
+    { id: 77, date: "30 juni", time: "23:00", home: "Frankrike", away: "Sverige", round: "Sextondelsfinal" },
+    { id: 79, date: "1 juli", time: "03:00", home: "Mexiko", away: "Ecuador", round: "Sextondelsfinal" },
+    { id: 80, date: "1 juli", time: "18:00", home: "England", away: "DR Kongo", round: "Sextondelsfinal" },
+    { id: 82, date: "1 juli", time: "22:00", home: "Belgien", away: "Senegal", round: "Sextondelsfinal" },
+    { id: 81, date: "2 juli", time: "02:00", home: "USA", away: "Bosnien & Hercegovina", round: "Sextondelsfinal" },
+    { id: 84, date: "2 juli", time: "21:00", home: "Spanien", away: "Österrike", round: "Sextondelsfinal" },
+    { id: 83, date: "3 juli", time: "01:00", home: "Portugal", away: "Kroatien", round: "Sextondelsfinal" },
+    { id: 85, date: "3 juli", time: "05:00", home: "Schweiz", away: "Algeriet", round: "Sextondelsfinal" },
+    { id: 88, date: "3 juli", time: "20:00", home: "Australien", away: "Egypten", round: "Sextondelsfinal" },
+    { id: 86, date: "4 juli", time: "00:00", home: "Argentina", away: "Kap Verde", round: "Sextondelsfinal" },
+    { id: 87, date: "4 juli", time: "03:30", home: "Colombia", away: "Ghana", round: "Sextondelsfinal" }
 ];
 
 // ── Storage (Supabase) ──
@@ -189,7 +207,14 @@ const Storage = {
         const { data } = await sb.from('match_results').select('*');
         const results = {};
         (data || []).forEach(r => {
-            results[r.match_id] = { home: r.home_score, away: r.away_score };
+            results[r.match_id] = {
+                home: r.home_score,
+                away: r.away_score,
+                et: (r.home_score_et != null && r.away_score_et != null)
+                    ? { home: r.home_score_et, away: r.away_score_et } : null,
+                pens: (r.home_score_pens != null && r.away_score_pens != null)
+                    ? { home: r.home_score_pens, away: r.away_score_pens } : null
+            };
         });
         return results;
     },
@@ -582,15 +607,28 @@ function renderOthersTips(match, result) {
     </div>`;
 }
 
+function formatFullResult(result) {
+    if (!result || result.home == null || result.away == null) return '';
+    let s = `${result.home} – ${result.away}`;
+    if (result.et) {
+        s += `, ${result.et.home} – ${result.et.away} e. förlängning`;
+    }
+    if (result.pens) {
+        s += `, ${result.pens.home} – ${result.pens.away} e. straffar`;
+    }
+    return s;
+}
+
 function renderMatchCard(match, pred, result, locked) {
     const pts = result ? calcMatchPoints(pred.home, pred.away, result.home, result.away) : null;
     let scoreClass = '';
     if (pts === 2) scoreClass = ' inputs-exact';
     else if (pts === 1) scoreClass = ' inputs-correct';
     else if (pts === 0) scoreClass = ' inputs-wrong';
+    const stageLabel = match.group ? `Gr. ${match.group}` : (match.round || '');
     return `<div class="match-card ${locked ? 'locked' : ''}">
         <div class="match-meta">
-            <span>${formatDateShort(match.date)} ${match.time}${matchSort === 'date' ? ` — Gr. ${match.group}` : ''}</span>
+            <span>${formatDateShort(match.date)} ${match.time}${matchSort === 'date' && stageLabel ? ` — ${stageLabel}` : ''}</span>
             <span>
                 ${pts !== null ? `<span class="match-points-badge">${pts}p</span>` : ''}
                 <span class="match-lock-badge ${locked ? 'is-locked' : ''}">${locked ? 'Låst' : 'Öppen'}</span>
@@ -620,7 +658,7 @@ function renderMatchCard(match, pred, result, locked) {
             </div>
         </div>
         ${result ? `<div class="match-result-row">
-            Slutresultat: <span class="actual-result">${result.home} – ${result.away}</span>
+            Slutresultat: <span class="actual-result">${formatFullResult(result)}</span>
         </div>` : ''}
         ${renderOthersTips(match, result)}
     </div>`;
@@ -645,8 +683,11 @@ function renderMatches(container) {
         : schedule;
 
     if (matchSort === 'group') {
+        const groupGames = visibleSchedule.filter(m => m.group);
+        const knockoutGames = visibleSchedule.filter(m => m.round);
+
         const groups = {};
-        visibleSchedule.forEach(m => {
+        groupGames.forEach(m => {
             if (!groups[m.group]) groups[m.group] = [];
             groups[m.group].push(m);
         });
@@ -659,6 +700,33 @@ function renderMatches(container) {
             });
             html += `</div>`;
         });
+
+        if (knockoutGames.length) {
+            const knockoutSections = [
+                { key: 'Sextondelsfinal', title: 'Sextondelsfinaler' },
+                { key: 'Åttondelsfinal', title: 'Åttondelsfinaler' },
+                { key: 'Kvartsfinal', title: 'Kvartsfinaler' },
+                { key: 'Semifinal', title: 'Semifinaler' },
+                { key: 'Bronsmatch', title: 'Bronsmatch' },
+                { key: 'Final', title: 'Final' }
+            ];
+            const rounds = {};
+            knockoutGames.forEach(m => {
+                if (!rounds[m.round]) rounds[m.round] = [];
+                rounds[m.round].push(m);
+            });
+            knockoutSections.forEach(({ key, title }) => {
+                const matches = rounds[key];
+                if (!matches || !matches.length) return;
+                matches.sort((a, b) => parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time));
+                html += `<div class="group-section"><div class="group-header">${title}</div>`;
+                matches.forEach(match => {
+                    const pred = (data.matches && data.matches[match.id]) || {};
+                    html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match));
+                });
+                html += `</div>`;
+            });
+        }
     } else {
         const sorted = [...visibleSchedule].sort((a, b) =>
             parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time)

@@ -304,6 +304,44 @@ body {
     padding: 0 2px;
 }
 
+/* Extra rows for knockout (extra time / penalties) */
+.result-card.is-knockout {
+    border-left: 3px solid #5e35b1;
+}
+
+.result-card.is-knockout.has-result {
+    border-left: 3px solid #2e7d32;
+}
+
+.result-extra-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 6px;
+    border-top: 1px dashed #e0e0e0;
+    margin-top: 2px;
+}
+
+.result-extra-label {
+    flex: 1;
+    font-size: 12px;
+    color: #555;
+    font-weight: 500;
+    text-align: right;
+}
+
+.result-input-et,
+.result-input-pens {
+    background: #f7f4ff;
+    border-color: #d6cdf2;
+}
+
+.result-card.is-locked .result-input-et,
+.result-card.is-locked .result-input-pens {
+    background: #f0f0f0;
+    border-color: transparent;
+}
+
 /* Medal admin */
 .medal-section {
     background: #fff;
