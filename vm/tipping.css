@@ -499,6 +499,87 @@ body {
     border-color: #1a1a1a;
 }
 
+/* Slutspel-sektion */
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin: 4px 0 12px;
+    color: #1a1a1a;
+}
+
+.section-empty {
+    color: #888;
+    font-size: 14px;
+    padding: 12px 4px;
+    margin: 0 0 16px;
+}
+
+.playoff-section {
+    margin-bottom: 24px;
+}
+
+.playoff-round {
+    margin-bottom: 20px;
+}
+
+.playoff-round-header {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+    color: #555;
+    padding: 6px 0;
+    border-bottom: 1px solid #d0d0d0;
+    margin-bottom: 8px;
+}
+
+/* Gruppspel som hopfällbar sektion */
+.groupstage-section {
+    margin-top: 8px;
+    margin-bottom: 16px;
+}
+
+.groupstage-toggle {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-radius 0.15s;
+}
+
+.groupstage-toggle.open {
+    border-radius: 10px 10px 0 0;
+}
+
+.groupstage-toggle-label {
+    text-align: left;
+}
+
+.groupstage-arrow {
+    font-size: 14px;
+    color: #ccc;
+}
+
+.groupstage-body {
+    border: 1px solid #e0e0e0;
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    padding: 12px 12px 4px;
+    background: #fafafa;
+}
+
+.groupstage-body .group-section:last-child {
+    margin-bottom: 8px;
+}
+
 /* Matches section */
 .group-section {
     margin-bottom: 24px;

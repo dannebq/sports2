@@ -322,8 +322,10 @@ function calcTotalPoints(playerData, results, medals) {
 
 let currentPlayer = null;
 let currentTab = 'matches';
-let matchSort = 'date';
 let hideScored = false;
+let groupStageExpanded = (() => {
+    try { return localStorage.getItem('wc26-groupstage-expanded') === '1'; } catch (_) { return false; }
+})();
 
 // Shared data cache refreshed on each render cycle
 let _cache = {
@@ -628,7 +630,7 @@ function renderMatchCard(match, pred, result, locked) {
     const stageLabel = match.group ? `Gr. ${match.group}` : (match.round || '');
     return `<div class="match-card ${locked ? 'locked' : ''}">
         <div class="match-meta">
-            <span>${formatDateShort(match.date)} ${match.time}${matchSort === 'date' && stageLabel ? ` — ${stageLabel}` : ''}</span>
+            <span>${formatDateShort(match.date)} ${match.time}${stageLabel ? ` — ${stageLabel}` : ''}</span>
             <span>
                 ${pts !== null ? `<span class="match-points-badge">${pts}p</span>` : ''}
                 <span class="match-lock-badge ${locked ? 'is-locked' : ''}">${locked ? 'Låst' : 'Öppen'}</span>
@@ -668,96 +670,93 @@ function renderMatches(container) {
     const data = _cache.allData[currentPlayer] || { medals: {}, matches: {} };
     const allResults = _cache.results;
 
+    // "Dölj avgjorda" filtrerar endast slutspelet — gruppspelet är ändå dolt
+    // bakom en knapp och visar alltid hela schemat när det fälls ut.
+    const playoffAll = schedule.filter(m => m.round);
+    const playoffVisible = (hideScored ? playoffAll.filter(m => !allResults[m.id]) : playoffAll)
+        .sort((a, b) => parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time));
+
+    const groupGames = schedule.filter(m => m.group);
+    const groupBuckets = {};
+    groupGames.forEach(m => {
+        if (!groupBuckets[m.group]) groupBuckets[m.group] = [];
+        groupBuckets[m.group].push(m);
+    });
+
     let html = `<div class="match-controls">
-        <div class="sort-toggle">
-            <button class="sort-btn ${matchSort === 'group' ? 'active' : ''}" data-sort="group">Grupper</button>
-            <button class="sort-btn ${matchSort === 'date' ? 'active' : ''}" data-sort="date">Datum</button>
-        </div>
         <button class="hide-scored-btn ${hideScored ? 'active' : ''}" id="hideScoredBtn">
-            ${hideScored ? 'Visa avgjorda' : 'Dölj avgjorda'}
+            ${hideScored ? 'Visa avgjorda slutspelsmatcher' : 'Dölj avgjorda slutspelsmatcher'}
         </button>
     </div>`;
 
-    const visibleSchedule = hideScored
-        ? schedule.filter(m => !allResults[m.id])
-        : schedule;
+    // ── Slutspel ──
+    const knockoutOrder = [
+        { key: 'Sextondelsfinal', title: 'Sextondelsfinaler' },
+        { key: 'Åttondelsfinal', title: 'Åttondelsfinaler' },
+        { key: 'Kvartsfinal', title: 'Kvartsfinaler' },
+        { key: 'Semifinal', title: 'Semifinaler' },
+        { key: 'Bronsmatch', title: 'Bronsmatch' },
+        { key: 'Final', title: 'Final' }
+    ];
+    const knockoutTitle = Object.fromEntries(knockoutOrder.map(s => [s.key, s.title]));
 
-    if (matchSort === 'group') {
-        const groupGames = visibleSchedule.filter(m => m.group);
-        const knockoutGames = visibleSchedule.filter(m => m.round);
+    html += `<section class="playoff-section">
+        <h2 class="section-title">Slutspel</h2>`;
 
-        const groups = {};
-        groupGames.forEach(m => {
-            if (!groups[m.group]) groups[m.group] = [];
-            groups[m.group].push(m);
-        });
-
-        Object.keys(groups).sort().forEach(groupKey => {
-            html += `<div class="group-section"><div class="group-header">Grupp ${groupKey}</div>`;
-            groups[groupKey].forEach(match => {
-                const pred = (data.matches && data.matches[match.id]) || {};
-                html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match));
-            });
-            html += `</div>`;
-        });
-
-        if (knockoutGames.length) {
-            const knockoutSections = [
-                { key: 'Sextondelsfinal', title: 'Sextondelsfinaler' },
-                { key: 'Åttondelsfinal', title: 'Åttondelsfinaler' },
-                { key: 'Kvartsfinal', title: 'Kvartsfinaler' },
-                { key: 'Semifinal', title: 'Semifinaler' },
-                { key: 'Bronsmatch', title: 'Bronsmatch' },
-                { key: 'Final', title: 'Final' }
-            ];
-            const rounds = {};
-            knockoutGames.forEach(m => {
-                if (!rounds[m.round]) rounds[m.round] = [];
-                rounds[m.round].push(m);
-            });
-            knockoutSections.forEach(({ key, title }) => {
-                const matches = rounds[key];
-                if (!matches || !matches.length) return;
-                matches.sort((a, b) => parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time));
-                html += `<div class="group-section"><div class="group-header">${title}</div>`;
-                matches.forEach(match => {
-                    const pred = (data.matches && data.matches[match.id]) || {};
-                    html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match));
-                });
-                html += `</div>`;
-            });
-        }
+    if (playoffVisible.length === 0) {
+        html += `<p class="section-empty">${hideScored ? 'Inga ospelade slutspelsmatcher kvar.' : 'Slutspelet har inte börjat ännu.'}</p>`;
     } else {
-        const sorted = [...visibleSchedule].sort((a, b) =>
-            parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time)
-        );
-        let currentDate = '';
-        sorted.forEach(match => {
-            const dateLabel = formatDateShort(match.date);
-            if (dateLabel !== currentDate) {
-                if (currentDate) html += `</div>`;
-                currentDate = dateLabel;
-                html += `<div class="group-section"><div class="group-header">${match.date}</div>`;
+        // Datumordning, men bryt med rond-rubrik när ronden byts. Eftersom ronderna
+        // spelas i kronologisk ordning sammanfaller detta med en naturlig läsordning.
+        let currentRound = null;
+        playoffVisible.forEach(match => {
+            if (match.round !== currentRound) {
+                if (currentRound !== null) html += `</div>`;
+                currentRound = match.round;
+                const title = knockoutTitle[currentRound] || currentRound;
+                html += `<div class="playoff-round"><div class="playoff-round-header">${title}</div>`;
             }
             const pred = (data.matches && data.matches[match.id]) || {};
             html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match));
         });
-        if (currentDate) html += `</div>`;
+        if (currentRound !== null) html += `</div>`;
     }
+    html += `</section>`;
+
+    // ── Gruppspel (kollapsad bakom knapp) ──
+    const groupKeys = Object.keys(groupBuckets).sort();
+    html += `<section class="groupstage-section">
+        <button class="groupstage-toggle ${groupStageExpanded ? 'open' : ''}" id="toggleGroupStage"
+                aria-expanded="${groupStageExpanded ? 'true' : 'false'}" aria-controls="groupStageBody">
+            <span class="groupstage-toggle-label">Gruppspel</span>
+            <span class="groupstage-arrow" aria-hidden="true">${groupStageExpanded ? '▾' : '▸'}</span>
+        </button>
+        <div class="groupstage-body ${groupStageExpanded ? '' : 'hidden'}" id="groupStageBody">`;
+    groupKeys.forEach(groupKey => {
+        html += `<div class="group-section"><div class="group-header">Grupp ${groupKey}</div>`;
+        groupBuckets[groupKey].forEach(match => {
+            const pred = (data.matches && data.matches[match.id]) || {};
+            html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match));
+        });
+        html += `</div>`;
+    });
+    html += `</div></section>`;
 
     container.innerHTML = html;
-
-    container.querySelectorAll('.sort-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            matchSort = btn.dataset.sort;
-            renderMatches(container);
-        });
-    });
 
     const hideBtn = container.querySelector('#hideScoredBtn');
     if (hideBtn) {
         hideBtn.addEventListener('click', () => {
             hideScored = !hideScored;
+            renderMatches(container);
+        });
+    }
+
+    const toggleBtn = container.querySelector('#toggleGroupStage');
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            groupStageExpanded = !groupStageExpanded;
+            try { localStorage.setItem('wc26-groupstage-expanded', groupStageExpanded ? '1' : '0'); } catch (_) {}
             renderMatches(container);
         });
     }
