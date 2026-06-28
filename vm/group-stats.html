@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gruppspelet i siffror – VM-tipset 2026</title>
+    <link rel="apple-touch-icon" href="vm_tips_icon_1024_full2.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="vm_tips_icon_1024_full2.png">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="VM-tipset">
+    <link rel="stylesheet" href="tipping.css">
+    <style>
+        /* ── Statistiksida ── */
+        .stats-page {
+            padding-bottom: 40px;
+        }
+
+        .stats-intro {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 22px;
+        }
+
+        .stats-section {
+            margin-bottom: 28px;
+        }
+
+        .stats-section-title {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: #777;
+            margin-bottom: 10px;
+        }
+
+        .award-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
+        }
+
+        .award-card {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 14px;
+            padding: 14px 16px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+        }
+
+        .award-card-title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 10px;
+        }
+
+        .award-card-title .award-icon {
+            font-size: 18px;
+        }
+
+        .award-podium {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .award-podium li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .award-podium .award-rank {
+            width: 22px;
+            display: inline-flex;
+            justify-content: center;
+            font-size: 14px;
+        }
+
+        .award-podium .award-value {
+            margin-left: auto;
+            font-variant-numeric: tabular-nums;
+            color: #555;
+            font-size: 13px;
+        }
+
+        .award-podium li.is-leader .award-name {
+            font-weight: 700;
+        }
+
+        .player-card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 12px;
+        }
+
+        .player-card {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 14px;
+            padding: 16px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .player-card-head {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .player-card-head .player-avatar {
+            width: 36px;
+            height: 36px;
+            font-size: 16px;
+            margin-right: 0;
+        }
+
+        .player-card-head .player-card-names {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .player-card-name {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .player-card-title {
+            font-size: 12px;
+            color: #777;
+            font-weight: 500;
+        }
+
+        .player-card-stat-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            font-size: 12px;
+            color: #555;
+            margin-top: 2px;
+        }
+
+        .player-card-stat {
+            background: #f3f3f3;
+            border-radius: 999px;
+            padding: 3px 10px;
+            font-variant-numeric: tabular-nums;
+        }
+
+        .player-card-bio {
+            font-size: 13px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .fact-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .fact-list li {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-size: 14px;
+            line-height: 1.55;
+            display: flex;
+            gap: 10px;
+            align-items: flex-start;
+        }
+
+        .fact-list .fact-icon {
+            font-size: 18px;
+            flex-shrink: 0;
+            line-height: 1.2;
+        }
+
+        .stats-table-wrap {
+            overflow-x: auto;
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+        }
+
+        table.stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        table.stats-table th,
+        table.stats-table td {
+            padding: 8px 10px;
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+            border-bottom: 1px solid #f0f0f0;
+            white-space: nowrap;
+        }
+
+        table.stats-table th:first-child,
+        table.stats-table td:first-child {
+            text-align: left;
+        }
+
+        table.stats-table thead th {
+            background: #fafafa;
+            font-size: 12px;
+            font-weight: 700;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        table.stats-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        table.stats-table .leader td {
+            background: #fffaf0;
+        }
+
+        table.stats-table .player-cell {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .facit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 10px;
+        }
+
+        .facit-card {
+            background: #fff;
+            border: 1px solid #e8e8e8;
+            border-radius: 12px;
+            padding: 12px 14px;
+            font-size: 13px;
+        }
+
+        .facit-card-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #777;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 6px;
+        }
+
+        .facit-card ol {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .facit-card li {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 2px 0;
+        }
+
+        .facit-card .facit-pos {
+            width: 18px;
+            color: #999;
+            font-weight: 600;
+        }
+
+        .facit-card .team-flag-tiny {
+            width: 18px;
+            height: 12px;
+            object-fit: cover;
+            border-radius: 2px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container stats-page">
+        <header class="header">
+            <a href="tipping.html" class="back-link">← Tillbaka till VM-tipset</a>
+            <h1>Gruppspelet i siffror</h1>
+        </header>
+
+        <p class="stats-intro">
+            Gruppspelet är slut – här är hela facit och hur våra tippare lyckades.
+            Statistiken räknar antal lag som hamnade på rätt plats (1–4) i varje grupp.
+        </p>
+
+        <!-- Topplistor -->
+        <section class="stats-section">
+            <div class="stats-section-title">Topplistor</div>
+            <div class="award-grid" id="awardGrid"></div>
+        </section>
+
+        <!-- Personliga utmärkelser -->
+        <section class="stats-section">
+            <div class="stats-section-title">Personliga utmärkelser</div>
+            <div class="player-card-grid" id="playerCardGrid"></div>
+        </section>
+
+        <!-- Roliga fakta -->
+        <section class="stats-section">
+            <div class="stats-section-title">Roliga fakta</div>
+            <ul class="fact-list">
+                <li>
+                    <span class="fact-icon">🎯</span>
+                    <span><strong>Grupp K blev en chock.</strong> Bara <strong>1 av 8</strong> tippare prickade Colombia som vinnare i grupp K – och det var <strong>Johannes</strong>, helt ensam mot resten av ligan som trodde på Portugal.</span>
+                </li>
+                <li>
+                    <span class="fact-icon">😵</span>
+                    <span><strong>Grupp A var svårast totalt.</strong> Snittträff bara <strong>0,89 av 4</strong>, och ingen kom över 2/4. Sydafrikas oväntade andraplats sumpade alla.</span>
+                </li>
+                <li>
+                    <span class="fact-icon">🐎</span>
+                    <span><strong>Grupp J var lättast.</strong> Snitt <strong>3,5 av 4</strong> – sex tippare fick alla fyra rätt (Argentina ▸ Österrike ▸ Algeriet ▸ Jordanien).</span>
+                </li>
+                <li>
+                    <span class="fact-icon">👯</span>
+                    <span><strong>Hivekloner i grupp J.</strong> Daniel, Hans, Johannes, Johnas, Kalle och Tord tippade <em>exakt</em> samma ordning – och alla fick 4/4.</span>
+                </li>
+                <li>
+                    <span class="fact-icon">🦘</span>
+                    <span><strong>Det här såg ingen komma:</strong> bara Johannes prickade Australien som tvåa i grupp D – ensam av 8 tippare.</span>
+                </li>
+                <li>
+                    <span class="fact-icon">🏆</span>
+                    <span><strong>Säkra gruppvinnare:</strong> Brasilien, Tyskland, Belgien, Argentina och Nederländerna prickades av <em>samtliga</em> tippare som spelade dessa grupper.</span>
+                </li>
+                <li>
+                    <span class="fact-icon">🪨</span>
+                    <span><strong>Stabilast:</strong> Johnas, Kalle och Tord var de enda som <em>aldrig</em> bombade en hel grupp (0/4) – jämn nivå rakt igenom.</span>
+                </li>
+                <li>
+                    <span class="fact-icon">🎰</span>
+                    <span><strong>Mest vågat:</strong> Johannes avvek från majoritetstipset i <strong>38 %</strong> av sina placeringar – mer än någon annan – och plockade ändå hem 27/48 rätt.</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Detaljtabell -->
+        <section class="stats-section">
+            <div class="stats-section-title">Detaljtabell – alla siffror</div>
+            <div class="stats-table-wrap">
+                <table class="stats-table" id="statsTable">
+                    <thead>
+                        <tr>
+                            <th>Spelare</th>
+                            <th>Grupper</th>
+                            <th>Rätt</th>
+                            <th>Träff %</th>
+                            <th>Vinnare</th>
+                            <th>2:or</th>
+                            <th>3:or</th>
+                            <th>Jumbos</th>
+                            <th>4/4</th>
+                            <th>0/4</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Facit per grupp -->
+        <section class="stats-section">
+            <div class="stats-section-title">Facit per grupp</div>
+            <div class="facit-grid" id="facitGrid"></div>
+        </section>
+    </div>
+
+    <script>
+        // ── Data ──
+        const teamToCode = {
+            "Mexiko":"MEX","Sydafrika":"RSA","Sydkorea":"KOR","Tjeckien":"CZE",
+            "Kanada":"CAN","Bosnien & Hercegovina":"BIH","USA":"USA","Paraguay":"PAR",
+            "Qatar":"QAT","Schweiz":"SUI","Brasilien":"BRA","Marocko":"MAR",
+            "Haiti":"HAI","Skottland":"SCO","Australien":"AUS","Turkiet":"TUR",
+            "Tyskland":"GER","Curacao":"CUW","Nederländerna":"NED","Japan":"JPN",
+            "Elfenbenskusten":"CIV","Ecuador":"ECU","Sverige":"SWE","Tunisien":"TUN",
+            "Spanien":"ESP","Kap Verde":"CPV","Belgien":"BEL","Egypten":"EGY",
+            "Saudiarabien":"KSA","Uruguay":"URU","Iran":"IRN","Nya Zeeland":"NZL",
+            "Frankrike":"FRA","Senegal":"SEN","Irak":"IRQ","Norge":"NOR",
+            "Argentina":"ARG","Algeriet":"ALG","Österrike":"AUT","Jordanien":"JOR",
+            "Portugal":"POR","DR Kongo":"COD","England":"ENG","Kroatien":"CRO",
+            "Ghana":"GHA","Panama":"PAN","Uzbekistan":"UZB","Colombia":"COL"
+        };
+
+        const flagUrl = team => teamToCode[team] ? `flags/${teamToCode[team]}.png` : '';
+
+        const FACIT = {
+            "A":["Mexiko","Sydafrika","Sydkorea","Tjeckien"],
+            "B":["Schweiz","Kanada","Bosnien & Hercegovina","Qatar"],
+            "C":["Brasilien","Marocko","Skottland","Haiti"],
+            "D":["USA","Australien","Paraguay","Turkiet"],
+            "E":["Tyskland","Elfenbenskusten","Ecuador","Curacao"],
+            "F":["Nederländerna","Japan","Sverige","Tunisien"],
+            "G":["Belgien","Egypten","Iran","Nya Zeeland"],
+            "H":["Spanien","Kap Verde","Uruguay","Saudiarabien"],
+            "I":["Frankrike","Norge","Senegal","Irak"],
+            "J":["Argentina","Österrike","Algeriet","Jordanien"],
+            "K":["Colombia","Portugal","DR Kongo","Uzbekistan"],
+            "L":["England","Kroatien","Ghana","Panama"]
+        };
+
+        // ── Per spelare: aggregerad statistik ──
+        // groups, slots, correct, winners, last (4:a rätt), perfect (4/4), zero (0/4)
+        const PLAYER_STATS = [
+            { name:"Johnas",   groups:11, slots:44, correct:30, pct:68.2, winners:8, runner_up:6, third:7, last:9, perfect:5, zero:0 },
+            { name:"Johannes", groups:12, slots:48, correct:27, pct:56.2, winners:8, runner_up:6, third:6, last:7, perfect:3, zero:1 },
+            { name:"Tord",     groups:9,  slots:36, correct:26, pct:72.2, winners:7, runner_up:5, third:7, last:7, perfect:4, zero:0 },
+            { name:"Kalle",    groups:11, slots:44, correct:26, pct:59.1, winners:9, runner_up:3, third:6, last:8, perfect:3, zero:0 },
+            { name:"Gustav",   groups:12, slots:48, correct:26, pct:54.2, winners:9, runner_up:5, third:4, last:8, perfect:4, zero:2 },
+            { name:"Simon",    groups:11, slots:44, correct:25, pct:56.8, winners:9, runner_up:3, third:5, last:8, perfect:3, zero:1 },
+            { name:"Daniel",   groups:12, slots:48, correct:25, pct:52.1, winners:9, runner_up:6, third:4, last:6, perfect:4, zero:3 },
+            { name:"Hans",     groups:12, slots:48, correct:23, pct:47.9, winners:9, runner_up:3, third:4, last:7, perfect:3, zero:2 },
+            { name:"Anna",     groups:1,  slots:4,  correct:1,  pct:25.0, winners:1, runner_up:0, third:0, last:0, perfect:0, zero:0 }
+        ];
+
+        // ── Personliga utmärkelser ──
+        const PLAYER_AWARDS = [
+            {
+                name:"Johnas", title:"👑 Kungen",
+                stats:["30/44 rätt","68 % träffsäkerhet","5 perfekta grupper"],
+                bio:"Mest rätt totalt och flest perfekta grupper (B, C, F, J, L). Vågade tippa Senegal som vinnare i grupp I – som blev 3:a – och hade ändå mest poäng av alla i slutändan. Aldrig en bombad grupp."
+            },
+            {
+                name:"Tord", title:"🎯 Snipern",
+                stats:["72 % träffsäkerhet","26/36 rätt","Inga floppade vinnare"],
+                bio:"Bäst träffsäkerhet av alla. Inget av hans gruppvinnartips slutade sämre än 2:a – en bedrift bara han och Kalle klarade. Var en av två som dessutom vågade lägga Sydkorea på 3:e plats i grupp A, och hade rätt."
+            },
+            {
+                name:"Kalle", title:"🪨 Klippan",
+                stats:["9/11 vinnare rätt","Inga vinnare under 2:a","0 unika placeringar"],
+                bio:"Den mest renodlade konsensus-tippsen – inte en enda placering där han stod ensam. Belönades med 9 av 11 rätta gruppvinnare och inte ett tips som floppade till 3:a eller sämre. Trygg som banken."
+            },
+            {
+                name:"Johannes", title:"🃏 Outsidern",
+                stats:["27/48 rätt","Ensam om Colombia & Australien","Avvek i 38 % av tipsen"],
+                bio:"Hela ligans enda spelare som tippade Colombia som vinnare i grupp K (de vann!) och Australien som 2:a i grupp D (de blev 2:a!). Mest vågade tippsen av alla och plockade ändå 27/48."
+            },
+            {
+                name:"Gustav", title:"🎰 Allt-eller-inget",
+                stats:["9 vinnare rätt","4 perfekta grupper","2 helt bombade"],
+                bio:"Levererade fyra perfekta grupper (E, F, I, L) – men nollade också grupp A och K helt. Han och Tord var de enda som vågade lägga Turkiet som jumbo i grupp D, och hade rätt."
+            },
+            {
+                name:"Simon", title:"⚪ Konformisten",
+                stats:["Avvek minst (18 %)","3 perfekta grupper","Ett enda vågat utbrott"],
+                bio:"Avvek mindre från majoriteten än någon annan. Men hade ett vasst utbrott: enda spelaren som la Sydkorea som vinnare i grupp A. I övrigt prickade han B, I och L till 4/4."
+            },
+            {
+                name:"Daniel", title:"🎢 Berg- och dalbanan",
+                stats:["4 perfekta grupper","3 helt bombade","9 vinnare rätt"],
+                bio:"Levererade fyra perfekta grupper (B, F, J, L) men hade också flest helt bombade grupper i hela ligan: A, D och K. Hans Tjeckien-som-vinnare i grupp A blev kvällens flopp – de slutade sist."
+            },
+            {
+                name:"Hans", title:"💪 Glaset halvtomt",
+                stats:["25 fel av 48","9 vinnare rätt","Fyra unika placeringar"],
+                bio:"Mest fel av alla, men ändå starka 9 gruppvinnare rätt. Lade fyra unika placeringar som ingen annan hade – samtliga blev fel. Hans Paraguay-som-vinnare i grupp D slutade som 3:a."
+            },
+            {
+                name:"Anna", title:"🎈 Festdeltagaren",
+                stats:["1/4 rätt","Tippade bara grupp A"],
+                bio:"Tippade enbart grupp A: Mexiko rätt som vinnare, sen tog det stopp. Vi noterar deltagandet."
+            }
+        ];
+
+        // ── Topplistor (multipla awards) ──
+        const AWARDS = [
+            {
+                icon:"🏆", title:"Mest rätt totalt",
+                sub:"Antal lag på rätt plats",
+                order: PLAYER_STATS.slice().sort((a,b) => b.correct - a.correct || b.pct - a.pct),
+                value: p => `${p.correct}/${p.slots}`
+            },
+            {
+                icon:"🎯", title:"Bäst träffsäkerhet",
+                sub:"Andel rätt placeringar",
+                order: PLAYER_STATS.slice().sort((a,b) => b.pct - a.pct),
+                value: p => `${p.pct.toFixed(1)} %`
+            },
+            {
+                icon:"🥇", title:"Flest gruppvinnare rätt",
+                sub:"Lag på 1:a plats",
+                order: PLAYER_STATS.slice().sort((a,b) => b.winners - a.winners || b.correct - a.correct),
+                value: p => `${p.winners}/${p.groups}`
+            },
+            {
+                icon:"👑", title:"Flest perfekta grupper",
+                sub:"Grupper med 4 av 4 rätt",
+                order: PLAYER_STATS.slice().sort((a,b) => b.perfect - a.perfect || b.correct - a.correct),
+                value: p => `${p.perfect} grp`
+            },
+            {
+                icon:"💩", title:"Flest fel",
+                sub:"Antal felplacerade lag",
+                order: PLAYER_STATS.slice().sort((a,b) => (b.slots-b.correct) - (a.slots-a.correct) || b.groups - a.groups),
+                value: p => `${p.slots - p.correct} fel`
+            },
+            {
+                icon:"💥", title:"Flest bombade grupper",
+                sub:"Grupper med 0 av 4 rätt",
+                order: PLAYER_STATS.slice().sort((a,b) => b.zero - a.zero || b.groups - a.groups),
+                value: p => `${p.zero} grp`
+            }
+        ];
+
+        // ── Avatar-helpers (samma palett som tipping.js) ──
+        const PLAYER_COLORS = [
+            '#e53935', '#8e24aa', '#3949ab', '#039be5',
+            '#00897b', '#43a047', '#f4511e', '#6d4c41',
+            '#d81b60', '#1e88e5', '#00acc1', '#7cb342'
+        ];
+
+        function playerColor(name) {
+            let hash = 0;
+            for (const ch of name) hash = ((hash << 5) - hash + ch.charCodeAt(0)) | 0;
+            return PLAYER_COLORS[Math.abs(hash) % PLAYER_COLORS.length];
+        }
+
+        function playerAvatar(name, cls) {
+            const color = playerColor(name);
+            const initial = name.charAt(0).toUpperCase();
+            return `<span class="player-avatar${cls ? ' ' + cls : ''}" style="background:${color}">${initial}</span>`;
+        }
+
+        // ── Rendering ──
+        function renderAwards() {
+            const grid = document.getElementById('awardGrid');
+            grid.innerHTML = AWARDS.map(award => {
+                const top = award.order.slice(0, 3);
+                const medals = ['🥇','🥈','🥉'];
+                return `<div class="award-card">
+                    <div class="award-card-title">
+                        <span class="award-icon">${award.icon}</span>
+                        <span>${award.title}</span>
+                    </div>
+                    <ol class="award-podium">
+                        ${top.map((p, i) => `
+                            <li class="${i === 0 ? 'is-leader' : ''}">
+                                <span class="award-rank">${medals[i]}</span>
+                                ${playerAvatar(p.name, 'avatar-sm')}
+                                <span class="award-name">${p.name}</span>
+                                <span class="award-value">${award.value(p)}</span>
+                            </li>
+                        `).join('')}
+                    </ol>
+                </div>`;
+            }).join('');
+        }
+
+        function renderPlayerCards() {
+            const grid = document.getElementById('playerCardGrid');
+            grid.innerHTML = PLAYER_AWARDS.map(p => `
+                <div class="player-card">
+                    <div class="player-card-head">
+                        ${playerAvatar(p.name)}
+                        <div class="player-card-names">
+                            <span class="player-card-name">${p.name}</span>
+                            <span class="player-card-title">${p.title}</span>
+                        </div>
+                    </div>
+                    <div class="player-card-stat-row">
+                        ${p.stats.map(s => `<span class="player-card-stat">${s}</span>`).join('')}
+                    </div>
+                    <p class="player-card-bio">${p.bio}</p>
+                </div>
+            `).join('');
+        }
+
+        function renderTable() {
+            const tbody = document.querySelector('#statsTable tbody');
+            const sorted = PLAYER_STATS.slice().sort((a,b) => b.correct - a.correct || b.pct - a.pct);
+            const leader = sorted[0];
+            tbody.innerHTML = sorted.map(p => `
+                <tr class="${p === leader ? 'leader' : ''}">
+                    <td><span class="player-cell">${playerAvatar(p.name, 'avatar-sm')}${p.name}</span></td>
+                    <td>${p.groups}</td>
+                    <td>${p.correct}/${p.slots}</td>
+                    <td>${p.pct.toFixed(1)} %</td>
+                    <td>${p.winners}</td>
+                    <td>${p.runner_up}</td>
+                    <td>${p.third}</td>
+                    <td>${p.last}</td>
+                    <td>${p.perfect}</td>
+                    <td>${p.zero}</td>
+                </tr>
+            `).join('');
+        }
+
+        function renderFacit() {
+            const grid = document.getElementById('facitGrid');
+            grid.innerHTML = Object.keys(FACIT).map(g => `
+                <div class="facit-card">
+                    <div class="facit-card-title">Grupp ${g}</div>
+                    <ol>
+                        ${FACIT[g].map((team, i) => `
+                            <li>
+                                <span class="facit-pos">${i+1}.</span>
+                                <img class="team-flag-tiny" src="${flagUrl(team)}" alt="${team}">
+                                <span>${team}</span>
+                            </li>
+                        `).join('')}
+                    </ol>
+                </div>
+            `).join('');
+        }
+
+        renderAwards();
+        renderPlayerCards();
+        renderTable();
+        renderFacit();
+    </script>
+</body>
+</html>

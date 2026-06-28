@@ -954,6 +954,14 @@ function renderGroups(container) {
     const tips = data.groupTips || {};
 
     let html = `<div class="group-tip-section">
+        <a href="group-stats.html" class="stats-link-banner">
+            <span class="stats-link-icon" aria-hidden="true">📊</span>
+            <span class="stats-link-text">
+                <span class="stats-link-title">Gruppspelet i siffror</span>
+                <span class="stats-link-sub">Topplistor, utmärkelser och facit</span>
+            </span>
+            <span class="stats-link-arrow" aria-hidden="true">→</span>
+        </a>
         <h2>Gruppspelstips</h2>
         <p class="group-lock-info">
             Drag och släpp för att placera lagen i den ordning du tror de slutar i gruppspelet.

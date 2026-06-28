@@ -1199,6 +1199,61 @@ body {
 
 /* ── Groups tab ── */
 
+.stats-link-banner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    margin-bottom: 16px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s, box-shadow 0.15s, transform 0.05s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.stats-link-banner:hover {
+    border-color: #bbb;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.stats-link-banner:active {
+    transform: scale(0.99);
+}
+
+.stats-link-icon {
+    font-size: 22px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.stats-link-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+    flex: 1;
+    min-width: 0;
+}
+
+.stats-link-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1a1a1a;
+}
+
+.stats-link-sub {
+    font-size: 12px;
+    color: #777;
+}
+
+.stats-link-arrow {
+    font-size: 18px;
+    color: #999;
+    flex-shrink: 0;
+}
+
 .group-tip-section h2 {
     font-size: 20px;
     font-weight: 700;
