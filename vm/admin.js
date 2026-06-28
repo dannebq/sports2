@@ -151,10 +151,13 @@ let matchSort = 'date';
 let pendingResults = {};
 let pendingMedals = { gold: null, silver: null, bronze: null };
 let unlockedMatches = new Set();
+// Match-id som verkligen finns i databasen (skiljer "sparat" från "pågående inmatning")
+let savedResults = new Set();
 
 async function loadSavedData() {
     const { data: results } = await sb.from('match_results').select('*');
     pendingResults = {};
+    savedResults = new Set();
     (results || []).forEach(r => {
         pendingResults[r.match_id] = {
             home: r.home_score,
@@ -164,6 +167,7 @@ async function loadSavedData() {
             homePens: r.home_score_pens,
             awayPens: r.away_score_pens
         };
+        savedResults.add(r.match_id);
     });
 
     const { data: medals } = await sb
@@ -222,7 +226,9 @@ async function saveResults() {
             homePens: r.home_score_pens,
             awayPens: r.away_score_pens
         };
+        savedResults.add(r.match_id);
     });
+    toDelete.forEach(id => savedResults.delete(id));
 }
 
 async function saveMedals() {
@@ -458,17 +464,20 @@ async function renderContent() {
 function renderResultCard(match) {
     const result = pendingResults[match.id];
     const hasResult = result && result.home != null && result.away != null;
-    const isLocked = hasResult && !unlockedMatches.has(match.id);
+    const isLocked = savedResults.has(match.id) && !unlockedMatches.has(match.id);
     const isKnockout = !!match.round;
     const stageLabel = match.group ? `Gr. ${match.group}` : (match.round || '');
 
-    // Visa förlängningsrad om 90 min är oavgjort
+    const homeVal = result && result.home != null ? result.home : '';
+    const awayVal = result && result.away != null ? result.away : '';
+
+    // Visa förlängningsrad om 90 min är oavgjort (båda rutor ifyllda + samma värde)
     const showEt = isKnockout && hasResult && result.home === result.away;
     const etHome = result && result.homeEt != null ? result.homeEt : '';
     const etAway = result && result.awayEt != null ? result.awayEt : '';
     const hasEtValues = etHome !== '' && etAway !== '';
 
-    // Visa straffrad om förlängningen är oavgjord (eller saknas men 90 min var lika)
+    // Visa straffrad om förlängningen är oavgjord
     const showPens = showEt && hasEtValues && parseInt(etHome) === parseInt(etAway);
     const pensHome = result && result.homePens != null ? result.homePens : '';
     const pensAway = result && result.awayPens != null ? result.awayPens : '';
@@ -483,12 +492,12 @@ function renderResultCard(match) {
             <div class="result-inputs">
                 <input type="number" class="result-input" min="0" max="20"
                     data-match="${match.id}" data-side="home"
-                    value="${hasResult ? result.home : ''}"
+                    value="${homeVal}"
                     ${isLocked ? 'disabled' : ''}>
                 <span class="result-separator">–</span>
                 <input type="number" class="result-input" min="0" max="20"
                     data-match="${match.id}" data-side="away"
-                    value="${hasResult ? result.away : ''}"
+                    value="${awayVal}"
                     ${isLocked ? 'disabled' : ''}>
             </div>
             <div class="result-team away">
@@ -605,22 +614,31 @@ function renderResults(container) {
         input.addEventListener('input', () => {
             const matchId = input.dataset.match;
             if (!pendingResults[matchId]) pendingResults[matchId] = {};
-            const val = input.value === '' ? null : parseInt(input.value);
             const side = input.dataset.side;
+            const before = { ...pendingResults[matchId] };
+            const val = input.value === '' ? null : parseInt(input.value);
             pendingResults[matchId][side] = val;
+            const after = pendingResults[matchId];
 
-            // Re-render om vi ändrat 90-min eller ET för en slutspelsmatch
-            // så ET/straff-rader kan dyka upp eller försvinna progressivt.
+            // För slutspelsmatcher: re-rendera bara när synligheten av extra-raderna
+            // faktiskt ändras (dvs 90-min eller ET övergår mellan oavgjort och inte).
             const match = schedule.find(m => m.id === parseInt(matchId));
-            if (match && match.round && (side === 'home' || side === 'away' || side === 'homeEt' || side === 'awayEt')) {
-                // Behåll fokus-position via setTimeout för att låta input-värdet sätta sig först
+            if (!match || !match.round) return;
+
+            const isDraw = (r) => r.home != null && r.away != null && r.home === r.away;
+            const isEtDraw = (r) => r.homeEt != null && r.awayEt != null && r.homeEt === r.awayEt;
+
+            const etVisibilityChanged = isDraw(before) !== isDraw(after);
+            const pensVisibilityChanged = (isDraw(after) && isEtDraw(before) !== isEtDraw(after));
+
+            if (etVisibilityChanged || pensVisibilityChanged) {
                 renderResults(container);
                 const focusInput = container.querySelector(
                     `.result-input[data-match="${matchId}"][data-side="${side}"]`
                 );
                 if (focusInput) {
                     focusInput.focus();
-                    const len = focusInput.value.length;
+                    const len = String(focusInput.value).length;
                     try { focusInput.setSelectionRange(len, len); } catch (e) {}
                 }
             }
