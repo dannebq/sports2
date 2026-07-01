@@ -115,7 +115,12 @@ const schedule = [
     { id: 85, date: "3 juli", time: "05:00", home: "Schweiz", away: "Algeriet", round: "Sextondelsfinal" },
     { id: 88, date: "3 juli", time: "20:00", home: "Australien", away: "Egypten", round: "Sextondelsfinal" },
     { id: 86, date: "4 juli", time: "00:00", home: "Argentina", away: "Kap Verde", round: "Sextondelsfinal" },
-    { id: 87, date: "4 juli", time: "03:30", home: "Colombia", away: "Ghana", round: "Sextondelsfinal" }
+    { id: 87, date: "4 juli", time: "03:30", home: "Colombia", away: "Ghana", round: "Sextondelsfinal" },
+
+    // Åttondelsfinaler (R16) – tider i svensk tid
+    { id: 90, date: "4 juli", time: "19:00", home: "Kanada", away: "Marocko", round: "Åttondelsfinal" },
+    { id: 89, date: "4 juli", time: "23:00", home: "Paraguay", away: "Frankrike", round: "Åttondelsfinal" },
+    { id: 91, date: "5 juli", time: "22:00", home: "Brasilien", away: "Norge", round: "Åttondelsfinal" }
 ];
 
 // ── Storage (Supabase) ──
