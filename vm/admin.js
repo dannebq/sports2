@@ -120,6 +120,7 @@ const schedule = [
     { id: 89, date: "4 juli", time: "23:00", home: "Paraguay", away: "Frankrike", round: "Åttondelsfinal" },
     { id: 91, date: "5 juli", time: "22:00", home: "Brasilien", away: "Norge", round: "Åttondelsfinal" },
     { id: 92, date: "6 juli", time: "02:00", home: "Mexiko", away: "England", round: "Åttondelsfinal" },
+    { id: 93, date: "6 juli", time: "21:00", home: "Portugal", away: "Spanien", round: "Åttondelsfinal" },
     { id: 94, date: "7 juli", time: "02:00", home: "USA", away: "Belgien", round: "Åttondelsfinal" }
 ];
 
