@@ -336,6 +336,9 @@ let hideScored = false;
 let groupStageExpanded = (() => {
     try { return localStorage.getItem('wc26-groupstage-expanded') === '1'; } catch (_) { return false; }
 })();
+let r32Expanded = (() => {
+    try { return localStorage.getItem('wc26-r32-expanded') === '1'; } catch (_) { return false; }
+})();
 
 // Shared data cache refreshed on each render cycle
 let _cache = {
@@ -682,8 +685,12 @@ function renderMatches(container) {
 
     // "Dölj avgjorda" filtrerar endast slutspelet — gruppspelet är ändå dolt
     // bakom en knapp och visar alltid hela schemat när det fälls ut.
-    const playoffAll = schedule.filter(m => m.round);
+    const playoffAll = schedule.filter(m => m.round && m.round !== 'Sextondelsfinal');
     const playoffVisible = (hideScored ? playoffAll.filter(m => !allResults[m.id]) : playoffAll)
+        .sort((a, b) => parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time));
+
+    const r32All = schedule.filter(m => m.round === 'Sextondelsfinal');
+    const r32Visible = (hideScored ? r32All.filter(m => !allResults[m.id]) : r32All)
         .sort((a, b) => parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time));
 
     const groupGames = schedule.filter(m => m.group);
@@ -733,6 +740,26 @@ function renderMatches(container) {
     }
     html += `</section>`;
 
+    // ── Sextondelsfinaler (kollapsad bakom knapp) ──
+    html += `<section class="groupstage-section">
+        <button class="groupstage-toggle ${r32Expanded ? 'open' : ''}" id="toggleR32"
+                aria-expanded="${r32Expanded ? 'true' : 'false'}" aria-controls="r32Body">
+            <span class="groupstage-toggle-label">Sextondelsfinaler</span>
+            <span class="groupstage-arrow" aria-hidden="true">${r32Expanded ? '▾' : '▸'}</span>
+        </button>
+        <div class="groupstage-body ${r32Expanded ? '' : 'hidden'}" id="r32Body">`;
+    if (r32Visible.length === 0) {
+        html += `<p class="section-empty">${hideScored ? 'Inga ospelade sextondelsfinaler kvar.' : 'Sextondelsfinalerna har inte börjat ännu.'}</p>`;
+    } else {
+        html += `<div class="playoff-round">`;
+        r32Visible.forEach(match => {
+            const pred = (data.matches && data.matches[match.id]) || {};
+            html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match));
+        });
+        html += `</div>`;
+    }
+    html += `</div></section>`;
+
     // ── Gruppspel (kollapsad bakom knapp) ──
     const groupKeys = Object.keys(groupBuckets).sort();
     html += `<section class="groupstage-section">
@@ -767,6 +794,15 @@ function renderMatches(container) {
         toggleBtn.addEventListener('click', () => {
             groupStageExpanded = !groupStageExpanded;
             try { localStorage.setItem('wc26-groupstage-expanded', groupStageExpanded ? '1' : '0'); } catch (_) {}
+            renderMatches(container);
+        });
+    }
+
+    const r32Btn = container.querySelector('#toggleR32');
+    if (r32Btn) {
+        r32Btn.addEventListener('click', () => {
+            r32Expanded = !r32Expanded;
+            try { localStorage.setItem('wc26-r32-expanded', r32Expanded ? '1' : '0'); } catch (_) {}
             renderMatches(container);
         });
     }
