@@ -125,7 +125,10 @@ const schedule = [
     { id: 93, date: "6 juli", time: "21:00", home: "Portugal", away: "Spanien", round: "Åttondelsfinal" },
     { id: 94, date: "7 juli", time: "02:00", home: "USA", away: "Belgien", round: "Åttondelsfinal" },
     { id: 95, date: "7 juli", time: "18:00", home: "Argentina", away: "Egypten", round: "Åttondelsfinal" },
-    { id: 96, date: "7 juli", time: "22:00", home: "Schweiz", away: "Colombia", round: "Åttondelsfinal" }
+    { id: 96, date: "7 juli", time: "22:00", home: "Schweiz", away: "Colombia", round: "Åttondelsfinal" },
+
+    // Kvartsfinaler – tider i svensk tid
+    { id: 97, date: "9 juli", time: "22:00", home: "Frankrike", away: "Marocko", round: "Kvartsfinal" }
 ];
 
 // ── Storage (Supabase) ──
