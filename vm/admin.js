@@ -127,6 +127,7 @@ const schedule = [
 
     // Kvartsfinaler – tider i svensk tid
     { id: 97, date: "9 juli", time: "22:00", home: "Frankrike", away: "Marocko", round: "Kvartsfinal" },
+    { id: 98, date: "10 juli", time: "21:00", home: "Spanien", away: "Belgien", round: "Kvartsfinal" },
     { id: 99, date: "11 juli", time: "23:00", home: "Norge", away: "England", round: "Kvartsfinal" }
 ];
 
