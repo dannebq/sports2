@@ -131,7 +131,10 @@ const schedule = [
     { id: 97, date: "9 juli", time: "22:00", home: "Frankrike", away: "Marocko", round: "Kvartsfinal" },
     { id: 98, date: "10 juli", time: "21:00", home: "Spanien", away: "Belgien", round: "Kvartsfinal" },
     { id: 99, date: "11 juli", time: "23:00", home: "Norge", away: "England", round: "Kvartsfinal" },
-    { id: 100, date: "12 juli", time: "03:00", home: "Argentina", away: "Schweiz", round: "Kvartsfinal" }
+    { id: 100, date: "12 juli", time: "03:00", home: "Argentina", away: "Schweiz", round: "Kvartsfinal" },
+
+    // Semifinaler – tider i svensk tid
+    { id: 101, date: "14 juli", time: "21:00", home: "Frankrike", away: "Spanien", round: "Semifinal" }
 ];
 
 // ── Storage (Supabase) ──
