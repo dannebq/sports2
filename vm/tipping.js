@@ -342,7 +342,6 @@ function calcTotalPoints(playerData, results, medals) {
 
 let currentPlayer = null;
 let currentTab = 'matches';
-let hideScored = false;
 let groupStageExpanded = (() => {
     try { return localStorage.getItem('wc26-groupstage-expanded') === '1'; } catch (_) { return false; }
 })();
@@ -699,24 +698,20 @@ function renderMatches(container) {
     const data = _cache.allData[currentPlayer] || { medals: {}, matches: {} };
     const allResults = _cache.results;
 
-    // "Dölj avgjorda" filtrerar endast slutspelet — gruppspelet är ändå dolt
-    // bakom en knapp och visar alltid hela schemat när det fälls ut.
-    const playoffAll = schedule.filter(m =>
-        m.round && m.round !== 'Sextondelsfinal' && m.round !== 'Åttondelsfinal' && m.round !== 'Kvartsfinal'
-    );
-    const playoffVisible = (hideScored ? playoffAll.filter(m => !allResults[m.id]) : playoffAll)
+    const playoffVisible = schedule
+        .filter(m => m.round && m.round !== 'Sextondelsfinal' && m.round !== 'Åttondelsfinal' && m.round !== 'Kvartsfinal')
         .sort((a, b) => parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time));
 
-    const qfAll = schedule.filter(m => m.round === 'Kvartsfinal');
-    const qfVisible = (hideScored ? qfAll.filter(m => !allResults[m.id]) : qfAll)
+    const qfVisible = schedule
+        .filter(m => m.round === 'Kvartsfinal')
         .sort((a, b) => parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time));
 
-    const r16All = schedule.filter(m => m.round === 'Åttondelsfinal');
-    const r16Visible = (hideScored ? r16All.filter(m => !allResults[m.id]) : r16All)
+    const r16Visible = schedule
+        .filter(m => m.round === 'Åttondelsfinal')
         .sort((a, b) => parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time));
 
-    const r32All = schedule.filter(m => m.round === 'Sextondelsfinal');
-    const r32Visible = (hideScored ? r32All.filter(m => !allResults[m.id]) : r32All)
+    const r32Visible = schedule
+        .filter(m => m.round === 'Sextondelsfinal')
         .sort((a, b) => parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time));
 
     const groupGames = schedule.filter(m => m.group);
@@ -726,11 +721,7 @@ function renderMatches(container) {
         groupBuckets[m.group].push(m);
     });
 
-    let html = `<div class="match-controls">
-        <button class="hide-scored-btn ${hideScored ? 'active' : ''}" id="hideScoredBtn">
-            ${hideScored ? 'Visa avgjorda slutspelsmatcher' : 'Dölj avgjorda slutspelsmatcher'}
-        </button>
-    </div>`;
+    let html = '';
 
     // ── Slutspel ──
     const knockoutOrder = [
@@ -747,7 +738,7 @@ function renderMatches(container) {
         <h2 class="section-title">Slutspel</h2>`;
 
     if (playoffVisible.length === 0) {
-        html += `<p class="section-empty">${hideScored ? 'Inga ospelade slutspelsmatcher kvar.' : 'Slutspelet har inte börjat ännu.'}</p>`;
+        html += `<p class="section-empty">Slutspelet har inte börjat ännu.</p>`;
     } else {
         // Datumordning, men bryt med rond-rubrik när ronden byts. Eftersom ronderna
         // spelas i kronologisk ordning sammanfaller detta med en naturlig läsordning.
@@ -775,7 +766,7 @@ function renderMatches(container) {
         </button>
         <div class="groupstage-body ${qfExpanded ? '' : 'hidden'}" id="qfBody">`;
     if (qfVisible.length === 0) {
-        html += `<p class="section-empty">${hideScored ? 'Inga ospelade kvartsfinaler kvar.' : 'Kvartsfinalerna har inte börjat ännu.'}</p>`;
+        html += `<p class="section-empty">Kvartsfinalerna har inte börjat ännu.</p>`;
     } else {
         html += `<div class="playoff-round">`;
         qfVisible.forEach(match => {
@@ -795,7 +786,7 @@ function renderMatches(container) {
         </button>
         <div class="groupstage-body ${r16Expanded ? '' : 'hidden'}" id="r16Body">`;
     if (r16Visible.length === 0) {
-        html += `<p class="section-empty">${hideScored ? 'Inga ospelade åttondelsfinaler kvar.' : 'Åttondelsfinalerna har inte börjat ännu.'}</p>`;
+        html += `<p class="section-empty">Åttondelsfinalerna har inte börjat ännu.</p>`;
     } else {
         html += `<div class="playoff-round">`;
         r16Visible.forEach(match => {
@@ -815,7 +806,7 @@ function renderMatches(container) {
         </button>
         <div class="groupstage-body ${r32Expanded ? '' : 'hidden'}" id="r32Body">`;
     if (r32Visible.length === 0) {
-        html += `<p class="section-empty">${hideScored ? 'Inga ospelade sextondelsfinaler kvar.' : 'Sextondelsfinalerna har inte börjat ännu.'}</p>`;
+        html += `<p class="section-empty">Sextondelsfinalerna har inte börjat ännu.</p>`;
     } else {
         html += `<div class="playoff-round">`;
         r32Visible.forEach(match => {
@@ -846,14 +837,6 @@ function renderMatches(container) {
     html += `</div></section>`;
 
     container.innerHTML = html;
-
-    const hideBtn = container.querySelector('#hideScoredBtn');
-    if (hideBtn) {
-        hideBtn.addEventListener('click', () => {
-            hideScored = !hideScored;
-            renderMatches(container);
-        });
-    }
 
     const toggleBtn = container.querySelector('#toggleGroupStage');
     if (toggleBtn) {
