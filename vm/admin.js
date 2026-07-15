@@ -133,7 +133,11 @@ const schedule = [
 
     // Semifinaler – tider i svensk tid
     { id: 101, date: "14 juli", time: "21:00", home: "Frankrike", away: "Spanien", round: "Semifinal" },
-    { id: 102, date: "15 juli", time: "21:00", home: "England", away: "Argentina", round: "Semifinal" }
+    { id: 102, date: "15 juli", time: "21:00", home: "England", away: "Argentina", round: "Semifinal" },
+
+    // Bronsmatch och Final – tider i svensk tid
+    { id: 103, date: "18 juli", time: "23:00", home: "Frankrike", away: "England", round: "Bronsmatch" },
+    { id: 104, date: "19 juli", time: "21:00", home: "Spanien", away: "Argentina", round: "Final" }
 ];
 
 function flagUrl(teamName) {

@@ -502,6 +502,176 @@ body {
     margin-bottom: 8px;
 }
 
+/* ── Extra flärd: Final och Bronsmatch ── */
+
+.playoff-round--final,
+.playoff-round--bronze {
+    border-radius: 14px;
+    padding: 14px 12px 12px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+}
+
+.playoff-round--final {
+    background:
+        radial-gradient(120% 90% at 50% 0%, rgba(255, 245, 200, 0.55) 0%, rgba(255, 245, 200, 0) 60%),
+        linear-gradient(160deg, #2b1a05 0%, #4a2c0a 45%, #78521a 100%);
+    box-shadow:
+        0 0 0 1px rgba(255, 214, 102, 0.35),
+        0 12px 28px rgba(0, 0, 0, 0.28);
+}
+
+.playoff-round--final::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(60% 40% at 20% 10%, rgba(255, 220, 120, 0.22), transparent 70%),
+        radial-gradient(50% 35% at 85% 15%, rgba(255, 200, 90, 0.18), transparent 70%);
+    pointer-events: none;
+}
+
+.playoff-round--bronze {
+    background:
+        linear-gradient(160deg, #2a1a10 0%, #4d2e1b 55%, #7a4a2b 100%);
+    box-shadow:
+        0 0 0 1px rgba(205, 133, 83, 0.3),
+        0 8px 20px rgba(0, 0, 0, 0.22);
+}
+
+.playoff-round-header--final,
+.playoff-round-header--bronze {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    border-bottom: none;
+    padding: 6px 0 14px;
+    margin-bottom: 12px;
+    position: relative;
+    z-index: 1;
+}
+
+.playoff-round-header--final .playoff-round-title {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    background: linear-gradient(180deg, #fff4c2 0%, #ffd766 45%, #b8862a 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+    filter: drop-shadow(0 0 6px rgba(255, 214, 102, 0.45));
+}
+
+.playoff-round-header--bronze .playoff-round-title {
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: linear-gradient(180deg, #f2c39a 0%, #d38a4f 55%, #8a4a1f 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+}
+
+.playoff-trophy {
+    height: 56px;
+    width: auto;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 10px rgba(255, 214, 102, 0.55));
+    animation: trophy-glow 3.2s ease-in-out infinite;
+}
+
+.playoff-trophy--right {
+    transform: scaleX(-1);
+    animation-delay: 1.6s;
+}
+
+@keyframes trophy-glow {
+    0%, 100% {
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 8px rgba(255, 214, 102, 0.4));
+        transform: translateY(0);
+    }
+    50% {
+        filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 16px rgba(255, 214, 102, 0.75));
+        transform: translateY(-2px);
+    }
+}
+
+.playoff-trophy--right {
+    animation-name: trophy-glow-right;
+}
+
+@keyframes trophy-glow-right {
+    0%, 100% {
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 8px rgba(255, 214, 102, 0.4));
+        transform: scaleX(-1) translateY(0);
+    }
+    50% {
+        filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 16px rgba(255, 214, 102, 0.75));
+        transform: scaleX(-1) translateY(-2px);
+    }
+}
+
+.playoff-medal {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 35% 30%, #f2c39a 0%, #cd7f32 45%, #7a4a1f 100%);
+    box-shadow:
+        inset 0 -2px 4px rgba(0, 0, 0, 0.35),
+        inset 0 1px 2px rgba(255, 240, 220, 0.6),
+        0 2px 6px rgba(0, 0, 0, 0.35);
+    position: relative;
+}
+
+.playoff-medal::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    width: 6px;
+    height: 8px;
+    transform: translateX(-50%);
+    background: linear-gradient(180deg, #6a3d1d 0%, #4a2611 100%);
+    border-radius: 2px;
+}
+
+/* Match-korten inuti Final/Bronsmatch: ljus kontrast mot mörk bakgrund */
+.playoff-round--final .match-card,
+.playoff-round--bronze .match-card {
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
+    position: relative;
+    z-index: 1;
+}
+
+.playoff-round--final .match-card {
+    box-shadow:
+        0 0 0 1px rgba(255, 214, 102, 0.4),
+        0 8px 22px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 480px) {
+    .playoff-trophy {
+        height: 46px;
+    }
+
+    .playoff-round-header--final .playoff-round-title {
+        font-size: 18px;
+        letter-spacing: 2px;
+    }
+
+    .playoff-round-header--bronze .playoff-round-title {
+        font-size: 16px;
+        letter-spacing: 1.5px;
+    }
+}
+
 /* Gruppspel som hopfällbar sektion */
 .groupstage-section {
     margin-top: 8px;

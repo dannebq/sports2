@@ -135,7 +135,11 @@ const schedule = [
 
     // Semifinaler – tider i svensk tid
     { id: 101, date: "14 juli", time: "21:00", home: "Frankrike", away: "Spanien", round: "Semifinal" },
-    { id: 102, date: "15 juli", time: "21:00", home: "England", away: "Argentina", round: "Semifinal" }
+    { id: 102, date: "15 juli", time: "21:00", home: "England", away: "Argentina", round: "Semifinal" },
+
+    // Bronsmatch och Final – tider i svensk tid
+    { id: 103, date: "18 juli", time: "23:00", home: "Frankrike", away: "England", round: "Bronsmatch" },
+    { id: 104, date: "19 juli", time: "21:00", home: "Spanien", away: "Argentina", round: "Final" }
 ];
 
 // ── Storage (Supabase) ──
@@ -748,7 +752,24 @@ function renderMatches(container) {
                 if (currentRound !== null) html += `</div>`;
                 currentRound = match.round;
                 const title = knockoutTitle[currentRound] || currentRound;
-                html += `<div class="playoff-round"><div class="playoff-round-header">${title}</div>`;
+                let roundClass = 'playoff-round';
+                let headerHtml = `<div class="playoff-round-header">${title}</div>`;
+                if (currentRound === 'Final') {
+                    roundClass += ' playoff-round--final';
+                    headerHtml = `<div class="playoff-round-header playoff-round-header--final">
+                        <img class="playoff-trophy playoff-trophy--left" src="world-cup-trophy.webp" alt="">
+                        <span class="playoff-round-title">${title}</span>
+                        <img class="playoff-trophy playoff-trophy--right" src="world-cup-trophy.webp" alt="">
+                    </div>`;
+                } else if (currentRound === 'Bronsmatch') {
+                    roundClass += ' playoff-round--bronze';
+                    headerHtml = `<div class="playoff-round-header playoff-round-header--bronze">
+                        <span class="playoff-medal" aria-hidden="true"></span>
+                        <span class="playoff-round-title">${title}</span>
+                        <span class="playoff-medal" aria-hidden="true"></span>
+                    </div>`;
+                }
+                html += `<div class="${roundClass}">${headerHtml}`;
             }
             const pred = (data.matches && data.matches[match.id]) || {};
             html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match));
