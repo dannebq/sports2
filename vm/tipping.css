@@ -506,169 +506,226 @@ body {
 
 .playoff-round--final,
 .playoff-round--bronze {
-    border-radius: 14px;
-    padding: 14px 12px 12px;
-    margin-bottom: 24px;
+    border-radius: 16px;
+    padding: 4px;
+    margin: 12px 0 28px;
     position: relative;
-    overflow: hidden;
+    isolation: isolate;
 }
 
+/* Guldkant för Final, bronskant för Bronsmatch */
 .playoff-round--final {
-    background:
-        radial-gradient(120% 90% at 50% 0%, rgba(255, 245, 200, 0.55) 0%, rgba(255, 245, 200, 0) 60%),
-        linear-gradient(160deg, #2b1a05 0%, #4a2c0a 45%, #78521a 100%);
+    background: linear-gradient(140deg, #f6d67a 0%, #c9992c 30%, #8a5c14 55%, #d9b04a 80%, #f6d67a 100%);
     box-shadow:
-        0 0 0 1px rgba(255, 214, 102, 0.35),
-        0 12px 28px rgba(0, 0, 0, 0.28);
-}
-
-.playoff-round--final::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background:
-        radial-gradient(60% 40% at 20% 10%, rgba(255, 220, 120, 0.22), transparent 70%),
-        radial-gradient(50% 35% at 85% 15%, rgba(255, 200, 90, 0.18), transparent 70%);
-    pointer-events: none;
+        0 14px 30px rgba(0, 0, 0, 0.28),
+        0 2px 6px rgba(0, 0, 0, 0.18);
 }
 
 .playoff-round--bronze {
-    background:
-        linear-gradient(160deg, #2a1a10 0%, #4d2e1b 55%, #7a4a2b 100%);
+    background: linear-gradient(140deg, #d5a37a 0%, #a2643a 40%, #6d3d1f 70%, #c48857 100%);
     box-shadow:
-        0 0 0 1px rgba(205, 133, 83, 0.3),
-        0 8px 20px rgba(0, 0, 0, 0.22);
+        0 10px 22px rgba(0, 0, 0, 0.22),
+        0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
-.playoff-round-header--final,
-.playoff-round-header--bronze {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    border-bottom: none;
-    padding: 6px 0 14px;
-    margin-bottom: 12px;
+/* Inre "gala-bakgrund" */
+.playoff-round--final > .playoff-round-header--final,
+.playoff-round--final > .match-card,
+.playoff-round--bronze > .playoff-round-header--bronze,
+.playoff-round--bronze > .match-card {
     position: relative;
     z-index: 1;
 }
 
+.playoff-round--final::before,
+.playoff-round--bronze::before {
+    content: "";
+    position: absolute;
+    inset: 4px;
+    border-radius: 12px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.playoff-round--final::before {
+    background:
+        radial-gradient(80% 55% at 50% 0%, rgba(255, 214, 102, 0.22) 0%, transparent 65%),
+        linear-gradient(180deg, #10151f 0%, #0b1220 60%, #0a0f19 100%);
+}
+
+.playoff-round--bronze::before {
+    background:
+        radial-gradient(70% 55% at 50% 0%, rgba(205, 127, 50, 0.18) 0%, transparent 65%),
+        linear-gradient(180deg, #14100c 0%, #0f0b08 100%);
+}
+
+/* Header-block */
+.playoff-round-header--final,
+.playoff-round-header--bronze {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    border-bottom: none;
+    padding: 22px 16px 20px;
+    margin-bottom: 10px;
+}
+
+/* Titel: solid gold text med subtil glow – tydligt och läsbart */
 .playoff-round-header--final .playoff-round-title {
-    font-size: 22px;
-    font-weight: 800;
-    letter-spacing: 3px;
+    font-size: 34px;
+    font-weight: 900;
+    letter-spacing: 8px;
     text-transform: uppercase;
-    background: linear-gradient(180deg, #fff4c2 0%, #ffd766 45%, #b8862a 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
-    filter: drop-shadow(0 0 6px rgba(255, 214, 102, 0.45));
+    color: #ffe7a1;
+    text-shadow:
+        0 1px 0 #7c5a10,
+        0 2px 0 rgba(0, 0, 0, 0.35),
+        0 0 18px rgba(255, 214, 102, 0.45);
+    line-height: 1;
 }
 
 .playoff-round-header--bronze .playoff-round-title {
-    font-size: 18px;
-    font-weight: 700;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: #f2c8a2;
+    text-shadow:
+        0 1px 0 #5a3418,
+        0 2px 0 rgba(0, 0, 0, 0.3);
+    line-height: 1;
+}
+
+/* Undertitel – matchernas datum eller sammanhang */
+.playoff-round-subtitle {
+    font-size: 11px;
+    font-weight: 600;
     letter-spacing: 2px;
     text-transform: uppercase;
-    background: linear-gradient(180deg, #f2c39a 0%, #d38a4f 55%, #8a4a1f 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+    color: rgba(255, 232, 180, 0.7);
 }
 
+.playoff-round--bronze .playoff-round-subtitle {
+    color: rgba(242, 200, 162, 0.7);
+}
+
+/* Pokal – större, centrerad, med ljus podium-glow */
 .playoff-trophy {
-    height: 56px;
+    height: 120px;
     width: auto;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 10px rgba(255, 214, 102, 0.55));
-    animation: trophy-glow 3.2s ease-in-out infinite;
+    filter:
+        drop-shadow(0 8px 12px rgba(0, 0, 0, 0.55))
+        drop-shadow(0 0 22px rgba(255, 214, 102, 0.35));
+    animation: trophy-float 4s ease-in-out infinite;
 }
 
-.playoff-trophy--right {
-    transform: scaleX(-1);
-    animation-delay: 1.6s;
-}
-
-@keyframes trophy-glow {
+@keyframes trophy-float {
     0%, 100% {
-        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 8px rgba(255, 214, 102, 0.4));
         transform: translateY(0);
+        filter:
+            drop-shadow(0 8px 12px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 0 18px rgba(255, 214, 102, 0.3));
     }
     50% {
-        filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 16px rgba(255, 214, 102, 0.75));
-        transform: translateY(-2px);
+        transform: translateY(-4px);
+        filter:
+            drop-shadow(0 12px 18px rgba(0, 0, 0, 0.55))
+            drop-shadow(0 0 28px rgba(255, 214, 102, 0.5));
     }
 }
 
-.playoff-trophy--right {
-    animation-name: trophy-glow-right;
-}
-
-@keyframes trophy-glow-right {
-    0%, 100% {
-        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.4)) drop-shadow(0 0 8px rgba(255, 214, 102, 0.4));
-        transform: scaleX(-1) translateY(0);
-    }
-    50% {
-        filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.45)) drop-shadow(0 0 16px rgba(255, 214, 102, 0.75));
-        transform: scaleX(-1) translateY(-2px);
-    }
-}
-
+/* Bronsmedalj för bronsmatchen */
 .playoff-medal {
-    width: 22px;
-    height: 22px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background:
-        radial-gradient(circle at 35% 30%, #f2c39a 0%, #cd7f32 45%, #7a4a1f 100%);
+        radial-gradient(circle at 35% 30%, #f4c9a1 0%, #d38a4f 45%, #7a4210 100%);
     box-shadow:
-        inset 0 -2px 4px rgba(0, 0, 0, 0.35),
-        inset 0 1px 2px rgba(255, 240, 220, 0.6),
-        0 2px 6px rgba(0, 0, 0, 0.35);
+        inset 0 -3px 6px rgba(0, 0, 0, 0.4),
+        inset 0 2px 3px rgba(255, 240, 220, 0.7),
+        0 6px 12px rgba(0, 0, 0, 0.45);
     position: relative;
+    margin-top: 6px;
 }
 
 .playoff-medal::before {
     content: "";
     position: absolute;
     left: 50%;
-    bottom: 100%;
-    width: 6px;
-    height: 8px;
+    bottom: calc(100% - 4px);
+    width: 10px;
+    height: 12px;
     transform: translateX(-50%);
     background: linear-gradient(180deg, #6a3d1d 0%, #4a2611 100%);
-    border-radius: 2px;
+    border-radius: 3px 3px 0 0;
 }
 
-/* Match-korten inuti Final/Bronsmatch: ljus kontrast mot mörk bakgrund */
+.playoff-medal::after {
+    content: "3";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 900;
+    font-size: 18px;
+    color: #6a3d1d;
+    text-shadow: 0 1px 0 rgba(255, 240, 220, 0.4);
+}
+
+/* Match-korten inuti Final/Bronsmatch */
 .playoff-round--final .match-card,
 .playoff-round--bronze .match-card {
-    background: rgba(255, 255, 255, 0.97);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28);
-    position: relative;
-    z-index: 1;
+    background: #ffffff;
+    margin: 0 10px 12px;
 }
 
 .playoff-round--final .match-card {
     box-shadow:
-        0 0 0 1px rgba(255, 214, 102, 0.4),
-        0 8px 22px rgba(0, 0, 0, 0.35);
+        0 0 0 1px rgba(255, 214, 102, 0.5),
+        0 10px 26px rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+}
+
+.playoff-round--bronze .match-card {
+    box-shadow:
+        0 0 0 1px rgba(205, 127, 50, 0.4),
+        0 8px 20px rgba(0, 0, 0, 0.32);
+    border-radius: 10px;
 }
 
 @media (max-width: 480px) {
     .playoff-trophy {
-        height: 46px;
+        height: 92px;
+    }
+
+    .playoff-round-header--final {
+        padding: 18px 12px 16px;
     }
 
     .playoff-round-header--final .playoff-round-title {
-        font-size: 18px;
-        letter-spacing: 2px;
+        font-size: 26px;
+        letter-spacing: 6px;
+    }
+
+    .playoff-round-header--bronze {
+        padding: 16px 12px 14px;
     }
 
     .playoff-round-header--bronze .playoff-round-title {
-        font-size: 16px;
-        letter-spacing: 1.5px;
+        font-size: 18px;
+        letter-spacing: 4px;
+    }
+
+    .playoff-medal {
+        width: 38px;
+        height: 38px;
+    }
+
+    .playoff-medal::after {
+        font-size: 15px;
     }
 }
 

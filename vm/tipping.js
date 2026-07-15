@@ -757,16 +757,16 @@ function renderMatches(container) {
                 if (currentRound === 'Final') {
                     roundClass += ' playoff-round--final';
                     headerHtml = `<div class="playoff-round-header playoff-round-header--final">
-                        <img class="playoff-trophy playoff-trophy--left" src="world-cup-trophy.webp" alt="">
-                        <span class="playoff-round-title">${title}</span>
-                        <img class="playoff-trophy playoff-trophy--right" src="world-cup-trophy.webp" alt="">
+                        <img class="playoff-trophy" src="world-cup-trophy.webp" alt="VM-pokalen">
+                        <div class="playoff-round-title">${title}</div>
+                        <div class="playoff-round-subtitle">VM 2026 · Söndag 19 juli</div>
                     </div>`;
                 } else if (currentRound === 'Bronsmatch') {
                     roundClass += ' playoff-round--bronze';
                     headerHtml = `<div class="playoff-round-header playoff-round-header--bronze">
                         <span class="playoff-medal" aria-hidden="true"></span>
-                        <span class="playoff-round-title">${title}</span>
-                        <span class="playoff-medal" aria-hidden="true"></span>
+                        <div class="playoff-round-title">${title}</div>
+                        <div class="playoff-round-subtitle">Lördag 18 juli</div>
                     </div>`;
                 }
                 html += `<div class="${roundClass}">${headerHtml}`;
