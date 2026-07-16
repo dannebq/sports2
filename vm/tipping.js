@@ -358,6 +358,9 @@ let r16Expanded = (() => {
 let qfExpanded = (() => {
     try { return localStorage.getItem('wc26-qf-expanded') === '1'; } catch (_) { return false; }
 })();
+let sfExpanded = (() => {
+    try { return localStorage.getItem('wc26-sf-expanded') === '1'; } catch (_) { return false; }
+})();
 
 // Shared data cache refreshed on each render cycle
 let _cache = {
@@ -703,7 +706,11 @@ function renderMatches(container) {
     const allResults = _cache.results;
 
     const playoffVisible = schedule
-        .filter(m => m.round && m.round !== 'Sextondelsfinal' && m.round !== 'Åttondelsfinal' && m.round !== 'Kvartsfinal')
+        .filter(m => m.round && m.round !== 'Sextondelsfinal' && m.round !== 'Åttondelsfinal' && m.round !== 'Kvartsfinal' && m.round !== 'Semifinal')
+        .sort((a, b) => parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time));
+
+    const sfVisible = schedule
+        .filter(m => m.round === 'Semifinal')
         .sort((a, b) => parseMatchDateTime(a.date, a.time) - parseMatchDateTime(b.date, b.time));
 
     const qfVisible = schedule
@@ -777,6 +784,26 @@ function renderMatches(container) {
         if (currentRound !== null) html += `</div>`;
     }
     html += `</section>`;
+
+    // ── Semifinaler (kollapsad bakom knapp) ──
+    html += `<section class="groupstage-section">
+        <button class="groupstage-toggle ${sfExpanded ? 'open' : ''}" id="toggleSF"
+                aria-expanded="${sfExpanded ? 'true' : 'false'}" aria-controls="sfBody">
+            <span class="groupstage-toggle-label">Semifinaler</span>
+            <span class="groupstage-arrow" aria-hidden="true">${sfExpanded ? '▾' : '▸'}</span>
+        </button>
+        <div class="groupstage-body ${sfExpanded ? '' : 'hidden'}" id="sfBody">`;
+    if (sfVisible.length === 0) {
+        html += `<p class="section-empty">Semifinalerna har inte börjat ännu.</p>`;
+    } else {
+        html += `<div class="playoff-round">`;
+        sfVisible.forEach(match => {
+            const pred = (data.matches && data.matches[match.id]) || {};
+            html += renderMatchCard(match, pred, allResults[match.id], isMatchLocked(match));
+        });
+        html += `</div>`;
+    }
+    html += `</div></section>`;
 
     // ── Kvartsfinaler (kollapsad bakom knapp) ──
     html += `<section class="groupstage-section">
@@ -891,6 +918,15 @@ function renderMatches(container) {
         qfBtn.addEventListener('click', () => {
             qfExpanded = !qfExpanded;
             try { localStorage.setItem('wc26-qf-expanded', qfExpanded ? '1' : '0'); } catch (_) {}
+            renderMatches(container);
+        });
+    }
+
+    const sfBtn = container.querySelector('#toggleSF');
+    if (sfBtn) {
+        sfBtn.addEventListener('click', () => {
+            sfExpanded = !sfExpanded;
+            try { localStorage.setItem('wc26-sf-expanded', sfExpanded ? '1' : '0'); } catch (_) {}
             renderMatches(container);
         });
     }
