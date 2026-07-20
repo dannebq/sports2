@@ -345,7 +345,7 @@ function calcTotalPoints(playerData, results, medals) {
 // ── UI State ──
 
 let currentPlayer = null;
-let currentTab = 'matches';
+let currentTab = 'report';
 let groupStageExpanded = (() => {
     try { return localStorage.getItem('wc26-groupstage-expanded') === '1'; } catch (_) { return false; }
 })();
@@ -464,9 +464,9 @@ function renderPlayerSelect() {
 
 async function selectPlayer(name) {
     currentPlayer = name;
-    currentTab = 'matches';
+    currentTab = 'report';
     document.querySelectorAll('.tab-btn').forEach(b => {
-        b.classList.toggle('active', b.dataset.tab === 'matches');
+        b.classList.toggle('active', b.dataset.tab === 'report');
     });
 
     const groupsTab = document.getElementById('tabGroups');
@@ -492,7 +492,7 @@ async function selectPlayer(name) {
     `;
     document.getElementById('changePlayer').addEventListener('click', async () => {
         currentPlayer = null;
-        currentTab = 'matches';
+        currentTab = 'report';
         try { localStorage.removeItem('wc26-player'); } catch (_) {}
         document.getElementById('tippingScreen').classList.add('hidden');
         document.getElementById('playerSelect').classList.remove('hidden');
@@ -1310,8 +1310,10 @@ function buildReportStats() {
         let outcomes = 0;
         let submitted = 0;
         let predictedGoals = 0;
+        let actualGoals = 0;
         let playoffPoints = 0;
         const teamPoints = {};
+        const teamStats = {};
         const scoredTips = [];
 
         completedMatches.forEach(match => {
@@ -1321,11 +1323,18 @@ function buildReportStats() {
             if (pts === null) return;
             submitted++;
             predictedGoals += pred.home + pred.away;
+            actualGoals += result.home + result.away;
             if (pts === 2) exact++;
             if (pts > 0) outcomes++;
             if (match.round) playoffPoints += pts;
             teamPoints[match.home] = (teamPoints[match.home] || 0) + pts;
             teamPoints[match.away] = (teamPoints[match.away] || 0) + pts;
+            [match.home, match.away].forEach(team => {
+                const stats = teamStats[team] || (teamStats[team] = { tips: 0, correct: 0, points: 0 });
+                stats.tips++;
+                stats.points += pts;
+                if (pts > 0) stats.correct++;
+            });
             scoredTips.push({ match, pred, pts });
         });
 
@@ -1357,8 +1366,12 @@ function buildReportStats() {
             outcomes,
             submitted,
             predictedGoals,
+            actualGoals,
+            goalDelta: predictedGoals - actualGoals,
             playoffPoints,
             groupPositions,
+            wrongOutcomes: submitted - outcomes,
+            teamStats,
             bestScoredTip,
             favoriteTeam: favoriteTeam ? { team: favoriteTeam[0], points: favoriteTeam[1] } : null
         };
@@ -1400,38 +1413,165 @@ function buildReportStats() {
     };
 }
 
-function reportAward(row, rows) {
-    const isMax = (key, requirePositive = true) => {
-        const values = rows.map(r => r[key]).filter(v => v != null);
-        const max = values.length ? Math.max(...values) : 0;
-        return row[key] === max && (!requirePositive || max > 0);
-    };
-    const activeRows = rows.filter(r => r.submitted > 0);
-    const minGoals = activeRows.length ? Math.min(...activeRows.map(r => r.predictedGoals)) : null;
+function buildUniqueReportAwards(rows) {
+    const awards = new Map();
+    const usedTitles = new Set();
+    const unassigned = row => !awards.has(row);
+    const byDesc = key => (a, b) => b[key] - a[key] || a.rank - b.rank;
+    const byAsc = key => (a, b) => a[key] - b[key] || b.rank - a.rank;
 
-    if (row.rank === 1) return { icon: '🏆', title: 'Tipsets världsmästare', text: 'Höll huvudet kallast när varje poäng räknades.' };
-    if (isMax('exact')) return { icon: '🎯', title: 'Prickskytten', text: `${row.exact} exakta resultat – kirurgisk precision.` };
-    if (isMax('medalPts')) return { icon: '🏅', title: 'Medaljexperten', text: `${row.medalPts} poäng på medaljtipset.` };
-    if (isMax('playoffPoints')) return { icon: '🔥', title: 'Slutspurtaren', text: `${row.playoffPoints} poäng när utslagsmatcherna började.` };
-    if (isMax('outcomes')) return { icon: '🔮', title: 'Oraklet', text: `${row.outcomes} rätta matchutfall totalt.` };
-    if (row.groupPositions != null && isMax('groupPositions')) {
-        return { icon: '🧩', title: 'Gruppspelsprofessorn', text: `${row.groupPositions} lag placerades på exakt rätt plats.` };
+    function assignFirst(candidates, makeAward) {
+        for (const row of candidates) {
+            if (!unassigned(row)) continue;
+            const award = makeAward(row);
+            if (!award || usedTitles.has(award.title)) continue;
+            awards.set(row, award);
+            usedTitles.add(award.title);
+            return true;
+        }
+        return false;
     }
-    if (row.submitted > 0 && isMax('predictedGoals')) {
-        return { icon: '⚽', title: 'Målfesten', text: `${row.predictedGoals} mål tippades – defensiv var inget alternativ.` };
+
+    assignFirst(rows.filter(r => r.rank === 1), () => ({
+        icon: '🏆',
+        title: 'Tipsets världsmästare',
+        text: 'Höll huvudet kallast när varje poäng räknades.'
+    }));
+    assignFirst([...rows].filter(r => r.exact > 0).sort(byDesc('exact')), row => ({
+        icon: '🎯',
+        title: 'Prickskytten',
+        text: `${row.exact} exakta resultat – kirurgisk precision.`
+    }));
+    assignFirst([...rows].filter(r => r.outcomes > 0).sort(byDesc('outcomes')), row => ({
+        icon: '🔮',
+        title: 'Oraklet',
+        text: `${row.outcomes} rätta matchutfall totalt.`
+    }));
+    assignFirst([...rows].filter(r => r.medalPts > 0).sort(byDesc('medalPts')), row => ({
+        icon: '🏅',
+        title: 'Medaljexperten',
+        text: `${row.medalPts} poäng på medaljtipset.`
+    }));
+    assignFirst([...rows].filter(r => r.playoffPoints > 0).sort(byDesc('playoffPoints')), row => ({
+        icon: '🔥',
+        title: 'Slutspurtaren',
+        text: `${row.playoffPoints} poäng när utslagsmatcherna började.`
+    }));
+    assignFirst([...rows].filter(r => r.groupPositions > 0).sort(byDesc('groupPositions')), row => ({
+        icon: '🧩',
+        title: 'Gruppspelsprofessorn',
+        text: `${row.groupPositions} lag placerades på exakt rätt plats.`
+    }));
+
+    // Dela ut högst tre landsförbannelser. Samma landstitel får aldrig återanvändas.
+    let curseCount = 0;
+    for (const row of rows) {
+        if (!unassigned(row) || curseCount >= 3) continue;
+        const cursedTeams = Object.entries(row.teamStats)
+            .filter(([, stats]) => stats.tips >= 2 && stats.correct === 0)
+            .sort((a, b) => b[1].tips - a[1].tips || a[0].localeCompare(b[0], 'sv'));
+        for (const [team, stats] of cursedTeams) {
+            const award = {
+                icon: '☠️',
+                title: `${team}-förbannelsen`,
+                text: `0 rätta utfall på ${stats.tips} matcher med ${team}. Imponerande konsekvent.`
+            };
+            if (usedTitles.has(award.title)) continue;
+            awards.set(row, award);
+            usedTitles.add(award.title);
+            curseCount++;
+            break;
+        }
     }
-    if (row.submitted > 0 && row.predictedGoals === minGoals) {
-        return { icon: '🧱', title: 'Försvarsstrategen', text: 'Litade på täta matcher och välorganiserade backlinjer.' };
-    }
-    if (row.favoriteTeam && row.favoriteTeam.points > 0) {
-        return {
-            icon: '🧠',
-            title: `${row.favoriteTeam.team}-kännaren`,
-            text: `Samlade ${row.favoriteTeam.points} poäng när ${row.favoriteTeam.team} spelade.`
-        };
-    }
-    if (row.submitted > 0) return { icon: '🎲', title: 'Den modiga tipparen', text: 'Vågade gå sin egen väg hela vägen till slutsignalen.' };
-    return { icon: '📣', title: 'Publikfavoriten', text: 'En självklar del av VM-gänget, från första match till final.' };
+
+    const activeRows = rows.filter(r => r.submitted > 0);
+    assignFirst([...activeRows].sort(byDesc('wrongOutcomes')), row => ({
+        icon: '🚫',
+        title: 'Nollvisionären',
+        text: `${row.wrongOutcomes} matcher gav 0 poäng. En tydlig vision, åt fel håll.`
+    }));
+    assignFirst([...activeRows].sort(byAsc('exact')), row => ({
+        icon: '🫣',
+        title: 'Fullträffsfobin',
+        text: `${row.exact} exakta resultat. Stolparna stod uppenbarligen fel.`
+    }));
+    assignFirst([...activeRows].sort(byAsc('playoffPoints')), row => ({
+        icon: '🏖️',
+        title: 'Semester i slutspelet',
+        text: `${row.playoffPoints} slutspelspoäng. Formen toppades någon annanstans.`
+    }));
+    assignFirst([...activeRows].filter(r => r.goalDelta > 0).sort(byDesc('goalDelta')), row => ({
+        icon: '🚀',
+        title: 'Målgalningen',
+        text: `Tippade totalt ${row.goalDelta} mål fler än vad som faktiskt gjordes.`
+    }));
+    assignFirst([...activeRows].filter(r => r.goalDelta < 0).sort(byAsc('goalDelta')), row => ({
+        icon: '🧱',
+        title: 'Målsnåljåpen',
+        text: `Tippade totalt ${Math.abs(row.goalDelta)} mål färre än verkligheten.`
+    }));
+    assignFirst([...rows].filter(r => r.medalPts === 0 && r.submitted > 0).sort(byDesc('total')), () => ({
+        icon: '🙈',
+        title: 'Medaljblind',
+        text: 'Noll medaljpoäng. Pallen kom som en fullständig överraskning.'
+    }));
+    assignFirst([...rows].filter(r => r.groupPositions != null).sort(byAsc('groupPositions')), row => ({
+        icon: '🌪️',
+        title: 'Gruppspelskaoset',
+        text: `${row.groupPositions} rätt placerade lag. Tabeller är tydligen en tolkningsfråga.`
+    }));
+    assignFirst([...rows].reverse(), row => ({
+        icon: '🥄',
+        title: 'Tipsets träsked',
+        text: `${row.total} poäng och en placering som lämnar gott om utrymme för revansch.`
+    }));
+
+    // Om någon återstår används deras svagaste land. Vi provar flera lag så även
+    // dessa dynamiska titlar garanterat blir unika.
+    rows.filter(unassigned).forEach(row => {
+        const weakestTeams = Object.entries(row.teamStats)
+            .filter(([, stats]) => stats.tips > 0)
+            .sort((a, b) =>
+                (a[1].points / a[1].tips) - (b[1].points / b[1].tips)
+                || b[1].tips - a[1].tips
+                || a[0].localeCompare(b[0], 'sv')
+            );
+        for (const [team, stats] of weakestTeams) {
+            const award = {
+                icon: '🤧',
+                title: `${team}-allergikern`,
+                text: `${stats.points} poäng på ${stats.tips} tips med ${team} inblandat.`
+            };
+            if (usedTitles.has(award.title)) continue;
+            awards.set(row, award);
+            usedTitles.add(award.title);
+            break;
+        }
+    });
+
+    const fallbackAwards = [
+        ['🎲', 'Kupongmarodören', 'Lämnade logiken hemma och spelade med hjärtat.'],
+        ['📉', 'Formsvackan', 'Hittade dalarna som andra inte ens visste fanns.'],
+        ['🧨', 'Kaosagenten', 'Gjorde varje match lite mindre förutsägbar.'],
+        ['🛟', 'Räddningsplankan', 'Höll fast vid tipset även när verkligheten protesterade.'],
+        ['📣', 'Publikfavoriten', 'Poängen är tillfälliga. Närvaron är odödlig.']
+    ];
+    let fallbackIndex = 0;
+    rows.filter(unassigned).forEach(row => {
+        const fallback = fallbackAwards[fallbackIndex];
+        const award = fallback
+            ? { icon: fallback[0], title: fallback[1], text: fallback[2] }
+            : {
+                icon: '🎟️',
+                title: `Wildcard ${fallbackIndex + 1}`,
+                text: 'En helt egen kategori – bokstavligen.'
+            };
+        fallbackIndex++;
+        awards.set(row, award);
+        usedTitles.add(award.title);
+    });
+
+    return awards;
 }
 
 function reportBestTip(row) {
@@ -1461,6 +1601,7 @@ function renderFinalReport(container) {
     }
 
     const report = buildReportStats();
+    const participantAwards = buildUniqueReportAwards(report.rows);
     const isComplete = report.completedMatches.length === schedule.length && !!_cache.medals.gold;
     const podium = report.rows.slice(0, 3);
     const medalIcons = ['🥇', '🥈', '🥉'];
@@ -1530,7 +1671,7 @@ function renderFinalReport(container) {
         <div class="report-participant-grid">`;
 
     report.rows.forEach(row => {
-        const award = reportAward(row, report.rows);
+        const award = participantAwards.get(row);
         const groupStat = row.groupPositions != null
             ? `<span><strong>${row.groupPositions}</strong> rätta gruppplatser</span>`
             : '';
