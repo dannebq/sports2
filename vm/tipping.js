@@ -520,6 +520,7 @@ function renderContent() {
         case 'matches': renderMatches(main); break;
         case 'groups': renderGroups(main); break;
         case 'leaderboard': renderLeaderboard(main); break;
+        case 'report': renderFinalReport(main); break;
     }
 }
 
@@ -1294,6 +1295,272 @@ async function saveGroupOrder(ul) {
 
     await Storage.saveGroupTip(currentPlayer, groupKey, ranking);
     await refreshCache();
+}
+
+// ── Final report tab ──
+
+function buildReportStats() {
+    const completedMatches = schedule.filter(m => _cache.results[m.id]);
+    const completedPlayoffs = completedMatches.filter(m => m.round);
+
+    const rows = _cache.players.map(name => {
+        const data = _cache.allData[name] || { medals: {}, matches: {}, groupTips: {} };
+        const points = calcTotalPoints(data, _cache.results, _cache.medals);
+        let exact = 0;
+        let outcomes = 0;
+        let submitted = 0;
+        let predictedGoals = 0;
+        let playoffPoints = 0;
+        const teamPoints = {};
+        const scoredTips = [];
+
+        completedMatches.forEach(match => {
+            const pred = (data.matches && data.matches[match.id]) || {};
+            const result = _cache.results[match.id];
+            const pts = calcMatchPoints(pred.home, pred.away, result.home, result.away);
+            if (pts === null) return;
+            submitted++;
+            predictedGoals += pred.home + pred.away;
+            if (pts === 2) exact++;
+            if (pts > 0) outcomes++;
+            if (match.round) playoffPoints += pts;
+            teamPoints[match.home] = (teamPoints[match.home] || 0) + pts;
+            teamPoints[match.away] = (teamPoints[match.away] || 0) + pts;
+            scoredTips.push({ match, pred, pts });
+        });
+
+        let groupPositions = null;
+        if (_cache.groupTippers.includes(name)) {
+            groupPositions = 0;
+            Object.keys(getGroupTeams()).forEach(groupKey => {
+                const facit = getGroupFacit(groupKey);
+                if (!facit) return;
+                const actual = facit.map(s => s.team);
+                const tip = effectiveGroupTip(name, groupKey);
+                tip.forEach((team, i) => {
+                    if (team === actual[i]) groupPositions++;
+                });
+            });
+        }
+
+        const bestScoredTip = [...scoredTips].reverse().find(t => t.pts === 2)
+            || [...scoredTips].reverse().find(t => t.pts === 1)
+            || [...scoredTips].reverse().find(t => t.pts === 0)
+            || null;
+        const favoriteTeam = Object.entries(teamPoints)
+            .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], 'sv'))[0];
+
+        return {
+            name,
+            ...points,
+            exact,
+            outcomes,
+            submitted,
+            predictedGoals,
+            playoffPoints,
+            groupPositions,
+            bestScoredTip,
+            favoriteTeam: favoriteTeam ? { team: favoriteTeam[0], points: favoriteTeam[1] } : null
+        };
+    }).sort((a, b) => b.total - a.total || b.exact - a.exact || a.name.localeCompare(b.name, 'sv'));
+
+    let previousTotal = null;
+    let previousRank = 0;
+    rows.forEach((row, index) => {
+        if (row.total !== previousTotal) previousRank = index + 1;
+        row.rank = previousRank;
+        previousTotal = row.total;
+    });
+
+    const matchDifficulty = completedMatches.map(match => {
+        let submitted = 0;
+        let correct = 0;
+        _cache.players.forEach(name => {
+            const data = _cache.allData[name] || {};
+            const pred = (data.matches && data.matches[match.id]) || {};
+            const result = _cache.results[match.id];
+            const pts = calcMatchPoints(pred.home, pred.away, result.home, result.away);
+            if (pts === null) return;
+            submitted++;
+            if (pts > 0) correct++;
+        });
+        return { match, submitted, correct, rate: submitted ? correct / submitted : null };
+    }).filter(item => item.rate !== null);
+
+    const byDifficulty = [...matchDifficulty].sort((a, b) => a.rate - b.rate);
+    return {
+        rows,
+        completedMatches,
+        completedPlayoffs,
+        totalTips: rows.reduce((sum, row) => sum + row.submitted, 0),
+        totalExact: rows.reduce((sum, row) => sum + row.exact, 0),
+        totalPoints: rows.reduce((sum, row) => sum + row.total, 0),
+        hardest: byDifficulty[0] || null,
+        easiest: byDifficulty[byDifficulty.length - 1] || null
+    };
+}
+
+function reportAward(row, rows) {
+    const isMax = (key, requirePositive = true) => {
+        const values = rows.map(r => r[key]).filter(v => v != null);
+        const max = values.length ? Math.max(...values) : 0;
+        return row[key] === max && (!requirePositive || max > 0);
+    };
+    const activeRows = rows.filter(r => r.submitted > 0);
+    const minGoals = activeRows.length ? Math.min(...activeRows.map(r => r.predictedGoals)) : null;
+
+    if (row.rank === 1) return { icon: '🏆', title: 'Tipsets världsmästare', text: 'Höll huvudet kallast när varje poäng räknades.' };
+    if (isMax('exact')) return { icon: '🎯', title: 'Prickskytten', text: `${row.exact} exakta resultat – kirurgisk precision.` };
+    if (isMax('medalPts')) return { icon: '🏅', title: 'Medaljexperten', text: `${row.medalPts} poäng på medaljtipset.` };
+    if (isMax('playoffPoints')) return { icon: '🔥', title: 'Slutspurtaren', text: `${row.playoffPoints} poäng när utslagsmatcherna började.` };
+    if (isMax('outcomes')) return { icon: '🔮', title: 'Oraklet', text: `${row.outcomes} rätta matchutfall totalt.` };
+    if (row.groupPositions != null && isMax('groupPositions')) {
+        return { icon: '🧩', title: 'Gruppspelsprofessorn', text: `${row.groupPositions} lag placerades på exakt rätt plats.` };
+    }
+    if (row.submitted > 0 && isMax('predictedGoals')) {
+        return { icon: '⚽', title: 'Målfesten', text: `${row.predictedGoals} mål tippades – defensiv var inget alternativ.` };
+    }
+    if (row.submitted > 0 && row.predictedGoals === minGoals) {
+        return { icon: '🧱', title: 'Försvarsstrategen', text: 'Litade på täta matcher och välorganiserade backlinjer.' };
+    }
+    if (row.favoriteTeam && row.favoriteTeam.points > 0) {
+        return {
+            icon: '🧠',
+            title: `${row.favoriteTeam.team}-kännaren`,
+            text: `Samlade ${row.favoriteTeam.points} poäng när ${row.favoriteTeam.team} spelade.`
+        };
+    }
+    if (row.submitted > 0) return { icon: '🎲', title: 'Den modiga tipparen', text: 'Vågade gå sin egen väg hela vägen till slutsignalen.' };
+    return { icon: '📣', title: 'Publikfavoriten', text: 'En självklar del av VM-gänget, från första match till final.' };
+}
+
+function reportBestTip(row) {
+    const item = row.bestScoredTip;
+    if (!item) return 'Inga matchtips registrerade';
+    const matchName = `${item.match.home}–${item.match.away}`;
+    const score = `${item.pred.home}–${item.pred.away}`;
+    if (item.pts === 2) return `Fullträff: ${matchName} ${score}`;
+    if (item.pts === 1) return `Rätt utfall: ${matchName} ${score}`;
+    return `Minnesvärt tips: ${matchName} ${score}`;
+}
+
+function reportMatchFact(label, item) {
+    if (!item) return '';
+    const pct = Math.round(item.rate * 100);
+    return `<div class="report-match-fact">
+        <span class="report-match-fact-label">${label}</span>
+        <strong>${item.match.home}–${item.match.away}</strong>
+        <span>${pct}% tippade rätt utfall</span>
+    </div>`;
+}
+
+function renderFinalReport(container) {
+    if (_cache.players.length === 0) {
+        container.innerHTML = '<div class="report-empty">Inga deltagare att sammanfatta ännu.</div>';
+        return;
+    }
+
+    const report = buildReportStats();
+    const isComplete = report.completedMatches.length === schedule.length && !!_cache.medals.gold;
+    const podium = report.rows.slice(0, 3);
+    const medalIcons = ['🥇', '🥈', '🥉'];
+    const actualMedals = _cache.medals;
+
+    let html = `<div class="final-report">
+        <section class="report-hero">
+            <div class="report-confetti" aria-hidden="true">✦</div>
+            <img src="world-cup-trophy.webp" alt="VM-pokalen" class="report-trophy">
+            <div class="report-kicker">VM-tipset 2026</div>
+            <h2>${isComplete ? 'Efter slutsignalen' : 'Rapport från mästerskapet'}</h2>
+            <p>${report.completedMatches.length} matcher, ${report.totalTips} tips och ett imponerande antal självsäkra beslut senare.</p>
+        </section>
+
+        <section class="report-section">
+            <h3>Prispallen</h3>
+            <div class="report-podium">`;
+
+    podium.forEach(row => {
+        const podiumRank = Math.min(row.rank, 3);
+        html += `<div class="report-podium-card report-podium-${podiumRank}">
+            <span class="report-podium-medal">${medalIcons[podiumRank - 1]}</span>
+            ${playerAvatar(row.name, 'report-avatar')}
+            <strong>${row.name}</strong>
+            <span>${row.total} poäng</span>
+            <small>${row.exact} fullträffar</small>
+        </div>`;
+    });
+
+    html += `</div></section>
+        <section class="report-number-grid">
+            <div class="report-number"><strong>${_cache.players.length}</strong><span>deltagare</span></div>
+            <div class="report-number"><strong>${report.totalPoints}</strong><span>utdelade poäng</span></div>
+            <div class="report-number"><strong>${report.totalExact}</strong><span>exakta resultat</span></div>
+            <div class="report-number"><strong>${report.totalTips}</strong><span>inlämnade tips</span></div>
+        </section>`;
+
+    if (actualMedals.gold) {
+        html += `<section class="report-section report-medals">
+            <h3>VM-pallen</h3>
+            <div class="report-medal-line">
+                <span>🥇 ${actualMedals.gold}</span>
+                <span>🥈 ${actualMedals.silver}</span>
+                <span>🥉 ${actualMedals.bronze}</span>
+            </div>
+        </section>`;
+    }
+
+    if (report.hardest || report.easiest) {
+        html += `<section class="report-section">
+            <h3>Matcherna vi minns</h3>
+            <div class="report-match-facts">
+                ${reportMatchFact('Tipsets nöt', report.hardest)}
+                ${reportMatchFact('Folkets säkra kort', report.easiest)}
+            </div>
+        </section>`;
+    }
+
+    html += `<section class="report-section report-everyone">
+        <div class="report-section-heading">
+            <div>
+                <span class="report-kicker">Ingen glömd</span>
+                <h3>Alla deltagare</h3>
+            </div>
+            <span>${report.rows.length} av ${_cache.players.length} med</span>
+        </div>
+        <div class="report-participant-grid">`;
+
+    report.rows.forEach(row => {
+        const award = reportAward(row, report.rows);
+        const groupStat = row.groupPositions != null
+            ? `<span><strong>${row.groupPositions}</strong> rätta gruppplatser</span>`
+            : '';
+        html += `<article class="report-participant-card">
+            <div class="report-participant-head">
+                ${playerAvatar(row.name, 'report-avatar')}
+                <div><h4>${row.name}</h4><span>Plats ${row.rank} · ${row.total} poäng</span></div>
+            </div>
+            <div class="report-award">
+                <span class="report-award-icon">${award.icon}</span>
+                <div><strong>${award.title}</strong><p>${award.text}</p></div>
+            </div>
+            <div class="report-person-stats">
+                <span><strong>${row.exact}</strong> fullträffar</span>
+                <span><strong>${row.outcomes}</strong> rätta utfall</span>
+                <span><strong>${row.medalPts}</strong> medaljpoäng</span>
+                ${groupStat}
+            </div>
+            <div class="report-best-tip">${reportBestTip(row)}</div>
+        </article>`;
+    });
+
+    html += `</div></section>
+        <section class="report-finale">
+            <span>🏟️</span>
+            <p>Tack för kampen, analyserna och alla tips. Revansch om fyra år!</p>
+        </section>
+    </div>`;
+
+    container.innerHTML = html;
 }
 
 // ── Leaderboard tab ──
