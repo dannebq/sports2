@@ -405,48 +405,31 @@ const skiClassicsSchedule = [
     { date: "2026-03-29", location: "Bardufoss–Finnsnes, Norge", time: "08:35", event: "Grand Finale Summit 2 Senja, 60 km (damer)" }
 ];
 
-// IFK Kristianstad 2025/2026
+// IFK Kristianstad 2026/2027
 const handballLeagueSchedule = [
-    // Grundserie & EHF
-    { date: "2026-02-10", time: "19:00", home: "IFK Kristianstad", away: "VästeråsIrsta HF" },
-    { date: "2026-02-13", time: "19:00", home: "HK Malmö", away: "IFK Kristianstad" },
-    { date: "2026-02-17", time: "20:45", home: "MT Melsungen", away: "IFK Kristianstad" },
-    { date: "2026-02-20", time: "19:00", home: "Ystads IF HF", away: "IFK Kristianstad" },
-    { date: "2026-02-24", time: "18:45", home: "IFK Kristianstad", away: "Sport Lisboa e Benfica" },
-    { date: "2026-02-28", time: "16:00", home: "IFK Kristianstad", away: "Eskilstuna Guif" },
-    { date: "2026-03-03", time: "18:45", home: "IFK Kristianstad", away: "MT Melsungen" },
-    { date: "2026-03-07", time: "16:30", home: "Hammarby IF HF", away: "IFK Kristianstad" },
-    { date: "2026-03-10", time: "19:00", home: "Sport Lisboa e Benfica", away: "IFK Kristianstad" },
-    { date: "2026-03-12", time: "19:00", home: "IFK Kristianstad", away: "OV Helsingborg HK" },
-    { date: "2026-03-19", time: "20:30", home: "Island", away: "Sverige (herrar)" },
-    { date: "2026-03-21", time: "18:00", home: "Island", away: "Sverige (herrar)" },
-    { date: "2026-03-25", time: "19:00", home: "IFK Skövde HK", away: "IFK Kristianstad" },
-    { date: "2026-03-28", time: "13:00", home: "HF Karlskrona", away: "IFK Kristianstad" },
-    { date: "2026-03-29", time: "15:45", home: "IFK Kristianstad", away: "TBD" },
-    { date: "2026-03-31", time: "18:45", home: "IFK Kristianstad", away: "RK Nexe" },
-    { date: "2026-04-07", time: "20:45", home: "RK Nexe", away: "IFK Kristianstad" },
-    { date: "2026-04-08", time: "14:00", home: "Ukraina", away: "Sverige (damer)" },
-    { date: "2026-04-12", time: "18:00", home: "Sverige", away: "Litauen (damer)" },
-    // Kvartsfinal: IFK Kristianstad–HF Karlskrona (bäst av 5)
-    { date: "2026-04-03", time: "19:00", home: "IFK Kristianstad", away: "HF Karlskrona", round: "Kvartsfinal" },
-    { date: "2026-04-09", time: "19:00", home: "HF Karlskrona", away: "IFK Kristianstad", round: "Kvartsfinal" },
-    { date: "2026-04-13", time: "19:00", home: "IFK Kristianstad", away: "HF Karlskrona", round: "Kvartsfinal" },
-    { date: "2026-04-16", time: "19:00", home: "HF Karlskrona", away: "IFK Kristianstad", round: "Kvartsfinal" },
-    // Semifinal: IFK Kristianstad–Alingsås (bäst av 5)
-    { date: "2026-04-23", time: "19:00", home: "IFK Kristianstad", away: "Alingsås", round: "Semifinal" },
-    { date: "2026-04-29", time: "19:00", home: "Alingsås", away: "IFK Kristianstad", round: "Semifinal" },
-    { date: "2026-05-02", time: "16:00", home: "IFK Kristianstad", away: "Alingsås", round: "Semifinal" },
-    { date: "2026-05-06", time: "19:00", home: "Alingsås", away: "IFK Kristianstad", round: "Semifinal", ev: true },
-    { date: "2026-05-08", time: "19:00", home: "IFK Kristianstad", away: "Alingsås", round: "Semifinal", ev: true },
-    // Sverige
-    { date: "2026-05-13", time: "18:10", home: "Sverige", away: "Kroatien (herrar)" },
-    { date: "2026-05-16", time: "TBD", home: "Kroatien", away: "Sverige (herrar)" },
-    // Ev. SM-Final
-    { date: "2026-05-20", time: "TBD", home: "TBD", away: "TBD", round: "SM-Final", ev: true },
-    { date: "2026-05-23", time: "TBD", home: "TBD", away: "TBD", round: "SM-Final", ev: true },
-    { date: "2026-05-26", time: "TBD", home: "TBD", away: "TBD", round: "SM-Final", ev: true },
-    { date: "2026-05-29", time: "TBD", home: "TBD", away: "TBD", round: "SM-Final", ev: true },
-    { date: "2026-05-31", time: "TBD", home: "TBD", away: "TBD", round: "SM-Final", ev: true }
+    // Grundserie
+    { date: "2026-10-19", time: "19:00", home: "IK Sävehof", away: "IFK Kristianstad" },
+    { date: "2026-10-25", time: "16:00", home: "HF Karlskrona", away: "IFK Kristianstad" },
+    { date: "2026-11-01", time: "15:00", home: "Skånela IF", away: "IFK Kristianstad" },
+    { date: "2026-11-11", time: "19:00", home: "IFK Kristianstad", away: "Amo HK" },
+    { date: "2026-11-15", time: "16:00", home: "IFK Skövde HK", away: "IFK Kristianstad" },
+    { date: "2026-11-19", time: "19:00", home: "IFK Kristianstad", away: "Lugi HF" },
+    { date: "2026-11-24", time: "19:00", home: "IFK Kristianstad", away: "Alingsås HK" },
+    { date: "2026-11-29", time: "16:15", home: "HK Malmö", away: "IFK Kristianstad" },
+    { date: "2026-12-01", time: "19:00", home: "IFK Kristianstad", away: "IFK Skövde HK" },
+    { date: "2026-12-04", time: "19:00", home: "IFK Kristianstad", away: "OV Helsingborg HK" },
+    { date: "2026-12-13", time: "17:00", home: "Alingsås HK", away: "IFK Kristianstad" },
+    { date: "2026-12-16", time: "19:00", home: "IFK Kristianstad", away: "Skånela IF" },
+    { date: "2026-12-21", time: "19:00", home: "Ystads IF HF", away: "IFK Kristianstad" },
+    { date: "2026-12-27", time: "16:00", home: "Önnereds HK", away: "IFK Kristianstad" },
+    { date: "2026-12-30", time: "19:00", home: "IFK Kristianstad", away: "IF Hallby HK" },
+    { date: "2027-02-03", time: "19:00", home: "OV Helsingborg HK", away: "IFK Kristianstad" },
+    { date: "2027-02-06", time: "16:00", home: "IFK Kristianstad", away: "HF Karlskrona" },
+    { date: "2027-02-12", time: "19:00", home: "Lugi HF", away: "IFK Kristianstad" },
+    { date: "2027-02-19", time: "19:00", home: "IFK Kristianstad", away: "IK Sävehof" },
+    { date: "2027-03-02", time: "19:00", home: "Amo HK", away: "IFK Kristianstad" },
+    { date: "2027-03-05", time: "19:00", home: "IFK Kristianstad", away: "HK Malmö" },
+    { date: "2027-03-17", time: "19:00", home: "Hammarby IF HF", away: "IFK Kristianstad" }
 ];
 
 // Allsvenskan 2026
@@ -2063,11 +2046,14 @@ function createHandballLeagueTable(schedule) {
         }
     }
     
+    // Only show the Omgång column when some match has a round (e.g. playoffs)
+    const showRound = schedule.some(game => game.round);
+    
     let html = `
-        <caption>IFK Kristianstad – Slutspel 2026 (bäst av 5)</caption>
+        <caption>IFK Kristianstad – Handbollsligan 2026/27</caption>
         <thead>
             <tr>
-                <th>Omgång</th>
+                ${showRound ? '<th>Omgång</th>' : ''}
                 <th>Datum</th>
                 <th>Tid</th>
                 <th>Hemmalag</th>
@@ -2095,7 +2081,7 @@ function createHandballLeagueTable(schedule) {
         
         html += `
             <tr${rowClass ? ' ' + rowClass : ''}>
-                <td>${roundLabel}</td>
+                ${showRound ? `<td>${roundLabel || ''}</td>` : ''}
                 <td>${evPrefix}${formattedDate}</td>
                 <td>${game.time}</td>
                 <td>${game.home}</td>
