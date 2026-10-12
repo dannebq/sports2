@@ -380,29 +380,23 @@ const crossCountrySchedule = [
     { date: "2026-03-22", location: "Lake Placid", time: "19:30", event: "20 km (f) masstart, damer" }
 ];
 
-// Ski Classics 2025/2026
+// Ski Classics 2026/2027 (Season XVIII) – starttider ej publicerade än
 const skiClassicsSchedule = [
-    { date: "2025-12-13", location: "Sportgastein, Österrike", time: "08:15–11:30", event: "Bad Gastein – individuell 7 km" },
-    { date: "2025-12-14", location: "Sportgastein, Österrike", time: "08:20–11:30", event: "Bad Gastein – Criterium 36 km" },
-    { date: "2026-01-17", location: "Pontresina–Zuoz, Schweiz", time: "09:33", event: "Engadin La Diagonela, 55 km (herrar)" },
-    { date: "2026-01-17", location: "Pontresina–Zuoz, Schweiz", time: "09:39", event: "Engadin La Diagonela, 55 km (damer)" },
-    { date: "2026-01-25", location: "Moena–Cavalese, Italien", time: "08:00", event: "Marcialonga, 70 km (herrar)" },
-    { date: "2026-01-25", location: "Moena–Cavalese, Italien", time: "08:05", event: "Marcialonga, 70 km (damer)" },
-    { date: "2026-01-30", location: "Bedřichov, Tjeckien", time: "16:00", event: "Bedřichov Sprint, 1,5 km (damer)" },
-    { date: "2026-01-30", location: "Bedřichov, Tjeckien", time: "16:30", event: "Bedřichov Sprint, 1,5 km (herrar)" },
-    { date: "2026-02-01", location: "Bedřichov, Tjeckien", time: "08:00", event: "Jizerská50, 50 km (damer)" },
-    { date: "2026-02-01", location: "Bedřichov, Tjeckien", time: "08:30", event: "Jizerská50, 50 km (herrar)" },
-    { date: "2026-03-01", location: "Sälen–Mora, Sverige", time: "08:00", event: "Vasaloppet, 90 km" },
-    { date: "2026-03-07", location: "Grönklitt, Sverige", time: "08:00", event: "Orsa Grönklitt 50k ITT damer, 50 km" },
-    { date: "2026-03-08", location: "Grönklitt, Sverige", time: "09:00", event: "Orsa Grönklitt 50k ITT herrar, 50 km" },
-    { date: "2026-03-14", location: "Rena–Lillehammer, Norge", time: "07:45", event: "Birkebeinerrennet, 54 km (herrar)" },
-    { date: "2026-03-14", location: "Rena–Lillehammer, Norge", time: "08:00", event: "Birkebeinerrennet, 54 km (damer)" },
-    { date: "2026-03-21", location: "Bodø, Norge", time: "10:15", event: "Marcialonga Bodø, 50 km (herrar)" },
-    { date: "2026-03-21", location: "Bodø, Norge", time: "10:20", event: "Marcialonga Bodø, 50 km (damer)" },
-    { date: "2026-03-28", location: "Setermoen–Bardufoss, Norge", time: "10:00", event: "Reistadløpet, 46 km (damer)" },
-    { date: "2026-03-28", location: "Setermoen–Bardufoss, Norge", time: "11:00", event: "Reistadløpet, 46 km (herrar)" },
-    { date: "2026-03-29", location: "Bardufoss–Finnsnes, Norge", time: "08:30", event: "Grand Finale Summit 2 Senja, 60 km (herrar)" },
-    { date: "2026-03-29", location: "Bardufoss–Finnsnes, Norge", time: "08:35", event: "Grand Finale Summit 2 Senja, 60 km (damer)" }
+    { date: "2026-12-11", location: "Österrike", time: "TBD", event: "Bad Gastein Prologue, 1 km" },
+    { date: "2026-12-13", location: "Österrike", time: "TBD", event: "Sportgastein Criterium, 30 km" },
+    { date: "2026-12-19", location: "Österrike", time: "TBD", event: "Bad Gastein – individuell, 7 km" },
+    { date: "2026-12-20", location: "Österrike", time: "TBD", event: "Bad Gastein Criterium, 36 km" },
+    { date: "2027-01-16", location: "Schweiz", time: "TBD", event: "Engadin La Diagonela, 55 km" },
+    { date: "2027-01-17", location: "Schweiz", time: "TBD", event: "Zuoz–St. Moritz Sprint, 30 km" },
+    { date: "2027-01-31", location: "Italien", time: "TBD", event: "Marcialonga, 70 km" },
+    { date: "2027-02-12", location: "Tjeckien", time: "TBD", event: "Bedřichov Heat Sprint, 1,5 km" },
+    { date: "2027-02-14", location: "Tjeckien", time: "TBD", event: "Jizerská50, 50 km" },
+    { date: "2027-02-27", location: "Sverige", time: "TBD", event: "Oxberg–Mora Sprint, 30 km (damer)" },
+    { date: "2027-02-28", location: "Sverige", time: "TBD", event: "Oxberg–Mora Sprint, 30 km (herrar)" },
+    { date: "2027-03-07", location: "Sverige", time: "TBD", event: "Vasaloppet, 90 km" },
+    { date: "2027-03-20", location: "Norge", time: "TBD", event: "Birkebeinerrennet, 53 km" },
+    { date: "2027-04-03", location: "Norge", time: "TBD", event: "Reistadløpet, 35 km" },
+    { date: "2027-04-04", location: "Norge", time: "TBD", event: "Grand Finale Summit 2 Senja, 60 km" }
 ];
 
 // IFK Kristianstad 2026/2027
@@ -1636,7 +1630,7 @@ function createSkiClassicsTable(schedule) {
     }
     
     let html = `
-        <caption>Ski Classics 2025/2026</caption>
+        <caption>Ski Classics 2026/2027</caption>
         <thead>
             <tr>
                 <th>Datum</th>
