@@ -432,308 +432,16 @@ const handballLeagueSchedule = [
     { date: "2027-03-17", time: "19:00", home: "Hammarby IF HF", away: "IFK Kristianstad" }
 ];
 
-// Allsvenskan 2026
+// Malmö FF – Allsvenskan 2026
 const allsvenskanSchedule = [
-    { round: 1, dates: "4-6 april", matches: [
-        { date: "2026-04-04", home: "Hammarby", away: "Mjällby AIF", time: "15:00" },
-        { date: "2026-04-04", home: "Degerfors IF", away: "IK Sirius", time: "15:00" },
-        { date: "2026-04-05", home: "AIK", away: "Halmstads BK", time: "14:00" },
-        { date: "2026-04-05", home: "Kalmar FF", away: "Västerås SK", time: "14:00" },
-        { date: "2026-04-05", home: "Örgryte IS", away: "Malmö FF", time: "16:30", malmoff: true },
-        { date: "2026-04-06", home: "BK Häcken", away: "IF Brommapojkarna", time: "14:00" },
-        { date: "2026-04-06", home: "IF Elfsborg", away: "IFK Göteborg", time: "14:00" },
-        { date: "2026-04-06", home: "GAIS", away: "Djurgårdens IF", time: "16:30" }
-    ]},
-    { round: 2, dates: "11-13 april", matches: [
-        { date: "2026-04-11", home: "IFK Göteborg", away: "BK Häcken", time: "15:00" },
-        { date: "2026-04-11", home: "Mjällby AIF", away: "Örgryte IS", time: "15:00" },
-        { date: "2026-04-11", home: "Västerås SK", away: "IF Elfsborg", time: "15:00" },
-        { date: "2026-04-12", home: "Djurgårdens IF", away: "Kalmar FF", time: "14:00" },
-        { date: "2026-04-12", home: "Halmstads BK", away: "Degerfors IF", time: "14:00" },
-        { date: "2026-04-12", home: "Malmö FF", away: "GAIS", time: "16:30", malmoff: true },
-        { date: "2026-04-13", home: "IF Brommapojkarna", away: "AIK", time: "19:00" },
-        { date: "2026-04-13", home: "IK Sirius", away: "Hammarby", time: "19:00" }
-    ]},
-    { round: 3, dates: "17-19 april", matches: [
-        { date: "2026-04-17", home: "Djurgårdens IF", away: "Malmö FF", time: "19:00", malmoff: true },
-        { date: "2026-04-17", home: "Degerfors IF", away: "IF Elfsborg", time: "19:00" },
-        { date: "2026-04-18", home: "Hammarby", away: "Örgryte IS", time: "15:00" },
-        { date: "2026-04-18", home: "Mjällby AIF", away: "IF Brommapojkarna", time: "15:00" },
-        { date: "2026-04-18", home: "IK Sirius", away: "Västerås SK", time: "15:00" },
-        { date: "2026-04-18", home: "Halmstads BK", away: "IFK Göteborg", time: "15:00" },
-        { date: "2026-04-19", home: "AIK", away: "Kalmar FF", time: "14:00" },
-        { date: "2026-04-19", home: "BK Häcken", away: "GAIS", time: "16:30" }
-    ]},
-    { round: 4, dates: "22-23 april", matches: [
-        { date: "2026-04-22", home: "Hammarby", away: "Halmstads BK", time: "19:00" },
-        { date: "2026-04-22", home: "Örgryte IS", away: "IF Brommapojkarna", time: "19:00" },
-        { date: "2026-04-22", home: "IF Elfsborg", away: "Djurgårdens IF", time: "19:00" },
-        { date: "2026-04-22", home: "Västerås SK", away: "BK Häcken", time: "19:00" },
-        { date: "2026-04-23", home: "GAIS", away: "Mjällby AIF", time: "19:00" },
-        { date: "2026-04-23", home: "Malmö FF", away: "IK Sirius", time: "19:00", malmoff: true },
-        { date: "2026-04-23", home: "Degerfors IF", away: "AIK", time: "19:00" },
-        { date: "2026-04-23", home: "Kalmar FF", away: "IFK Göteborg", time: "19:00" }
-    ]},
-    { round: 5, dates: "26-27 april", matches: [
-        { date: "2026-04-26", home: "Djurgårdens IF", away: "Hammarby", time: "14:00" },
-        { date: "2026-04-26", home: "IFK Göteborg", away: "GAIS", time: "16:30" },
-        { date: "2026-04-26", home: "IF Brommapojkarna", away: "Västerås SK", time: "16:30" },
-        { date: "2026-04-27", home: "AIK", away: "Malmö FF", time: "19:00", malmoff: true },
-        { date: "2026-04-27", home: "Örgryte IS", away: "Degerfors IF", time: "19:00" },
-        { date: "2026-04-27", home: "BK Häcken", away: "IK Sirius", time: "19:00" },
-        { date: "2026-04-27", home: "Mjällby AIF", away: "Halmstads BK", time: "19:00" },
-        { date: "2026-04-27", home: "Kalmar FF", away: "IF Elfsborg", time: "19:00" }
-    ]},
-    { round: 6, dates: "2-4 maj", matches: [
-        { date: "2026-05-02", home: "Degerfors IF", away: "BK Häcken", time: "15:00" },
-        { date: "2026-05-02", home: "IK Sirius", away: "Kalmar FF", time: "15:00" },
-        { date: "2026-05-03", home: "Hammarby", away: "Västerås SK", time: "14:00" },
-        { date: "2026-05-03", home: "Malmö FF", away: "Mjällby AIF", time: "14:00", malmoff: true },
-        { date: "2026-05-03", home: "GAIS", away: "Örgryte IS", time: "16:30" },
-        { date: "2026-05-03", home: "IF Elfsborg", away: "AIK", time: "16:30" },
-        { date: "2026-05-04", home: "Djurgårdens IF", away: "IFK Göteborg", time: "19:00" },
-        { date: "2026-05-04", home: "Halmstads BK", away: "IF Brommapojkarna", time: "19:00" }
-    ]},
-    { round: 7, dates: "8-11 maj", matches: [
-        { date: "2026-05-08", home: "IF Elfsborg", away: "IF Brommapojkarna", time: "19:00" },
-        { date: "2026-05-09", home: "Degerfors IF", away: "Mjällby AIF", time: "15:00" },
-        { date: "2026-05-09", home: "Västerås SK", away: "GAIS", time: "15:00" },
-        { date: "2026-05-10", home: "AIK", away: "Djurgårdens IF", time: "14:00" },
-        { date: "2026-05-10", home: "Kalmar FF", away: "Halmstads BK", time: "14:00" },
-        { date: "2026-05-10", home: "BK Häcken", away: "Malmö FF", time: "16:30", malmoff: true },
-        { date: "2026-05-11", home: "IFK Göteborg", away: "Hammarby", time: "19:00" },
-        { date: "2026-05-11", home: "IK Sirius", away: "Örgryte IS", time: "19:00" }
-    ]},
-    { round: 8, dates: "16-18 maj", matches: [
-        { date: "2026-05-16", home: "GAIS", away: "Degerfors IF", time: "15:00" },
-        { date: "2026-05-16", home: "Halmstads BK", away: "IF Elfsborg", time: "15:00" },
-        { date: "2026-05-17", home: "Hammarby", away: "Malmö FF", time: "14:00", malmoff: true },
-        { date: "2026-05-17", home: "IF Brommapojkarna", away: "Kalmar FF", time: "14:00" },
-        { date: "2026-05-17", home: "Mjällby AIF", away: "BK Häcken", time: "16:30" },
-        { date: "2026-05-18", home: "Djurgårdens IF", away: "IK Sirius", time: "19:00" },
-        { date: "2026-05-18", home: "Örgryte IS", away: "IFK Göteborg", time: "19:00" },
-        { date: "2026-05-18", home: "Västerås SK", away: "AIK", time: "19:00" }
-    ]},
-    { round: 9, dates: "22-25 maj", matches: [
-        { date: "2026-05-22", home: "Djurgårdens IF", away: "IF Brommapojkarna", time: "19:00" },
-        { date: "2026-05-23", home: "Kalmar FF", away: "Degerfors IF", time: "15:00" },
-        { date: "2026-05-23", home: "Halmstads BK", away: "Örgryte IS", time: "15:00" },
-        { date: "2026-05-24", home: "Hammarby", away: "AIK", time: "14:00" },
-        { date: "2026-05-24", home: "IK Sirius", away: "GAIS", time: "14:00" },
-        { date: "2026-05-24", home: "Malmö FF", away: "Västerås SK", time: "16:30", malmoff: true },
-        { date: "2026-05-25", home: "IFK Göteborg", away: "Mjällby AIF", time: "19:00" },
-        { date: "2026-05-25", home: "IF Elfsborg", away: "BK Häcken", time: "19:00" }
-    ]},
-    { round: 10, dates: "29-31 maj", matches: [
-        { date: "2026-05-29", home: "Örgryte IS", away: "IF Elfsborg", time: "19:00" },
-        { date: "2026-05-30", home: "AIK", away: "IK Sirius", time: "15:00" },
-        { date: "2026-05-30", home: "GAIS", away: "Kalmar FF", time: "15:00" },
-        { date: "2026-05-30", home: "Malmö FF", away: "Halmstads BK", time: "15:00", malmoff: true },
-        { date: "2026-05-31", home: "BK Häcken", away: "Hammarby", time: "14:00" },
-        { date: "2026-05-31", home: "Degerfors IF", away: "IF Brommapojkarna", time: "14:00" },
-        { date: "2026-05-31", home: "Västerås SK", away: "IFK Göteborg", time: "14:00" },
-        { date: "2026-05-31", home: "Mjällby AIF", away: "Djurgårdens IF", time: "16:30" }
-    ]},
-    { round: 11, dates: "04/7-06/7", matches: [
-        { home: "IFK Göteborg", away: "AIK", time: "–" },
-        { home: "BK Häcken", away: "Djurgården", time: "–" },
-        { home: "IF Elfsborg", away: "Hammarby", time: "–" },
-        { home: "BP", away: "GAIS", time: "–" },
-        { home: "Degerfors IF", away: "Malmö FF", time: "–" },
-        { home: "IK Sirius", away: "Mjällby AIF", time: "–" },
-        { home: "Kalmar FF", away: "Örgryte IS", time: "–" },
-        { home: "Halmstads BK", away: "Västerås SK", time: "–" }
-    ]},
-    { round: 12, dates: "11/7-13/7", matches: [
-        { home: "Djurgården", away: "Halmstads BK", time: "–" },
-        { home: "Hammarby", away: "Kalmar FF", time: "–" },
-        { home: "GAIS", away: "IF Elfsborg", time: "–" },
-        { home: "Örgryte IS", away: "BK Häcken", time: "–" },
-        { home: "Mjällby AIF", away: "AIK", time: "–" },
-        { home: "Malmö FF", away: "IFK Göteborg", time: "–" },
-        { home: "BP", away: "IK Sirius", time: "–" },
-        { home: "Västerås SK", away: "Degerfors IF", time: "–" }
-    ]},
-    { round: 13, dates: "18/7-20/7", matches: [
-        { home: "AIK", away: "GAIS", time: "–" },
-        { home: "Hammarby", away: "Degerfors IF", time: "–" },
-        { home: "IFK Göteborg", away: "BP", time: "–" },
-        { home: "Örgryte IS", away: "Djurgården", time: "–" },
-        { home: "Mjällby AIF", away: "Västerås SK", time: "–" },
-        { home: "IF Elfsborg", away: "IK Sirius", time: "–" },
-        { home: "Kalmar FF", away: "Malmö FF", time: "–" },
-        { home: "Halmstads BK", away: "BK Häcken", time: "–" }
-    ]},
-    { round: 14, dates: "25/7-27/7", matches: [
-        { home: "GAIS", away: "Halmstads BK", time: "–" },
-        { home: "BK Häcken", away: "AIK", time: "–" },
-        { home: "Malmö FF", away: "IF Elfsborg", time: "–" },
-        { home: "BP", away: "Hammarby", time: "–" },
-        { home: "Degerfors IF", away: "Djurgården", time: "–" },
-        { home: "IK Sirius", away: "IFK Göteborg", time: "–" },
-        { home: "Västerås SK", away: "Örgryte IS", time: "–" },
-        { home: "Kalmar FF", away: "Mjällby AIF", time: "–" }
-    ]},
-    { round: 15, dates: "01/8-03/8", matches: [
-        { home: "AIK", away: "Örgryte IS", time: "–" },
-        { home: "Djurgården", away: "Västerås SK", time: "–" },
-        { home: "IFK Göteborg", away: "Degerfors IF", time: "–" },
-        { home: "GAIS", away: "Hammarby", time: "–" },
-        { home: "BK Häcken", away: "Kalmar FF", time: "–" },
-        { home: "IF Elfsborg", away: "Mjällby AIF", time: "–" },
-        { home: "BP", away: "Malmö FF", time: "–" },
-        { home: "Halmstads BK", away: "IK Sirius", time: "–" }
-    ]},
-    { round: 16, dates: "08/8-10/8", matches: [
-        { home: "Hammarby", away: "BK Häcken", time: "–" },
-        { home: "IFK Göteborg", away: "Kalmar FF", time: "–" },
-        { home: "Örgryte IS", away: "AIK", time: "–" },
-        { home: "Mjällby AIF", away: "IF Elfsborg", time: "–" },
-        { home: "Malmö FF", away: "Degerfors IF", time: "–" },
-        { home: "IK Sirius", away: "BP", time: "–" },
-        { home: "Västerås SK", away: "Djurgården", time: "–" },
-        { home: "Halmstads BK", away: "GAIS", time: "–" }
-    ]},
-    { round: 17, dates: "15/8-17/8", matches: [
-        { home: "Djurgården", away: "AIK", time: "–" },
-        { home: "GAIS", away: "Malmö FF", time: "–" },
-        { home: "BK Häcken", away: "Halmstads BK", time: "–" },
-        { home: "Mjällby AIF", away: "IK Sirius", time: "–" },
-        { home: "IF Elfsborg", away: "Västerås SK", time: "–" },
-        { home: "BP", away: "Örgryte IS", time: "–" },
-        { home: "Degerfors IF", away: "IFK Göteborg", time: "–" },
-        { home: "Kalmar FF", away: "Hammarby", time: "–" }
-    ]},
-    { round: 18, dates: "22/8-24/8", matches: [
-        { home: "AIK", away: "Mjällby AIF", time: "–" },
-        { home: "Hammarby", away: "GAIS", time: "–" },
-        { home: "IFK Göteborg", away: "IF Elfsborg", time: "–" },
-        { home: "Örgryte IS", away: "Halmstads BK", time: "–" },
-        { home: "BP", away: "Degerfors IF", time: "–" },
-        { home: "IK Sirius", away: "BK Häcken", time: "–" },
-        { home: "Västerås SK", away: "Kalmar FF", time: "–" },
-        { home: "Malmö FF", away: "Djurgården", time: "–" }
-    ]},
-    { round: 19, dates: "29/8-31/8", matches: [
-        { home: "AIK", away: "Hammarby", time: "–" },
-        { home: "Djurgården", away: "Mjällby AIF", time: "–" },
-        { home: "IFK Göteborg", away: "Örgryte IS", time: "–" },
-        { home: "GAIS", away: "BP", time: "–" },
-        { home: "BK Häcken", away: "Västerås SK", time: "–" },
-        { home: "IF Elfsborg", away: "Degerfors IF", time: "–" },
-        { home: "IK Sirius", away: "Malmö FF", time: "–" },
-        { home: "Halmstads BK", away: "Kalmar FF", time: "–" }
-    ]},
-    { round: 20, dates: "05/9-07/9", matches: [
-        { home: "GAIS", away: "BK Häcken", time: "–" },
-        { home: "Örgryte IS", away: "Hammarby", time: "–" },
-        { home: "Mjällby AIF", away: "IFK Göteborg", time: "–" },
-        { home: "Malmö FF", away: "AIK", time: "–" },
-        { home: "BP", away: "IF Elfsborg", time: "–" },
-        { home: "Degerfors IF", away: "Halmstads BK", time: "–" },
-        { home: "Västerås SK", away: "IK Sirius", time: "–" },
-        { home: "Kalmar FF", away: "Djurgården", time: "–" }
-    ]},
-    { round: 21, dates: "12/9-14/9", matches: [
-        { home: "AIK", away: "Västerås SK", time: "–" },
-        { home: "Djurgården", away: "GAIS", time: "–" },
-        { home: "Hammarby", away: "BP", time: "–" },
-        { home: "IFK Göteborg", away: "Halmstads BK", time: "–" },
-        { home: "BK Häcken", away: "Mjällby AIF", time: "–" },
-        { home: "Malmö FF", away: "Örgryte IS", time: "–" },
-        { home: "IF Elfsborg", away: "Kalmar FF", time: "–" },
-        { home: "IK Sirius", away: "Degerfors IF", time: "–" }
-    ]},
-    { round: 22, dates: "19/9-20/9", matches: [
-        { home: "Djurgården", away: "IF Elfsborg", time: "–" },
-        { home: "Örgryte IS", away: "IK Sirius", time: "–" },
-        { home: "Mjällby AIF", away: "GAIS", time: "–" },
-        { home: "BP", away: "IFK Göteborg", time: "–" },
-        { home: "Degerfors IF", away: "Hammarby", time: "–" },
-        { home: "Västerås SK", away: "Malmö FF", time: "–" },
-        { home: "Kalmar FF", away: "BK Häcken", time: "–" },
-        { home: "Halmstads BK", away: "AIK", time: "–" }
-    ]},
-    { round: 23, dates: "10/10-12/10", matches: [
-        { home: "AIK", away: "BP", time: "–" },
-        { home: "Hammarby", away: "Djurgården", time: "–" },
-        { home: "IFK Göteborg", away: "Västerås SK", time: "–" },
-        { home: "GAIS", away: "IK Sirius", time: "–" },
-        { home: "BK Häcken", away: "Örgryte IS", time: "–" },
-        { home: "Mjällby AIF", away: "Degerfors IF", time: "–" },
-        { home: "Malmö FF", away: "Kalmar FF", time: "–" },
-        { home: "IF Elfsborg", away: "Halmstads BK", time: "–" }
-    ]},
-    { round: 24, dates: "17/10-19/10", matches: [
-        { home: "AIK", away: "IFK Göteborg", time: "–" },
-        { home: "Örgryte IS", away: "GAIS", time: "–" },
-        { home: "Malmö FF", away: "BK Häcken", time: "–" },
-        { home: "BP", away: "Djurgården", time: "–" },
-        { home: "Degerfors IF", away: "Kalmar FF", time: "–" },
-        { home: "IK Sirius", away: "IF Elfsborg", time: "–" },
-        { home: "Västerås SK", away: "Mjällby AIF", time: "–" },
-        { home: "Halmstads BK", away: "Hammarby", time: "–" }
-    ]},
-    { round: 25, dates: "24/10-26/10", matches: [
-        { home: "Djurgården", away: "Örgryte IS", time: "–" },
-        { home: "GAIS", away: "IFK Göteborg", time: "–" },
-        { home: "BK Häcken", away: "Degerfors IF", time: "–" },
-        { home: "Mjällby AIF", away: "Hammarby", time: "–" },
-        { home: "IF Elfsborg", away: "Malmö FF", time: "–" },
-        { home: "IK Sirius", away: "AIK", time: "–" },
-        { home: "Västerås SK", away: "Halmstads BK", time: "–" },
-        { home: "Kalmar FF", away: "BP", time: "–" }
-    ]},
-    { round: 26, dates: "28/10-29/10", matches: [
-        { home: "AIK", away: "IF Elfsborg", time: "–" },
-        { home: "Hammarby", away: "IK Sirius", time: "–" },
-        { home: "IFK Göteborg", away: "Djurgården", time: "–" },
-        { home: "Örgryte IS", away: "Mjällby AIF", time: "–" },
-        { home: "BP", away: "BK Häcken", time: "–" },
-        { home: "Degerfors IF", away: "Västerås SK", time: "–" },
-        { home: "Kalmar FF", away: "GAIS", time: "–" },
-        { home: "Halmstads BK", away: "Malmö FF", time: "–" }
-    ]},
-    { round: 27, dates: "31/10-01/11", matches: [
-        { home: "Djurgården", away: "Degerfors IF", time: "–" },
-        { home: "GAIS", away: "AIK", time: "–" },
-        { home: "BK Häcken", away: "IFK Göteborg", time: "–" },
-        { home: "Mjällby AIF", away: "Kalmar FF", time: "–" },
-        { home: "Malmö FF", away: "Hammarby", time: "–" },
-        { home: "IF Elfsborg", away: "Örgryte IS", time: "–" },
-        { home: "IK Sirius", away: "Halmstads BK", time: "–" },
-        { home: "Västerås SK", away: "BP", time: "–" }
-    ]},
-    { round: 28, dates: "07/11-08/11", matches: [
-        { home: "AIK", away: "BK Häcken", time: "–" },
-        { home: "Hammarby", away: "IF Elfsborg", time: "–" },
-        { home: "IFK Göteborg", away: "Malmö FF", time: "–" },
-        { home: "Örgryte IS", away: "Västerås SK", time: "–" },
-        { home: "BP", away: "Mjällby AIF", time: "–" },
-        { home: "Degerfors IF", away: "GAIS", time: "–" },
-        { home: "Kalmar FF", away: "IK Sirius", time: "–" },
-        { home: "Halmstads BK", away: "Djurgården", time: "–" }
-    ]},
-    { round: 29, dates: "21/11-24/11", matches: [
-        { home: "AIK", away: "Degerfors IF", time: "–" },
-        { home: "Hammarby", away: "IFK Göteborg", time: "–" },
-        { home: "GAIS", away: "Västerås SK", time: "–" },
-        { home: "Örgryte IS", away: "Kalmar FF", time: "–" },
-        { home: "BK Häcken", away: "IF Elfsborg", time: "–" },
-        { home: "Mjällby AIF", away: "Malmö FF", time: "–" },
-        { home: "BP", away: "Halmstads BK", time: "–" },
-        { home: "IK Sirius", away: "Djurgården", time: "–" }
-    ]},
-    { round: 30, dates: "29/11", matches: [
-        { home: "Djurgården", away: "BK Häcken", time: "–" },
-        { home: "IFK Göteborg", away: "IK Sirius", time: "–" },
-        { home: "Malmö FF", away: "BP", time: "–" },
-        { home: "IF Elfsborg", away: "GAIS", time: "–" },
-        { home: "Degerfors IF", away: "Örgryte IS", time: "–" },
-        { home: "Västerås SK", away: "Hammarby", time: "–" },
-        { home: "Kalmar FF", away: "AIK", time: "–" },
-        { home: "Halmstads BK", away: "Mjällby AIF", time: "–" }
-    ]}
+    { date: "2026-10-12", time: "19:00", home: "Malmö FF", away: "Kalmar FF" },
+    { date: "2026-10-18", time: "16:30", home: "Malmö FF", away: "BK Häcken" },
+    { date: "2026-10-23", time: "19:00", home: "IF Elfsborg", away: "Malmö FF" },
+    { date: "2026-10-28", time: "19:00", home: "Halmstads BK", away: "Malmö FF" },
+    { date: "2026-11-01", time: "14:00", home: "Malmö FF", away: "Hammarby" },
+    { date: "2026-11-08", time: "14:00", home: "IFK Göteborg", away: "Malmö FF" },
+    { date: "2026-11-21", time: "15:00", home: "Mjällby AIF", away: "Malmö FF" },
+    { date: "2026-11-29", time: "15:00", home: "Malmö FF", away: "IF Brommapojkarna" }
 ];
 
 // Svenska Cupen 2026 - Group Stage
@@ -1712,25 +1420,21 @@ function getAllEvents() {
         }
     });
     
-    // Add Allsvenskan matches (only Malmö FF's matches for overview)
-    allsvenskanSchedule.forEach(round => {
-        round.matches.forEach(match => {
-            if (match.malmoff) {
-                const date = parseDate(match.date);
-                if (date) {
-                    events.push({
-                        date: date,
-                        dateString: formatDateSwedish(date),
-                        sport: 'Allsvenskan',
-                        team: 'Malmö FF',
-                        description: `${match.home} – ${match.away}`,
-                        location: '-',
-                        time: match.time,
-                        isHighlightedTeam: true
-                    });
-                }
-            }
-        });
+    // Add Allsvenskan matches (Malmö FF)
+    allsvenskanSchedule.forEach(match => {
+        const date = parseDate(match.date);
+        if (date) {
+            events.push({
+                date: date,
+                dateString: formatDateSwedish(date),
+                sport: 'Allsvenskan',
+                team: 'Malmö FF',
+                description: `${match.home} – ${match.away}`,
+                location: '-',
+                time: match.time,
+                isHighlightedTeam: true
+            });
+        }
     });
     
     // Add World Cup matches
@@ -2102,107 +1806,59 @@ function displayHandballLeagueSchedule(schedule) {
     scheduleContainer.appendChild(table);
 }
 
-// Function to create Allsvenskan table
+// Function to create Allsvenskan table (Malmö FF matches only)
 function createAllsvenskanTable(schedule) {
-    const container = document.createElement('div');
+    const table = document.createElement('table');
+    table.className = 'schedule-table';
     
-    // Find next match date for Malmö
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    let nextMalmoMatchDate = null;
-    for (const round of schedule) {
-        for (const match of round.matches) {
-            if (match.malmoff) {
-                const matchDate = parseDate(match.date);
-                if (matchDate && matchDate >= today) {
-                    nextMalmoMatchDate = matchDate;
-                    break;
-                }
-            }
-        }
-        if (nextMalmoMatchDate) break;
-    }
-    
+    // Keep a match visible until roughly two hours after kick-off
     const now = new Date();
-
-    schedule.forEach(round => {
-        const upcomingMatches = round.matches.filter(match => {
-            if (!match.date || !match.time || match.time === '–') return true;
-            const matchDate = parseDate(match.date);
-            if (!matchDate) return true;
-            const [hours, minutes] = match.time.split(':').map(Number);
-            const matchEnd = new Date(matchDate);
-            matchEnd.setHours(hours + 2, minutes, 0, 0);
-            return now < matchEnd;
-        });
-
-        if (upcomingMatches.length === 0) return;
-
-        const section = document.createElement('div');
-        section.className = 'competition-section';
-        
-        const title = document.createElement('div');
-        title.className = 'competition-title';
-        title.textContent = `Omgång ${round.round}`;
-        
-        const dates = document.createElement('div');
-        dates.className = 'competition-dates';
-        dates.textContent = round.dates;
-        
-        const table = document.createElement('table');
-        table.className = 'schedule-table';
-        
-        let html = `
-            <thead>
-                <tr>
-                    <th>Datum</th>
-                    <th>Tid</th>
-                    <th>Match</th>
-                </tr>
-            </thead>
-            <tbody>
-        `;
-        
-        upcomingMatches.forEach(match => {
-            const isMalmoMatch = match.malmoff;
-            const matchDate = match.date ? parseDate(match.date) : null;
-            const isNextMalmoMatch = nextMalmoMatchDate && matchDate && 
-                                     matchDate.getTime() === nextMalmoMatchDate.getTime() && isMalmoMatch;
-            
-            let rowClass = '';
-            if (isNextMalmoMatch) rowClass = 'next-event sweden-match';
-            else if (isMalmoMatch) rowClass = 'sweden-match';
-            
-            // Format date to Swedish format, or show dash if no date
-            const formattedDate = matchDate ? formatDateSwedish(matchDate) : '–';
-            
-            html += `
-                <tr${rowClass ? ` class="${rowClass}"` : ''}>
-                    <td>${formattedDate}</td>
-                    <td>${match.time}</td>
-                    <td>${match.home} – ${match.away}</td>
-                </tr>
-            `;
-        });
-        
-        html += `</tbody>`;
-        table.innerHTML = html;
-        
-        section.appendChild(title);
-        section.appendChild(dates);
-        section.appendChild(table);
-        container.appendChild(section);
+    const upcomingMatches = schedule.filter(match => {
+        const matchDate = parseDate(match.date);
+        if (!matchDate) return false;
+        const [hours, minutes] = match.time.split(':').map(Number);
+        const matchEnd = new Date(matchDate);
+        matchEnd.setHours(hours + 2, minutes, 0, 0);
+        return now < matchEnd;
     });
     
-    return container;
+    let html = `
+        <caption>Malmö FF – Allsvenskan 2026</caption>
+        <thead>
+            <tr>
+                <th>Datum</th>
+                <th>Tid</th>
+                <th>Hemmalag</th>
+                <th>Bortalag</th>
+            </tr>
+        </thead>
+        <tbody>
+    `;
+    
+    upcomingMatches.forEach((match, index) => {
+        const rowClass = index === 0 ? ' class="next-event"' : '';
+        const formattedDate = formatDateSwedish(parseDate(match.date));
+        
+        html += `
+            <tr${rowClass}>
+                <td>${formattedDate}</td>
+                <td>${match.time}</td>
+                <td>${match.home}</td>
+                <td>${match.away}</td>
+            </tr>
+        `;
+    });
+    
+    html += `</tbody>`;
+    table.innerHTML = html;
+    return table;
 }
 
 // Function to display Allsvenskan schedule
 function displayAllsvenskanSchedule(schedule) {
     scheduleContainer.innerHTML = '';
-    const tables = createAllsvenskanTable(schedule);
-    scheduleContainer.appendChild(tables);
+    const table = createAllsvenskanTable(schedule);
+    scheduleContainer.appendChild(table);
 }
 
 function createWorldCupTable(schedule) {
